@@ -1,0 +1,5 @@
+# Optional producer environment. The comparison library remains dependency-free.
+# Hosted Python 3.11; prohibit implicit native source compilation.
+--only-binary=:all:
+numpy==2.2.6
+h5py==3.14.0

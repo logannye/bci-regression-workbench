@@ -1,0 +1,353 @@
+{
+  "artifact_hashes": {
+    "ATTRIBUTION.txt": "9e4816d0bb71951ea09cd3ae3f141b1ef98b1fc0dee12533738bc4dfa083b47e",
+    "audit.json": "5de13e64620533c5d88b386b66155a183e095514638c149661d94918e4e2e792",
+    "comparison/baseline.json": "86d3260f0d5796723d793960873ec756678a76e0ce315a81a15e303769585bd6",
+    "comparison/candidate.json": "3a497bc84496375607bf5a99d0d10a1f51c8a97ba7d33edda7f74673046a860c",
+    "comparison/comparison.json": "167f68e15199fd68be2fb95e7be92c909f17996c29fb20566f55b52233103d7a",
+    "comparison/evaluation.json": "11e50fe28446e542829fbadcf85c3fc3ee404e1e6b9018c024e59055b63a6121",
+    "comparison/manifest.json": "6a5106182911f446a0de3b3f1fb56c42904bf2cfedc228e41ad5fb7a984cc56e",
+    "comparison/report.html": "4fbb0ce3c052b63984e6365701a3bdd3778237837b07c5baba191acb7eb6bd13",
+    "comparison/session_metrics.csv": "464b24ae5fea8b9d0bfe106b17f785fd11db461e9aa025d53dd657f6c97f9870",
+    "environment.json": "da434c05c87804e01977e337174142f0d292c0749ea317432408cea38963ad08",
+    "features/indy_20160916_01.npz": "a2b14673df89fe6a62a8fc7c53aa958c56443ded51b2b165bf9c3facaf6ead4a",
+    "features/indy_20160921_01.npz": "ce527110c9085c4c058376b4e0d68e99c8085c609cd52af4ab0abe12057e3d7e",
+    "features/indy_20160927_04.npz": "40ef9625935971b18ab570e3fd21c21ac3a26eee85a152784ab540d9b2a2100a",
+    "inputs.json": "7be20015ffb1888d467eef8e84752af4af68aa15819ee283e0dc51e0c868a67f",
+    "models/baseline.json": "e32c7a61dfd36ed85046e6c01fd5cb9be3b2311b9e898a82ac3015e20b0948b0",
+    "models/candidate.json": "9decfc0bb41574e00aab1977b054b1e8c03447594667a1ee46a1ce74fb14acce",
+    "predictions-ready.json": "dc048cb4da656578a1447a10cf5dcc3a311cfacd5d43d9d24acdad2019089f2e",
+    "predictions/baseline/indy_20160916_01.npz": "44c86d188948d35049899c4aeba09f6d5be72924548cbcabe0a126d4936df551",
+    "predictions/baseline/indy_20160921_01.npz": "d57cd1b8bad7c9daa6e88cfbc09cdea47d86bfb5c53044be067d7c29ad077583",
+    "predictions/baseline/indy_20160927_04.npz": "4a29a28f2fa51d6d718303f3ac58d68e83a91e711ea7209a4b47ecd59266ea20",
+    "predictions/candidate/indy_20160916_01.npz": "d427b951b383923af67c9595ece8edb2903a89e7c100699220073d6de8ee76d8",
+    "predictions/candidate/indy_20160921_01.npz": "8adb072e9647ae2006c7336e12b65120ad34722375ce07675498ecbf22a748ee",
+    "predictions/candidate/indy_20160927_04.npz": "ba519535f83f52be8d071fb22e94dd684d478ff1b8f0126f3c7b4f8b27510e1a",
+    "protocol.json": "c7d24fbde2bd727247fb4415d134d10761b3ab204bb4f3af3015dbda02488af9",
+    "source-training.npz": "e5c59b477e25f5394ebddc62a502e16ca193b3efae4e9a2977f7d98dbc765056",
+    "summary.json": "2e3e0e5a4d9d8ae75eeb1cf6a48b1e643a5f4906a84352782d097a1f0cf2056a"
+  },
+  "ci_run": {
+    "conclusion": "success",
+    "id": 40738828979,
+    "tested_merge": "ff10e82dda29e5319aea5fe98c866a915aa98706",
+    "url": "https://github.com/logannye/bci-regression-workbench/actions/runs/40738828979"
+  },
+  "environment": {
+    "h5py": "3.14.0",
+    "numpy": "2.2.6",
+    "platform": "Linux-7.0.0-1017-azure-x86_64-with-glibc2.39",
+    "producer_sources": {
+      "audit.py": "cd684b371c8b3c052df891c83406c4eb428a43a67823df4eedb7303304a6c72d",
+      "data.py": "e2ef9bedb8a0e13bae2d71ddde20932cda1295a397b5fa69e5cd38e882d2fc9e",
+      "model.py": "2d26ffc4ef748e5528a248916f00babfc159b7e35849860cb3a473d56c6627bf",
+      "run.py": "458ef99d40d9c905d63988542804e0fc35302dee23dfc315d87b35afd08d1360"
+    },
+    "python": "3.11.17",
+    "source_revision": "ff10e82dda29e5319aea5fe98c866a915aa98706",
+    "threads": {
+      "MKL_NUM_THREADS": "1",
+      "OMP_NUM_THREADS": "1",
+      "OPENBLAS_NUM_THREADS": "1"
+    }
+  },
+  "frozen_protocol_commit": "b88ecd5cb920305bc1194b8ff758b6bf19c3cecf",
+  "local_verification": {
+    "audit_status": "passed",
+    "max_prediction_absolute_difference": 7.105427357601002e-14,
+    "numpy": "2.4.1",
+    "platform": "Darwin25.2.0-arm64",
+    "python": "3.14.6",
+    "receipt_hashes_verified": 26,
+    "scoring_reproduction": "passed",
+    "status": "passed"
+  },
+  "producer_head": "3bb699526644c13d1b0bd6c5142ecde4a2de2c02",
+  "receipt_sha256": "be6214031fe5e0e3a8770d4d14ef7e3681618734c0d7a6f7cd0d4d6f30fb588c",
+  "schema_version": 1,
+  "scientific_fit_count": 2,
+  "scope": "One fixed public-recording comparison; aggregate receipt only. Raw recordings, model parameters and per-bin arrays are not committed.",
+  "summary": {
+    "audit": {
+      "absolute_numerical_tolerance": 1e-09,
+      "audit_source_sha256": "cd684b371c8b3c052df891c83406c4eb428a43a67823df4eedb7303304a6c72d",
+      "evidence_files": [
+        {
+          "path": "comparison/baseline.json",
+          "sha256": "86d3260f0d5796723d793960873ec756678a76e0ce315a81a15e303769585bd6",
+          "size_bytes": 2542589
+        },
+        {
+          "path": "comparison/candidate.json",
+          "sha256": "3a497bc84496375607bf5a99d0d10a1f51c8a97ba7d33edda7f74673046a860c",
+          "size_bytes": 2540264
+        },
+        {
+          "path": "comparison/comparison.json",
+          "sha256": "167f68e15199fd68be2fb95e7be92c909f17996c29fb20566f55b52233103d7a",
+          "size_bytes": 6362148
+        },
+        {
+          "path": "comparison/evaluation.json",
+          "sha256": "11e50fe28446e542829fbadcf85c3fc3ee404e1e6b9018c024e59055b63a6121",
+          "size_bytes": 3813270
+        },
+        {
+          "path": "features/indy_20160916_01.npz",
+          "sha256": "a2b14673df89fe6a62a8fc7c53aa958c56443ded51b2b165bf9c3facaf6ead4a",
+          "size_bytes": 261903
+        },
+        {
+          "path": "features/indy_20160921_01.npz",
+          "sha256": "ce527110c9085c4c058376b4e0d68e99c8085c609cd52af4ab0abe12057e3d7e",
+          "size_bytes": 269994
+        },
+        {
+          "path": "features/indy_20160927_04.npz",
+          "sha256": "40ef9625935971b18ab570e3fd21c21ac3a26eee85a152784ab540d9b2a2100a",
+          "size_bytes": 272481
+        },
+        {
+          "path": "inputs.json",
+          "sha256": "7be20015ffb1888d467eef8e84752af4af68aa15819ee283e0dc51e0c868a67f",
+          "size_bytes": 1414
+        },
+        {
+          "path": "models/baseline.json",
+          "sha256": "e32c7a61dfd36ed85046e6c01fd5cb9be3b2311b9e898a82ac3015e20b0948b0",
+          "size_bytes": 11889
+        },
+        {
+          "path": "models/candidate.json",
+          "sha256": "9decfc0bb41574e00aab1977b054b1e8c03447594667a1ee46a1ce74fb14acce",
+          "size_bytes": 46262
+        },
+        {
+          "path": "predictions/baseline/indy_20160916_01.npz",
+          "sha256": "44c86d188948d35049899c4aeba09f6d5be72924548cbcabe0a126d4936df551",
+          "size_bytes": 79617
+        },
+        {
+          "path": "predictions/baseline/indy_20160921_01.npz",
+          "sha256": "d57cd1b8bad7c9daa6e88cfbc09cdea47d86bfb5c53044be067d7c29ad077583",
+          "size_bytes": 79609
+        },
+        {
+          "path": "predictions/baseline/indy_20160927_04.npz",
+          "sha256": "4a29a28f2fa51d6d718303f3ac58d68e83a91e711ea7209a4b47ecd59266ea20",
+          "size_bytes": 79596
+        },
+        {
+          "path": "predictions/candidate/indy_20160916_01.npz",
+          "sha256": "d427b951b383923af67c9595ece8edb2903a89e7c100699220073d6de8ee76d8",
+          "size_bytes": 79504
+        },
+        {
+          "path": "predictions/candidate/indy_20160921_01.npz",
+          "sha256": "8adb072e9647ae2006c7336e12b65120ad34722375ce07675498ecbf22a748ee",
+          "size_bytes": 79476
+        },
+        {
+          "path": "predictions/candidate/indy_20160927_04.npz",
+          "sha256": "ba519535f83f52be8d071fb22e94dd684d478ff1b8f0126f3c7b4f8b27510e1a",
+          "size_bytes": 79480
+        },
+        {
+          "path": "protocol.json",
+          "sha256": "c7d24fbde2bd727247fb4415d134d10761b3ab204bb4f3af3015dbda02488af9",
+          "size_bytes": 7862
+        },
+        {
+          "path": "source-training.npz",
+          "sha256": "e5c59b477e25f5394ebddc62a502e16ca193b3efae4e9a2977f7d98dbc765056",
+          "size_bytes": 319313
+        }
+      ],
+      "model_checks": {
+        "baseline": {
+          "feature_mean_max_abs_error": 0.0,
+          "feature_scale_max_abs_error": 0.0,
+          "n_training_rows": 4684,
+          "normalized_optimality_residual": 3.1711854746006184e-15,
+          "target_mean_max_abs_error": 0.0
+        },
+        "candidate": {
+          "feature_mean_max_abs_error": 0.0,
+          "feature_scale_max_abs_error": 0.0,
+          "n_training_rows": 4684,
+          "normalized_optimality_residual": 1.3500395885415615e-15,
+          "target_mean_max_abs_error": 0.0
+        }
+      },
+      "normal_equation_residual_tolerance": 1e-09,
+      "pooled": {
+        "baseline_rmse": 102.59761451619941,
+        "candidate_rmse": 90.5103019829578,
+        "delta": -12.087312533241615,
+        "n_samples": 14052
+      },
+      "protocol_sha256": "c7d24fbde2bd727247fb4415d134d10761b3ab204bb4f3af3015dbda02488af9",
+      "scope": "Retained-array prediction reconstruction and independent scoring; no refit or raw-recording extraction verification.",
+      "sessions": [
+        {
+          "baseline_rmse": 91.0270337701352,
+          "candidate_rmse": 76.87472608694064,
+          "delta": -14.152307683194564,
+          "n_expected": 4684,
+          "prediction_max_abs_error": {
+            "baseline": 0.0,
+            "candidate": 0.0
+          },
+          "session_id": "indy_20160916_01"
+        },
+        {
+          "baseline_rmse": 112.25232524734615,
+          "candidate_rmse": 95.60884612801654,
+          "delta": -16.643479119329612,
+          "n_expected": 4684,
+          "prediction_max_abs_error": {
+            "baseline": 0.0,
+            "candidate": 0.0
+          },
+          "session_id": "indy_20160921_01"
+        },
+        {
+          "baseline_rmse": 103.40360783269915,
+          "candidate_rmse": 97.59902318294863,
+          "delta": -5.804584649750524,
+          "n_expected": 4684,
+          "prediction_max_abs_error": {
+            "baseline": 0.0,
+            "candidate": 0.0
+          },
+          "session_id": "indy_20160927_04"
+        }
+      ],
+      "status": "passed"
+    },
+    "comparator_source_digest": "95d50f159a4ac854fb0d7f7bb3e7282e7fa7ca7ec1a20b526dd2d20e9ea79a83",
+    "evaluation_fingerprint": "beb3f4d621f2263ec58e09f778bde8c9f9e2e15ab4125430b395ded6b1e135d3",
+    "excluded_counts": {
+      "baseline": 0,
+      "candidate": 0,
+      "evaluation": 9
+    },
+    "input_files": [
+      {
+        "md5": "ef6a95c5a1a8d2126b90f5be0505e398",
+        "name": "indy_20160915_01.mat",
+        "role": "train",
+        "session_id": "indy_20160915_01",
+        "sha256": "76175e5bf851c123af29178fa7c483588e911a000615438bff97d6f2f2591408",
+        "size_bytes": 106555127,
+        "url": "https://zenodo.org/api/records/3854034/files/indy_20160915_01.mat/content"
+      },
+      {
+        "md5": "5587d27f46efa3c09a7f589f2addf3a9",
+        "name": "indy_20160916_01.mat",
+        "role": "evaluation",
+        "session_id": "indy_20160916_01",
+        "sha256": "37cadfec74f132633b38b772352c6b8a0978cdff69893add9c283f0a6bd0dc3a",
+        "size_bytes": 124026785,
+        "url": "https://zenodo.org/api/records/3854034/files/indy_20160916_01.mat/content"
+      },
+      {
+        "md5": "788a0fc779bdfffa8388b1108e1d1ce5",
+        "name": "indy_20160921_01.mat",
+        "role": "evaluation",
+        "session_id": "indy_20160921_01",
+        "sha256": "7f71b28f3a210afe8ef28dff60c9c277f61423550c69d3cfb80aaa3cd3790441",
+        "size_bytes": 109152855,
+        "url": "https://zenodo.org/api/records/3854034/files/indy_20160921_01.mat/content"
+      },
+      {
+        "md5": "c7f84c83f10494b34ec836ed2b3c9d58",
+        "name": "indy_20160927_04.mat",
+        "role": "evaluation",
+        "session_id": "indy_20160927_04",
+        "sha256": "3882359c67310c2f72fcc88400d64c9cfe42f2d67cd1006161a13466f6b41b82",
+        "size_bytes": 120313205,
+        "url": "https://zenodo.org/api/records/3854034/files/indy_20160927_04.mat/content"
+      }
+    ],
+    "limitations": [
+      "One macaque; physical reaching, not a Neuralink participant or attempted cursor control.",
+      "Current-bin versus history models deliberately differ in input history and parameter count; no isolated causal attribution.",
+      "Offline reconstruction of measured movement is not closed-loop BCI efficacy or deployment validation.",
+      "No threshold for meaningful or statistically significant degradation is justified here; raw signed deltas are descriptive."
+    ],
+    "models": {
+      "baseline": {
+        "history_bins": 1,
+        "model_id": "ridge-current-bin-v1",
+        "n_source_rows": 4684,
+        "sha256": "e32c7a61dfd36ed85046e6c01fd5cb9be3b2311b9e898a82ac3015e20b0948b0"
+      },
+      "candidate": {
+        "history_bins": 4,
+        "model_id": "ridge-four-bin-history-v1",
+        "n_source_rows": 4684,
+        "sha256": "9decfc0bb41574e00aab1977b054b1e8c03447594667a1ee46a1ce74fb14acce"
+      }
+    },
+    "pooled": {
+      "baseline_rmse": 102.59761451619941,
+      "candidate_rmse": 90.5103019829578,
+      "delta": -12.087312533241615,
+      "n_samples": 14052
+    },
+    "producer_sources": {
+      "audit.py": "cd684b371c8b3c052df891c83406c4eb428a43a67823df4eedb7303304a6c72d",
+      "data.py": "e2ef9bedb8a0e13bae2d71ddde20932cda1295a397b5fa69e5cd38e882d2fc9e",
+      "model.py": "2d26ffc4ef748e5528a248916f00babfc159b7e35849860cb3a473d56c6627bf",
+      "run.py": "458ef99d40d9c905d63988542804e0fc35302dee23dfc315d87b35afd08d1360"
+    },
+    "protocol_sha256": "c7d24fbde2bd727247fb4415d134d10761b3ab204bb4f3af3015dbda02488af9",
+    "scoring_reproduction": "passed",
+    "sessions": [
+      {
+        "baseline_rmse": 103.40360783269914,
+        "candidate_rmse": 97.59902318294863,
+        "delta": -5.80458464975051,
+        "issues": [],
+        "n_expected": 4684,
+        "n_scored": 4684,
+        "regression": null,
+        "session_id": "indy_20160927_04",
+        "status": "valid"
+      },
+      {
+        "baseline_rmse": 91.02703377013519,
+        "candidate_rmse": 76.87472608694065,
+        "delta": -14.152307683194536,
+        "issues": [],
+        "n_expected": 4684,
+        "n_scored": 4684,
+        "regression": null,
+        "session_id": "indy_20160916_01",
+        "status": "valid"
+      },
+      {
+        "baseline_rmse": 112.25232524734615,
+        "candidate_rmse": 95.60884612801654,
+        "delta": -16.643479119329612,
+        "issues": [],
+        "n_expected": 4684,
+        "n_scored": 4684,
+        "regression": null,
+        "session_id": "indy_20160921_01",
+        "status": "valid"
+      }
+    ],
+    "source_revision": "ff10e82dda29e5319aea5fe98c866a915aa98706",
+    "source_training_bundle_sha256": "e5c59b477e25f5394ebddc62a502e16ca193b3efae4e9a2977f7d98dbc765056",
+    "status": "complete",
+    "training_rows": 4684
+  },
+  "test_counts": {
+    "hosted_optional_arrow_skipped": 2,
+    "hosted_passed": 97,
+    "hosted_public_producer_skips": 0,
+    "hosted_total": 99
+  }
+}

@@ -1,6 +1,6 @@
 # Workflow
 
-Status: proposed user experience. Neuralink's internal evaluator, experiment tracker, and review interfaces are not known to us.
+Status: the Python integration point, local report, and saved-baseline synthetic example are implemented and checked as recorded in [Validation](VALIDATION.md). A separate public-recording producer has also exported fixed predictions into the same comparison/report path, with independent audit and scoring reproduction recorded in [Public demonstration results](public-demo/RESULTS.md). The reusable pinned hook passed its own local and hosted [validation](PINNED-VALIDATION.md). The redesigned report passed the browser and hosted checks in [Report interface](REPORT-UI.md). The workflow below remains a proposed fit for Neuralink; its internal evaluator, experiment tracker, and review interfaces are unknown.
 
 ## Fit the existing model-change loop
 
@@ -21,15 +21,24 @@ Repeated comparisons belong to a declared development regression set. They do no
 
 ## One-time integration
 
-An engineer maps the current evaluator's session/sample keys and two-dimensional predictions to the small table contract. The evaluation table supplies the reference labels and fixed eligible set. The mapping also captures available run and configuration identities automatically.
+An engineer maps the current evaluator's session/sample keys and two-dimensional predictions to the small table contract. Both constructors accept `columns={"canonical_name": "source_name"}` for explicit renaming. The evaluation table supplies the reference labels and fixed eligible set. The integration code can pass run/configuration metadata already emitted by the evaluator through `provenance`; the workbench does not discover that metadata automatically.
 
-The engineer selects a baseline output bundle and fixes the evaluation identity and error tolerance in versioned configuration. If the evaluator does not retain keyed predictions, it must first add an output export. This is real setup work; the public evidence does not tell us whether Neuralink already has that output.
+The engineer exports an `EvaluationSet` and baseline `PredictionSet` while running the baseline's actual evaluation. `PinnedComparison.create(reference_dir, evaluation=..., baseline=..., prediction_columns=..., tolerance=...)` persists them together with fixed reporting settings. It rejects incomplete baseline coverage and refuses any existing reference directory. New settings or a new evaluation set require an explicit new pin.
 
-Finally, add the comparison call at evaluation completion and save its artifacts in the job's existing output location. A framework-specific callback, new experiment tracker, and new UI destination are unnecessary.
+At evaluator startup, `PinnedComparison.load(reference_dir)` verifies the pin's content hashes and configuration. At evaluation completion, call:
+
+```python
+result = check.compare(candidate_outputs, evaluation=current_evaluation,
+    run_id=run_id, output_dir=job_dir / "session-regressions", provenance=run_metadata)
+```
+
+`current_evaluation` is built from the job's actual labels, keys, timestamps, eligibility, and declared semantics, independently of the pin. It is mandatory. A mismatch fails before output creation, with an instruction to create a new pin; a stale reference is never rebound to changed labels. This detects incompatible declarations and data, not a producer that falsely declares its inputs. The stored column mapping applies only to candidate outputs; it does not discover an evaluator's labels or sample identity.
+
+The returned dictionary retains `result["sessions"]` and `result["complete"]`. Reports appear beside the job's existing artifacts, with pin identity recorded in candidate provenance. The original low-level API remains available. No framework-specific callback, experiment tracker, or UI destination is required.
 
 ## Recurring experience
 
-The engineer runs the same candidate evaluation command as before. Baseline predictions are reused. The comparison appears beside the ordinary results without a second model run or manual file collection.
+After that integration, the engineer runs the same candidate evaluation command as before. Saved baseline predictions are reused. The comparison appears beside the ordinary results without a second model run or manual file collection.
 
 The first report view answers:
 
@@ -39,11 +48,27 @@ The first report view answers:
 
 Sort valid sessions by descending candidate-minus-baseline RMSE in velocity units, with invalid sessions prominently listed. Keep the full table available. A pooled score is secondary context. When no session exceeds tolerance, say so without labeling the candidate safe or ready to ship.
 
-A session selection opens its detail within the same report. The evidence bundle allows recomputation of the comparison. Users return to their existing evaluator when they need to regenerate predictions or investigate model internals.
+A session-row link selects its evidence in the adjacent pane, or in the stacked pane on narrow screens. The selected session has a direct URL fragment; native anchors keep every session accessible without JavaScript. Supporting samples and full provenance remain available in disclosures. See [Report interface](REPORT-UI.md) for the interaction and evidence-compatibility contract. `reproduce(bundle_dir)` verifies the saved artifacts and recomputes the comparison without loading models. Users return to their existing evaluator when they need to regenerate predictions or investigate model internals.
+
+## Implemented example
+
+From the repository root:
+
+```sh
+PYTHONPATH=src python3 examples/basic_comparison.py --output-dir runs/demo --initialize
+PYTHONPATH=src python3 examples/basic_comparison.py --output-dir runs/demo
+PYTHONPATH=src python3 examples/basic_comparison.py --output-dir runs/demo --candidate-id candidate-002
+```
+
+Start with a fresh example directory. Initialization stores the evaluation, baseline, prediction column mapping, and tolerances under `runs/demo/pinned/`. The two ordinary candidate commands load the same reference and save reports at `runs/demo/<candidate-id>/session-regressions/report.html`. Each prints its report path and verifies score reproduction. Existing references and comparison directories are not overwritten.
+
+The fixture uses the producer's `recording`, `bin`, `vx`, and `vy` fields. They are mapped once at initialization. The normal candidate path constructs its actual evaluation identity and predictions, then adds one comparison call. It contains no reference creation, baseline prediction construction, or repeated settings entry. This verifies a concrete integration pattern, not integration with Neuralink's evaluator.
+
+The completed [public-recording demonstration](public-demo/RESULTS.md) supplies real neural-recording predictions through the same interface. Its separate producer fits two fixed ridge models on one source recording and exports predictions for three evaluation sessions before scoring. All three candidate session RMSE values were lower, and `tolerance=None` preserves descriptive deltas. The saved bundle supports scoring reproduction without rerunning either model; see the [reproduction instructions](public-demo/REPRODUCE.md). This demonstrates the output contract on public recordings, not adoption by an intended engineer.
 
 ## Friction budget
 
-These are acceptance goals, not performance claims:
+These goals are checked in the synthetic workflow, with browser interaction evidence in [Validation](VALIDATION.md). They are not measurements of setup effort, usability, or adoption by an intended engineer:
 
 - After setup, zero additional manual commands to produce a comparison.
 - One action to open the report and one to inspect a session.
@@ -52,4 +77,4 @@ These are acceptance goals, not performance claims:
 - No new server, login, data migration, or dependency on Neuralink's Electron fork.
 - No silent baseline replacement, evaluation-set changes, or deletion of invalid sessions in pursuit of convenience.
 
-Measure this flow in the public demonstration. Verify the actual integration effort with an engineer before claiming it fits Neuralink's workflow. The key unknowns are retained prediction granularity, stable sample identities, and how the team names a reference run and evaluation set.
+Browser inspection of the synthetic report confirmed that the session table is visible on opening and a single session-row selection reaches the paired error trace. The public-recording demonstration uses the same report structure. Verify actual integration effort with an engineer before claiming it fits Neuralink's workflow. The key unknowns are retained prediction granularity, stable sample identities, and how the team names a reference run and evaluation set.

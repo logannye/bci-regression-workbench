@@ -1,0 +1,395 @@
+{
+  "browser": "ChatGPT in-app browser",
+  "browser_cases": [
+    {
+      "fixture": "pooled-improves-session-regresses",
+      "injected_elements": 0,
+      "invalid": 0,
+      "page_overflow": false,
+      "rows": 4,
+      "viewport": [
+        1265,
+        712
+      ],
+      "visible_panels": 1
+    },
+    {
+      "fixture": "invalid-missing-nonfinite-and-global",
+      "injected_elements": 0,
+      "invalid": 2,
+      "page_overflow": false,
+      "rows": 4,
+      "viewport": [
+        1265,
+        712
+      ],
+      "visible_panels": 1
+    },
+    {
+      "fixture": "global-only-incomplete",
+      "injected_elements": 0,
+      "invalid": 0,
+      "page_overflow": false,
+      "rows": 4,
+      "viewport": [
+        1265,
+        712
+      ],
+      "visible_panels": 1
+    },
+    {
+      "fixture": "descriptive-mixed-signs",
+      "injected_elements": 0,
+      "invalid": 0,
+      "page_overflow": false,
+      "rows": 4,
+      "viewport": [
+        1265,
+        712
+      ],
+      "visible_panels": 1
+    },
+    {
+      "fixture": "numeric-tolerance-boundaries",
+      "injected_elements": 0,
+      "invalid": 0,
+      "page_overflow": false,
+      "rows": 3,
+      "viewport": [
+        1265,
+        712
+      ],
+      "visible_panels": 1
+    },
+    {
+      "fixture": "singleton-zero-error",
+      "injected_elements": 0,
+      "invalid": 0,
+      "page_overflow": false,
+      "rows": 1,
+      "viewport": [
+        1265,
+        712
+      ],
+      "visible_panels": 1
+    },
+    {
+      "fixture": "long-hostile-identifiers",
+      "injected_elements": 0,
+      "invalid": 0,
+      "page_overflow": false,
+      "rows": 1,
+      "viewport": [
+        1265,
+        712
+      ],
+      "visible_panels": 1
+    },
+    {
+      "fixture": "public-saved-output-replay",
+      "injected_elements": 0,
+      "invalid": 0,
+      "page_overflow": false,
+      "rows": 3,
+      "viewport": [
+        1265,
+        712
+      ],
+      "visible_panels": 1
+    },
+    {
+      "fixture": "pooled-improves-session-regresses",
+      "injected_elements": 0,
+      "invalid": 0,
+      "page_overflow": false,
+      "rows": 4,
+      "viewport": [
+        390,
+        844
+      ],
+      "visible_panels": 1
+    },
+    {
+      "fixture": "invalid-missing-nonfinite-and-global",
+      "injected_elements": 0,
+      "invalid": 2,
+      "page_overflow": false,
+      "rows": 4,
+      "viewport": [
+        390,
+        844
+      ],
+      "visible_panels": 1
+    },
+    {
+      "fixture": "global-only-incomplete",
+      "injected_elements": 0,
+      "invalid": 0,
+      "page_overflow": false,
+      "rows": 4,
+      "viewport": [
+        390,
+        844
+      ],
+      "visible_panels": 1
+    },
+    {
+      "fixture": "descriptive-mixed-signs",
+      "injected_elements": 0,
+      "invalid": 0,
+      "page_overflow": false,
+      "rows": 4,
+      "viewport": [
+        390,
+        844
+      ],
+      "visible_panels": 1
+    },
+    {
+      "fixture": "numeric-tolerance-boundaries",
+      "injected_elements": 0,
+      "invalid": 0,
+      "page_overflow": false,
+      "rows": 3,
+      "viewport": [
+        390,
+        844
+      ],
+      "visible_panels": 1
+    },
+    {
+      "fixture": "singleton-zero-error",
+      "injected_elements": 0,
+      "invalid": 0,
+      "page_overflow": false,
+      "rows": 1,
+      "viewport": [
+        390,
+        844
+      ],
+      "visible_panels": 1
+    },
+    {
+      "fixture": "long-hostile-identifiers",
+      "injected_elements": 0,
+      "invalid": 0,
+      "page_overflow": false,
+      "rows": 1,
+      "viewport": [
+        390,
+        844
+      ],
+      "visible_panels": 1
+    },
+    {
+      "fixture": "public-saved-output-replay",
+      "injected_elements": 0,
+      "invalid": 0,
+      "page_overflow": false,
+      "rows": 3,
+      "viewport": [
+        390,
+        844
+      ],
+      "visible_panels": 1
+    },
+    {
+      "fixture": "pooled-improves-session-regresses",
+      "injected_elements": 0,
+      "invalid": 0,
+      "page_overflow": false,
+      "rows": 4,
+      "viewport": [
+        320,
+        740
+      ],
+      "visible_panels": 1
+    },
+    {
+      "fixture": "invalid-missing-nonfinite-and-global",
+      "injected_elements": 0,
+      "invalid": 2,
+      "page_overflow": false,
+      "rows": 4,
+      "viewport": [
+        320,
+        740
+      ],
+      "visible_panels": 1
+    },
+    {
+      "fixture": "global-only-incomplete",
+      "injected_elements": 0,
+      "invalid": 0,
+      "page_overflow": false,
+      "rows": 4,
+      "viewport": [
+        320,
+        740
+      ],
+      "visible_panels": 1
+    },
+    {
+      "fixture": "descriptive-mixed-signs",
+      "injected_elements": 0,
+      "invalid": 0,
+      "page_overflow": false,
+      "rows": 4,
+      "viewport": [
+        320,
+        740
+      ],
+      "visible_panels": 1
+    },
+    {
+      "fixture": "numeric-tolerance-boundaries",
+      "injected_elements": 0,
+      "invalid": 0,
+      "page_overflow": false,
+      "rows": 3,
+      "viewport": [
+        320,
+        740
+      ],
+      "visible_panels": 1
+    },
+    {
+      "fixture": "singleton-zero-error",
+      "injected_elements": 0,
+      "invalid": 0,
+      "page_overflow": false,
+      "rows": 1,
+      "viewport": [
+        320,
+        740
+      ],
+      "visible_panels": 1
+    },
+    {
+      "fixture": "long-hostile-identifiers",
+      "injected_elements": 0,
+      "invalid": 0,
+      "page_overflow": false,
+      "rows": 1,
+      "viewport": [
+        320,
+        740
+      ],
+      "visible_panels": 1
+    },
+    {
+      "fixture": "public-saved-output-replay",
+      "injected_elements": 0,
+      "invalid": 0,
+      "page_overflow": false,
+      "rows": 3,
+      "viewport": [
+        320,
+        740
+      ],
+      "visible_panels": 1
+    }
+  ],
+  "comparator_source_digest": "5c6a86d830784a9f4479c6f9da47990c2ac18ee35227e7a6dc36eacf9cfccaae",
+  "deep_link_reload": {
+    "selected": "session-02",
+    "visible": 1
+  },
+  "history": {
+    "hash": "#session-3",
+    "selected": "session-02"
+  },
+  "hosted_core_each": {
+    "discovered": 126,
+    "passed": 94,
+    "skipped": 32
+  },
+  "hosted_datarepo": {
+    "discovered": 126,
+    "passed": 96,
+    "skipped": 30
+  },
+  "hosted_run": "https://github.com/logannye/bci-regression-workbench/actions/runs/40750485414",
+  "hosted_tested_revision": "2b483b2c1656eb11d463bda8735771547999eb16",
+  "implementation_revision": "7ad88997c70e33997e10b062aff10729357b9210",
+  "keyboard_selection": {
+    "focus": "session-3-heading",
+    "outline": "solid",
+    "selected": "session-02"
+  },
+  "limits": [
+    "No model fit or inference was run.",
+    "No intended-engineer usability or internal Neuralink integration was evaluated.",
+    "No screen-reader or other-browser-engine validation was performed."
+  ],
+  "local_suite": {
+    "discovered": 126,
+    "passed": 117,
+    "skipped": 9
+  },
+  "long_list": {
+    "headingTop": 64.5,
+    "overflow": false,
+    "panePosition": "sticky",
+    "rowTop": 328.59375,
+    "selected": "session-10",
+    "viewportHeight": 712
+  },
+  "mobile_selection": {
+    "headingTop": 51.671875,
+    "overflow": false,
+    "paneOverflow": "visible",
+    "panelTop": 12.171875,
+    "selected": "indy_20160916_01",
+    "width": 390
+  },
+  "no_script": {
+    "enhanced": false,
+    "panels": 4,
+    "scripts": 0
+  },
+  "print_validation": "Static rules reviewed; actual print/PDF dialog not exercised.",
+  "public_replay": {
+    "n_expected": 14052,
+    "n_scored": 14052,
+    "original_bundle_unchanged": true,
+    "original_comparator_source_digest": "95d50f159a4ac854fb0d7f7bb3e7282e7fa7ca7ec1a20b526dd2d20e9ea79a83",
+    "original_manifest_sha256": "6a5106182911f446a0de3b3f1fb56c42904bf2cfedc228e41ad5fb7a984cc56e",
+    "result_equal_except_comparator_source_digest": true
+  },
+  "renderer_sha256": "7e60809d927a997acc548540611ea8bac3763f19f8dfa229383c9920de62d97d",
+  "report_tests_passed_per_environment": 14,
+  "tested_text_color_pairs": [
+    {
+      "background": "#ffffff",
+      "foreground": "#17212c",
+      "ratio": 16.275
+    },
+    {
+      "background": "#f7f8fa",
+      "foreground": "#586575",
+      "ratio": 5.593
+    },
+    {
+      "background": "#edf4fb",
+      "foreground": "#586575",
+      "ratio": 5.359
+    },
+    {
+      "background": "#edf4fb",
+      "foreground": "#255b91",
+      "ratio": 6.345
+    },
+    {
+      "background": "#edf4fb",
+      "foreground": "#9b392d",
+      "ratio": 6.276
+    }
+  ],
+  "unchanged_sources": {
+    "src/bci_regression/__init__.py": true,
+    "src/bci_regression/core.py": true,
+    "src/bci_regression/pinned.py": true,
+    "src/bci_regression/tables.py": true
+  }
+}
