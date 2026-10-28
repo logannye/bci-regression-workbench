@@ -4,9 +4,13 @@
 
 Call a small Python function at the end of an existing evaluation job. It compares saved two-dimensional velocity predictions on the same declared samples, writes a session-level RMSE report, and preserves the evidence needed to recompute it. Your evaluator continues to own model execution and data access.
 
-**Status:** the first implementation includes keyed comparison, a self-contained HTML report, CSV results, and scoring reproduction from a JSON bundle. The demonstration uses constructed predictions. No public neuroscience dataset or Neuralink integration has been evaluated.
+**Status: started, in progress.** The first implementation includes keyed comparison, a self-contained HTML report, CSV results, and scoring reproduction from a JSON bundle. The demonstration uses constructed predictions. No public neuroscience dataset or Neuralink integration has been evaluated.
 
-This is Logan Nye's independent open-source project, intended for presentation to Neuralink's BCI ML team. Neuralink's public [ML role](https://job-boards.greenhouse.io/neuralink/jobs/5663271003) includes model-update evaluation infrastructure; that establishes relevance, not a confirmed gap in its internal tools or endorsement of this project.
+An independent open-source project by Logan Nye, designed for Neuralink's BCI ML engineering team. (This is not an official Neuralink project or an implemented integration with its internal systems.)
+
+The intended user is a Neuralink BCI ML engineer reviewing a proposed decoder change to determine whether or not it is worth keeping. It is informed by Neuralink's public [ML role](https://job-boards.greenhouse.io/neuralink/jobs/5663271003), which explicitly mentions building evaluation infrastructure for model updates.
+
+> On the same recorded sessions, where did candidate B become WORSE than baseline A?
 
 ## Try the synthetic demonstration
 
@@ -24,6 +28,8 @@ The first invocation creates a pinned evaluation set and baseline. The second re
 This tradeoff checks the comparator's behavior. It is not a result about neural decoding performance.
 
 ## Add the comparison to an evaluation job
+
+Engineers on the BCI team can keep their model code, inference environment, data access, and evaluation command. They do not need to load a model into this tool. A one-time output mapping and pinned baseline enable a recurring path: run evaluation as usual, then open the comparison report. No new account, server, or dashboard is needed; it is meant to fit conveniently within their existing workflows with as few extra clicks as possible.
 
 Inputs are records keyed by `session_id` and `sample_id`. The evaluation table holds fixed targets and eligibility; each prediction bundle binds its outputs to that evaluation identity. Columns can be mapped once from the existing evaluator's names.
 
@@ -97,7 +103,11 @@ The core accepts record mappings directly and does not require a catalog migrati
 
 The single benefit is exposing reproducible session-level regressions in existing outputs. The tool does not train or run models, diagnose a biological cause, measure latency, or approve deployment. Producer-supplied metadata cannot independently establish causal inference or training/evaluation independence. Offline prediction error does not establish interactive BCI performance.
 
+## What will determine whether the project is practically useful
+
 Tests and the constructed demonstration are implementation checks. A frozen public-recording demonstration and validation with an intended engineer remain future work. No Neuralink data or model code is included.
+
+If the future public recordings contain physical reaching rather than attempted cursor movement, that demonstration will be described as an offline movement-decoding example, not a Neuralink participant evaluation. Deployment decisions remain outside this first iteration; any future expansion should depend on practical feedback from the ML engineering team.
 
 Run the standard-library checks with:
 
