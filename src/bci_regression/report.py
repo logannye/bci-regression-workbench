@@ -118,7 +118,8 @@ def _localization_window(samples: list[dict]) -> tuple[int, int] | None:
 
 
 def _error_trace(samples: list[dict], units: object, maximum: float, anchor: str,
-                 *, start: int = 0, title: str = "Paired error trace") -> str:
+                 *, start: int = 0, title: str = "Paired error trace",
+                 inferred_target: bool = False) -> str:
     if not samples:
         return '<p class="muted">No paired samples are available for this session.</p>'
     indices = _trace_indices(samples)
@@ -170,7 +171,7 @@ def _error_trace(samples: list[dict], units: object, maximum: float, anchor: str
         f'{"".join(ticks)}</div><svg viewBox="0 0 {width} {height}" '
         'preserveAspectRatio="none" role="img" '
         f'aria-labelledby="{anchor}-svg-title {anchor}-svg-description">'
-        f'<title id="{anchor}-svg-title">Paired Euclidean velocity error in evaluation sample order</title>'
+        f'<title id="{anchor}-svg-title">Paired Euclidean {"inferred-target vector" if inferred_target else "velocity"} error in evaluation sample order</title>'
         f'<desc id="{anchor}-svg-description">Sample order {start + 1:,} to {start + len(samples):,}. '
         f'Shared vertical range zero to {_number(maximum)} {_text(units)}. '
         'Baseline is gray and dashed; candidate is blue and solid.</desc>'
@@ -184,7 +185,8 @@ def _error_trace(samples: list[dict], units: object, maximum: float, anchor: str
 
 
 def _sample_preview(samples: list[dict], units: object, *, start: int = 0,
-                    total: int | None = None, localized: bool = False) -> str:
+                    total: int | None = None, localized: bool = False,
+                    inferred_target: bool = False) -> str:
     if not samples:
         return ""
     rows = []
@@ -208,25 +210,28 @@ def _sample_preview(samples: list[dict], units: object, *, start: int = 0,
         if localized else
         f'Showing {count:,} of {total:,} paired sample{"s" if total != 1 else ""} in evaluation order. '
     )
+    components = "x, y" if inferred_target else "vx, vy"
+    values_label = "Vectors" if inferred_target else "Velocities"
     return (
         '<details class="supporting-samples"><summary>Supporting samples '
         f'<span class="muted">· {count:,} / {total:,} {"window" if localized else "preview"}</span></summary>'
         '<div class="details-content">'
-        f'<p class="caption">{selection}Velocities and errors use {_text(units)}. '
+        f'<p class="caption">{selection}{values_label} and errors use {_text(units)}. '
         'Display values are rounded; timestamps retain the producer\'s convention. '
         'All samples and their identities remain in the saved scoring bundle.</p>'
         '<div class="table-scroll" tabindex="0" role="region" aria-label="Supporting sample table">'
         '<table class="sample-table"><thead><tr>'
         '<th scope="col">Sample ID</th><th scope="col">Timestamp</th>'
-        '<th scope="col">Target (vx, vy)</th><th scope="col">Baseline (vx, vy)</th>'
-        '<th scope="col">Candidate (vx, vy)</th><th scope="col">Baseline error</th>'
+        f'<th scope="col">{"Inferred target" if inferred_target else "Target"} ({components})</th>'
+        f'<th scope="col">Baseline ({components})</th>'
+        f'<th scope="col">Candidate ({components})</th><th scope="col">Baseline error</th>'
         '<th scope="col">Candidate error</th>'
         f'</tr></thead><tbody>{"".join(rows)}</tbody></table></div></div></details>'
     )
 
 
 def _session_evidence(samples: list[dict], units: object, maximum: float,
-                      anchor: str, delta: object) -> str:
+                      anchor: str, delta: object, *, inferred_target: bool = False) -> str:
     """Put a reproducible investigation window beside the unchanged session result."""
     width = min(_LOCALIZATION_SAMPLES, len(samples))
     window = _localization_window(samples)
@@ -256,8 +261,8 @@ def _session_evidence(samples: list[dict], units: object, maximum: float,
             f'<h3>{"No added-error window" if usable else "Localization unavailable"}</h3>'
             f'<p class="caption">{message} Session scores and flags are unchanged.</p>'
             f'{method}</section>'
-            + _error_trace(samples, units, maximum, anchor)
-            + _sample_preview(samples, units)
+            + _error_trace(samples, units, maximum, anchor, inferred_target=inferred_target)
+            + _sample_preview(samples, units, inferred_target=inferred_target)
         )
     start, stop = window
     selected = samples[start:stop]
@@ -281,11 +286,12 @@ def _session_evidence(samples: list[dict], units: object, maximum: float,
         f'<p class="caption">{context}</p>'
         f'<dl class="window-references">{"".join(references)}</dl>'
         + _error_trace(selected, units, maximum, anchor + "-window", start=start,
-                       title="Paired errors in selected window")
-        + _sample_preview(selected, units, start=start, total=len(samples), localized=True)
+                       title="Paired errors in selected window", inferred_target=inferred_target)
+        + _sample_preview(selected, units, start=start, total=len(samples), localized=True,
+                          inferred_target=inferred_target)
         + method + '</section><details class="full-session-trace"><summary>Full-session trace</summary>'
         '<div class="details-content">'
-        + _error_trace(samples, units, maximum, anchor)
+        + _error_trace(samples, units, maximum, anchor, inferred_target=inferred_target)
         + '</div></details>'
     )
 
@@ -526,6 +532,22 @@ def render_report(result: dict) -> str:
     embedded into executable source. All display rounding is presentation only.
     """
     evaluation = result.get("evaluation", {})
+    target_kind = evaluation.get("target_kind", "velocity")
+    if target_kind not in ("velocity", "inferred_cursor_to_target_vector"):
+        raise ValueError("Unsupported report target_kind")
+    inferred_target = target_kind == "inferred_cursor_to_target_vector"
+    target_notice = (
+        '<p class="description target-semantics"><strong>Inferred cursor-to-target vectors.</strong> '
+        'Targets are an inferred movement proxy, not measured intended velocities. '
+        'Lower error means closer agreement with this proxy; this offline comparison '
+        'does not establish better live BCI control.</p>'
+        if inferred_target else ""
+    )
+    target_caption = (
+        '<p class="caption target-semantics">Error against inferred cursor-to-target vectors, '
+        'in the declared source coordinate units.</p>' if inferred_target else ""
+    )
+    x_field, y_field = ("x", "y") if inferred_target else ("vx", "vy")
     baseline = result.get("baseline", {})
     candidate = result.get("candidate", {})
     units = evaluation.get("units", "unspecified units")
@@ -593,7 +615,8 @@ def render_report(result: dict) -> str:
         )
         session_samples = samples_by_session.get(session_id, []) if valid else []
         evidence = (
-            _session_evidence(session_samples, units, maximum, anchor, delta)
+            _session_evidence(session_samples, units, maximum, anchor, delta,
+                              inferred_target=inferred_target)
             if valid else
             '<p>This session was not scored as a valid pair. Its missing or incompatible '
             'evidence remains part of the comparison.</p>'
@@ -606,6 +629,7 @@ def render_report(result: dict) -> str:
             f'<div class="detail-change{ " delta-up" if (_finite(delta) or 0) > 0 else ""}">'
             f'{_metric(delta, signed=True)} <span class="unit">{_text(units)}</span></div>'
             '<p class="change-label">Candidate − baseline RMSE · positive means higher error</p>'
+            f'{target_caption}'
             '<dl class="detail-values"><div><dt>Baseline RMSE</dt>'
             f'<dd>{_metric(baseline_rmse)}</dd></div><div><dt>Candidate RMSE</dt>'
             f'<dd>{_metric(candidate_rmse)}</dd></div><div><dt>Scored / expected</dt>'
@@ -643,7 +667,7 @@ def render_report(result: dict) -> str:
         f'<strong>{_text(baseline.get("run_id", ""))}</strong></div><div>Candidate'
         f'<strong>{_text(candidate.get("run_id", ""))}</strong></div><div>Evaluation'
         f'<strong>{_text(evaluation.get("evaluation_id", ""))}</strong></div></div>'
-        f'{description_html}</header><section class="status{" incomplete" if not complete else ""}" '
+        f'{description_html}{target_notice}</header><section class="status{" incomplete" if not complete else ""}" '
         'aria-label="Comparison status"><div class="status-heading">'
         f'<div><div class="outcome">{_outcome(sessions, complete)}</div><p>{flag_summary}</p></div>'
         f'<div class="coverage"><strong>{completeness}</strong><br>'
@@ -668,8 +692,8 @@ def render_report(result: dict) -> str:
         '<details class="evidence" id="comparison-evidence"><summary>Evaluation identity &amp; scoring details</summary>'
         '<div class="details-content"><section aria-labelledby="metric-heading">'
         '<h2 id="metric-heading">Metric and reproduction</h2>'
-        '<p class="metric"><code>Vector RMSE = sqrt(mean((predicted_vx − target_vx)² '
-        '+ (predicted_vy − target_vy)²))</code></p>'
+        f'<p class="metric"><code>Vector RMSE = sqrt(mean((predicted_{x_field} − target_{x_field})² '
+        f'+ (predicted_{y_field} − target_{y_field})²))</code></p>'
         f'<p class="caption">RMSE and its change use {_text(units)}. Numerical reproduction tolerance: '
         f'{_number(result.get("numerical_tolerance"))} {_text(units)}. Display rounding does not change '
         'scores, sorting, or regression flags; the JSON bundle and CSV retain the recorded scores.</p>'

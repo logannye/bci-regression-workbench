@@ -21,6 +21,24 @@ VERSION = "0.1.0"
 FORMAT_VERSION = 1
 
 
+def _target_kind(value):
+    if not isinstance(value, str) or value not in ("velocity", "inferred_cursor_to_target_vector"):
+        raise ValueError("target_kind must be velocity or inferred_cursor_to_target_vector")
+    return value
+
+
+def _with_target_kind(payload, target_kind):
+    # Keep existing velocity bundle identities canonical and byte-compatible.
+    if _target_kind(target_kind) != "velocity":
+        payload["target_kind"] = target_kind
+    return payload
+
+
+def _metric_name(target_kind):
+    return ("velocity_vector_rmse" if _target_kind(target_kind) == "velocity"
+            else "inferred_target_vector_rmse")
+
+
 def _text(value: Any, name: str) -> str:
     if not isinstance(value, str) or not value.strip():
         raise ValueError(f"{name} must be a nonempty string")
@@ -102,15 +120,18 @@ class EvaluationSet:
     source_ref: str | None
     records: tuple[dict, ...]
     fingerprint: str
+    target_kind: str = "velocity"
 
     @classmethod
     def from_records(cls, records, *, evaluation_id, units, coordinates,
-                     horizon_ms=0, purpose="development", source_ref=None, columns=None):
+                     horizon_ms=0, purpose="development", source_ref=None, columns=None,
+                     target_kind="velocity"):
         metadata = dict(evaluation_id=_text(evaluation_id, "evaluation_id"),
                         units=_text(units, "units"), coordinates=_text(coordinates, "coordinates"),
                         horizon_ms=_nonnegative(horizon_ms, "horizon_ms"),
                         purpose=_text(purpose, "purpose"),
                         source_ref=None if source_ref is None else _text(source_ref, "source_ref"))
+        _with_target_kind(metadata, target_kind)
         normalized, seen = [], set()
         for row in table_records(records, columns=columns):
             sid = _text(row.get("session_id"), "session_id")
@@ -138,9 +159,10 @@ class EvaluationSet:
         return cls(**metadata, records=tuple(normalized), fingerprint=_digest(payload))
 
     def _payload(self):
-        return dict(evaluation_id=self.evaluation_id, units=self.units,
+        return _with_target_kind(dict(evaluation_id=self.evaluation_id, units=self.units,
                     coordinates=self.coordinates, horizon_ms=self.horizon_ms,
-                    purpose=self.purpose, source_ref=self.source_ref, records=list(self.records))
+                    purpose=self.purpose, source_ref=self.source_ref, records=list(self.records)),
+                    self.target_kind)
 
     def save(self, path):
         if _digest(self._payload()) != self.fingerprint:
@@ -175,6 +197,7 @@ class PredictionSet:
     provenance: dict
     records: tuple[dict, ...]
     digest: str
+    target_kind: str = "velocity"
 
     @classmethod
     def from_records(cls, records, *, run_id, evaluation, provenance=None, columns=None):
@@ -185,6 +208,7 @@ class PredictionSet:
                         units=evaluation.units, coordinates=evaluation.coordinates,
                         horizon_ms=evaluation.horizon_ms,
                         provenance=_safe(provenance or {}))
+        _with_target_kind(metadata, evaluation.target_kind)
         if not isinstance(metadata["provenance"], dict):
             raise ValueError("provenance must be a mapping")
         normalized = []
@@ -196,9 +220,9 @@ class PredictionSet:
         return cls(**metadata, records=tuple(normalized), digest=_digest(payload))
 
     def _payload(self):
-        return dict(run_id=self.run_id, evaluation_fingerprint=self.evaluation_fingerprint,
+        return _with_target_kind(dict(run_id=self.run_id, evaluation_fingerprint=self.evaluation_fingerprint,
                     units=self.units, coordinates=self.coordinates, horizon_ms=self.horizon_ms,
-                    provenance=self.provenance, records=list(self.records))
+                    provenance=self.provenance, records=list(self.records)), self.target_kind)
 
     def save(self, path):
         if _digest(self._payload()) != self.digest:
@@ -215,6 +239,10 @@ class PredictionSet:
         if not isinstance(payload, dict) or _digest(payload) != doc.get("digest"):
             raise ValueError("Prediction content digest mismatch")
         required = {"run_id", "evaluation_fingerprint", "units", "coordinates", "horizon_ms", "provenance", "records"}
+        if "target_kind" in payload:
+            if _target_kind(payload["target_kind"]) == "velocity":
+                raise ValueError("Prediction bundle is not canonical: omit default target_kind")
+            required.add("target_kind")
         if set(payload) != required or not isinstance(payload["records"], list):
             raise ValueError("Malformed prediction bundle")
         for name in ("run_id", "evaluation_fingerprint", "units", "coordinates"):
@@ -262,7 +290,7 @@ def compare(evaluation, baseline, candidate, *, tolerance=None, numerical_tolera
             output_dir=None, description="") -> dict:
     """Compare fixed outputs; incomplete rows stay visible and no model is executed.
 
-    ``tolerance`` is an absolute delta in the declared velocity units. None means
+    ``tolerance`` is an absolute delta in the declared target units. None means
     descriptive deltas only. ``output_dir`` must not exist; artifacts are never overwritten.
     """
     if not isinstance(evaluation, EvaluationSet) or not all(isinstance(p, PredictionSet) for p in (baseline, candidate)):
@@ -280,7 +308,7 @@ def compare(evaluation, baseline, candidate, *, tolerance=None, numerical_tolera
             identity_issues.append(f"{name}: prediction content digest mismatch")
         if pred.evaluation_fingerprint != evaluation.fingerprint:
             identity_issues.append(f"{name}: evaluation-set identity mismatch")
-        for field in ("units", "coordinates", "horizon_ms"):
+        for field in ("units", "coordinates", "horizon_ms", "target_kind"):
             if getattr(pred, field) != getattr(evaluation, field):
                 identity_issues.append(f"{name}: {field} mismatch")
     bi, be, bg, bx = _index(baseline, evaluation, "baseline")
@@ -346,6 +374,9 @@ def compare(evaluation, baseline, candidate, *, tolerance=None, numerical_tolera
         issues=list(dict.fromkeys(global_issues)),
         excluded_counts=dict(evaluation=sum(not r["eligible"] for r in evaluation.records), baseline=bx, candidate=cx),
         sessions=results, pooled=pooled, samples=observations)
+    _with_target_kind(report["evaluation"], evaluation.target_kind)
+    if evaluation.target_kind != "velocity":
+        report["metric"] = _metric_name(evaluation.target_kind)
     if output_dir is not None:
         _save_comparison(Path(output_dir), evaluation, baseline, candidate, report)
     return report
@@ -374,7 +405,7 @@ def _save_comparison(destination, evaluation, baseline, candidate, result):
         files = {p.name: hashlib.sha256(p.read_bytes()).hexdigest() for p in staging.iterdir()}
         _write_json(staging / "manifest.json", dict(format_version=FORMAT_VERSION,
             comparator_version=VERSION, comparator_source_digest=result["comparator_source_digest"],
-            metric="velocity_vector_rmse", tolerance=result["tolerance"],
+            metric=_metric_name(evaluation.target_kind), tolerance=result["tolerance"],
             numerical_tolerance=result["numerical_tolerance"], description=result["description"],
             environment=dict(python=platform.python_version(), platform=platform.platform()), files=files))
         # Reserve rather than replace the destination, including an empty existing directory.
@@ -413,7 +444,10 @@ def reproduce(bundle_dir, *, output_dir=None) -> dict:
     for name, expected in files.items():
         if hashlib.sha256((root / name).read_bytes()).hexdigest() != expected:
             raise ValueError(f"Artifact content digest mismatch: {name}")
-    result = compare(EvaluationSet.load(root / "evaluation.json"),
+    evaluation = EvaluationSet.load(root / "evaluation.json")
+    if manifest.get("metric") != _metric_name(evaluation.target_kind):
+        raise ValueError("Manifest metric does not match the declared target kind")
+    result = compare(evaluation,
         PredictionSet.load(root / "baseline.json"), PredictionSet.load(root / "candidate.json"),
         tolerance=manifest["tolerance"], numerical_tolerance=manifest["numerical_tolerance"],
         description=manifest.get("description", ""))

@@ -1,0 +1,642 @@
+{
+  "schema_version": 1,
+  "date": "2026-10-28",
+  "experiment_source_revision": "ca4695da8e139643bc2baba2208a0609bd05b0e4",
+  "local_preflight": {
+    "discovered": 173,
+    "passed": 164,
+    "optional_skipped": 9,
+    "new_human_and_semantics_tests": 29,
+    "platform": "macOS arm64; Python 3.12.14; NumPy 2.2.6 OpenBLAS; SciPy 1.15.3"
+  },
+  "browser": {
+    "sessions": [
+      {
+        "size": {
+          "width": 1265,
+          "height": 712
+        },
+        "day": "0783",
+        "fragment": "#session-1",
+        "heading": "T11-day-0783",
+        "notice": "Error against inferred cursor-to-target vectors, in the declared source coordinate units.",
+        "overflow": false,
+        "top": 246.59375,
+        "visible": 1,
+        "window": "Scored samples 8,128\u20138,151 of 29,279 \u00b7 24 samples"
+      },
+      {
+        "size": {
+          "width": 1265,
+          "height": 712
+        },
+        "day": "0709",
+        "fragment": "#session-2",
+        "heading": "T11-day-0709",
+        "notice": "Error against inferred cursor-to-target vectors, in the declared source coordinate units.",
+        "overflow": false,
+        "top": 173.59375,
+        "visible": 1,
+        "window": "Scored samples 27,771\u201327,794 of 28,794 \u00b7 24 samples"
+      },
+      {
+        "size": {
+          "width": 1265,
+          "height": 712
+        },
+        "day": "0715",
+        "fragment": "#session-3",
+        "heading": "T11-day-0715",
+        "notice": "Error against inferred cursor-to-target vectors, in the declared source coordinate units.",
+        "overflow": false,
+        "top": 99.59375,
+        "visible": 1,
+        "window": "Scored samples 8,525\u20138,548 of 28,946 \u00b7 24 samples"
+      },
+      {
+        "size": {
+          "width": 1265,
+          "height": 712
+        },
+        "day": "0689",
+        "fragment": "#session-4",
+        "heading": "T11-day-0689",
+        "notice": "Error against inferred cursor-to-target vectors, in the declared source coordinate units.",
+        "overflow": false,
+        "top": 26.59375,
+        "visible": 1,
+        "window": "Scored samples 15,755\u201315,778 of 28,479 \u00b7 24 samples"
+      },
+      {
+        "size": {
+          "width": 1265,
+          "height": 712
+        },
+        "day": "0692",
+        "fragment": "#session-5",
+        "heading": "T11-day-0692",
+        "notice": "Error against inferred cursor-to-target vectors, in the declared source coordinate units.",
+        "overflow": false,
+        "top": 21,
+        "visible": 1,
+        "window": "Scored samples 17,873\u201317,896 of 28,132 \u00b7 24 samples"
+      },
+      {
+        "size": {
+          "width": 1265,
+          "height": 712
+        },
+        "day": "0702",
+        "fragment": "#session-6",
+        "heading": "T11-day-0702",
+        "notice": "Error against inferred cursor-to-target vectors, in the declared source coordinate units.",
+        "overflow": false,
+        "top": 21,
+        "visible": 1,
+        "window": "Scored samples 5,927\u20135,950 of 27,129 \u00b7 24 samples"
+      },
+      {
+        "size": {
+          "width": 1265,
+          "height": 712
+        },
+        "day": "0751",
+        "fragment": "#session-7",
+        "heading": "T11-day-0751",
+        "notice": "Error against inferred cursor-to-target vectors, in the declared source coordinate units.",
+        "overflow": false,
+        "top": 21,
+        "visible": 1,
+        "window": "Scored samples 4,075\u20134,098 of 14,260 \u00b7 24 samples"
+      },
+      {
+        "size": {
+          "width": 1265,
+          "height": 712
+        },
+        "day": "0727",
+        "fragment": "#session-8",
+        "heading": "T11-day-0727",
+        "notice": "Error against inferred cursor-to-target vectors, in the declared source coordinate units.",
+        "overflow": false,
+        "top": 21,
+        "visible": 1,
+        "window": "Scored samples 5,125\u20135,148 of 29,379 \u00b7 24 samples"
+      },
+      {
+        "size": {
+          "width": 1265,
+          "height": 712
+        },
+        "day": "0800",
+        "fragment": "#session-9",
+        "heading": "T11-day-0800",
+        "notice": "Error against inferred cursor-to-target vectors, in the declared source coordinate units.",
+        "overflow": false,
+        "top": 21,
+        "visible": 1,
+        "window": "Scored samples 24,041\u201324,064 of 26,731 \u00b7 24 samples"
+      },
+      {
+        "size": {
+          "width": 1265,
+          "height": 712
+        },
+        "day": "0758",
+        "fragment": "#session-10",
+        "heading": "T11-day-0758",
+        "notice": "Error against inferred cursor-to-target vectors, in the declared source coordinate units.",
+        "overflow": false,
+        "top": 15.59375,
+        "visible": 1,
+        "window": "Scored samples 12,015\u201312,038 of 28,902 \u00b7 24 samples"
+      },
+      {
+        "size": {
+          "width": 1265,
+          "height": 712
+        },
+        "day": "0770",
+        "fragment": "#session-11",
+        "heading": "T11-day-0770",
+        "notice": "Error against inferred cursor-to-target vectors, in the declared source coordinate units.",
+        "overflow": false,
+        "top": -43.40625,
+        "visible": 1,
+        "window": "Scored samples 17,118\u201317,141 of 29,140 \u00b7 24 samples"
+      },
+      {
+        "size": {
+          "width": 1265,
+          "height": 712
+        },
+        "day": "0675",
+        "fragment": "#session-12",
+        "heading": "T11-day-0675",
+        "notice": "Error against inferred cursor-to-target vectors, in the declared source coordinate units.",
+        "overflow": false,
+        "top": -43.40625,
+        "visible": 1,
+        "window": "Scored samples 25,120\u201325,143 of 25,561 \u00b7 24 samples"
+      },
+      {
+        "size": {
+          "width": 390,
+          "height": 844
+        },
+        "day": "0783",
+        "fragment": "#session-1",
+        "heading": "T11-day-0783",
+        "notice": "Error against inferred cursor-to-target vectors, in the declared source coordinate units.",
+        "overflow": false,
+        "top": 12.1875,
+        "visible": 1,
+        "window": "Scored samples 8,128\u20138,151 of 29,279 \u00b7 24 samples"
+      },
+      {
+        "size": {
+          "width": 390,
+          "height": 844
+        },
+        "day": "0709",
+        "fragment": "#session-2",
+        "heading": "T11-day-0709",
+        "notice": "Error against inferred cursor-to-target vectors, in the declared source coordinate units.",
+        "overflow": false,
+        "top": 12.1875,
+        "visible": 1,
+        "window": "Scored samples 27,771\u201327,794 of 28,794 \u00b7 24 samples"
+      },
+      {
+        "size": {
+          "width": 390,
+          "height": 844
+        },
+        "day": "0715",
+        "fragment": "#session-3",
+        "heading": "T11-day-0715",
+        "notice": "Error against inferred cursor-to-target vectors, in the declared source coordinate units.",
+        "overflow": false,
+        "top": 12.1875,
+        "visible": 1,
+        "window": "Scored samples 8,525\u20138,548 of 28,946 \u00b7 24 samples"
+      },
+      {
+        "size": {
+          "width": 390,
+          "height": 844
+        },
+        "day": "0689",
+        "fragment": "#session-4",
+        "heading": "T11-day-0689",
+        "notice": "Error against inferred cursor-to-target vectors, in the declared source coordinate units.",
+        "overflow": false,
+        "top": 12.1875,
+        "visible": 1,
+        "window": "Scored samples 15,755\u201315,778 of 28,479 \u00b7 24 samples"
+      },
+      {
+        "size": {
+          "width": 390,
+          "height": 844
+        },
+        "day": "0692",
+        "fragment": "#session-5",
+        "heading": "T11-day-0692",
+        "notice": "Error against inferred cursor-to-target vectors, in the declared source coordinate units.",
+        "overflow": false,
+        "top": 12.1875,
+        "visible": 1,
+        "window": "Scored samples 17,873\u201317,896 of 28,132 \u00b7 24 samples"
+      },
+      {
+        "size": {
+          "width": 390,
+          "height": 844
+        },
+        "day": "0702",
+        "fragment": "#session-6",
+        "heading": "T11-day-0702",
+        "notice": "Error against inferred cursor-to-target vectors, in the declared source coordinate units.",
+        "overflow": false,
+        "top": 12.1875,
+        "visible": 1,
+        "window": "Scored samples 5,927\u20135,950 of 27,129 \u00b7 24 samples"
+      },
+      {
+        "size": {
+          "width": 390,
+          "height": 844
+        },
+        "day": "0751",
+        "fragment": "#session-7",
+        "heading": "T11-day-0751",
+        "notice": "Error against inferred cursor-to-target vectors, in the declared source coordinate units.",
+        "overflow": false,
+        "top": 12.1875,
+        "visible": 1,
+        "window": "Scored samples 4,075\u20134,098 of 14,260 \u00b7 24 samples"
+      },
+      {
+        "size": {
+          "width": 390,
+          "height": 844
+        },
+        "day": "0727",
+        "fragment": "#session-8",
+        "heading": "T11-day-0727",
+        "notice": "Error against inferred cursor-to-target vectors, in the declared source coordinate units.",
+        "overflow": false,
+        "top": 12.1875,
+        "visible": 1,
+        "window": "Scored samples 5,125\u20135,148 of 29,379 \u00b7 24 samples"
+      },
+      {
+        "size": {
+          "width": 390,
+          "height": 844
+        },
+        "day": "0800",
+        "fragment": "#session-9",
+        "heading": "T11-day-0800",
+        "notice": "Error against inferred cursor-to-target vectors, in the declared source coordinate units.",
+        "overflow": false,
+        "top": 12.1875,
+        "visible": 1,
+        "window": "Scored samples 24,041\u201324,064 of 26,731 \u00b7 24 samples"
+      },
+      {
+        "size": {
+          "width": 390,
+          "height": 844
+        },
+        "day": "0758",
+        "fragment": "#session-10",
+        "heading": "T11-day-0758",
+        "notice": "Error against inferred cursor-to-target vectors, in the declared source coordinate units.",
+        "overflow": false,
+        "top": 12.1875,
+        "visible": 1,
+        "window": "Scored samples 12,015\u201312,038 of 28,902 \u00b7 24 samples"
+      },
+      {
+        "size": {
+          "width": 390,
+          "height": 844
+        },
+        "day": "0770",
+        "fragment": "#session-11",
+        "heading": "T11-day-0770",
+        "notice": "Error against inferred cursor-to-target vectors, in the declared source coordinate units.",
+        "overflow": false,
+        "top": 12.1875,
+        "visible": 1,
+        "window": "Scored samples 17,118\u201317,141 of 29,140 \u00b7 24 samples"
+      },
+      {
+        "size": {
+          "width": 390,
+          "height": 844
+        },
+        "day": "0675",
+        "fragment": "#session-12",
+        "heading": "T11-day-0675",
+        "notice": "Error against inferred cursor-to-target vectors, in the declared source coordinate units.",
+        "overflow": false,
+        "top": 12.1875,
+        "visible": 1,
+        "window": "Scored samples 25,120\u201325,143 of 25,561 \u00b7 24 samples"
+      },
+      {
+        "size": {
+          "width": 320,
+          "height": 740
+        },
+        "day": "0783",
+        "fragment": "#session-1",
+        "heading": "T11-day-0783",
+        "notice": "Error against inferred cursor-to-target vectors, in the declared source coordinate units.",
+        "overflow": false,
+        "top": 12.1875,
+        "visible": 1,
+        "window": "Scored samples 8,128\u20138,151 of 29,279 \u00b7 24 samples"
+      },
+      {
+        "size": {
+          "width": 320,
+          "height": 740
+        },
+        "day": "0709",
+        "fragment": "#session-2",
+        "heading": "T11-day-0709",
+        "notice": "Error against inferred cursor-to-target vectors, in the declared source coordinate units.",
+        "overflow": false,
+        "top": 12.1875,
+        "visible": 1,
+        "window": "Scored samples 27,771\u201327,794 of 28,794 \u00b7 24 samples"
+      },
+      {
+        "size": {
+          "width": 320,
+          "height": 740
+        },
+        "day": "0715",
+        "fragment": "#session-3",
+        "heading": "T11-day-0715",
+        "notice": "Error against inferred cursor-to-target vectors, in the declared source coordinate units.",
+        "overflow": false,
+        "top": 12.1875,
+        "visible": 1,
+        "window": "Scored samples 8,525\u20138,548 of 28,946 \u00b7 24 samples"
+      },
+      {
+        "size": {
+          "width": 320,
+          "height": 740
+        },
+        "day": "0689",
+        "fragment": "#session-4",
+        "heading": "T11-day-0689",
+        "notice": "Error against inferred cursor-to-target vectors, in the declared source coordinate units.",
+        "overflow": false,
+        "top": 12.1875,
+        "visible": 1,
+        "window": "Scored samples 15,755\u201315,778 of 28,479 \u00b7 24 samples"
+      },
+      {
+        "size": {
+          "width": 320,
+          "height": 740
+        },
+        "day": "0692",
+        "fragment": "#session-5",
+        "heading": "T11-day-0692",
+        "notice": "Error against inferred cursor-to-target vectors, in the declared source coordinate units.",
+        "overflow": false,
+        "top": 12.1875,
+        "visible": 1,
+        "window": "Scored samples 17,873\u201317,896 of 28,132 \u00b7 24 samples"
+      },
+      {
+        "size": {
+          "width": 320,
+          "height": 740
+        },
+        "day": "0702",
+        "fragment": "#session-6",
+        "heading": "T11-day-0702",
+        "notice": "Error against inferred cursor-to-target vectors, in the declared source coordinate units.",
+        "overflow": false,
+        "top": 12.1875,
+        "visible": 1,
+        "window": "Scored samples 5,927\u20135,950 of 27,129 \u00b7 24 samples"
+      },
+      {
+        "size": {
+          "width": 320,
+          "height": 740
+        },
+        "day": "0751",
+        "fragment": "#session-7",
+        "heading": "T11-day-0751",
+        "notice": "Error against inferred cursor-to-target vectors, in the declared source coordinate units.",
+        "overflow": false,
+        "top": 12.1875,
+        "visible": 1,
+        "window": "Scored samples 4,075\u20134,098 of 14,260 \u00b7 24 samples"
+      },
+      {
+        "size": {
+          "width": 320,
+          "height": 740
+        },
+        "day": "0727",
+        "fragment": "#session-8",
+        "heading": "T11-day-0727",
+        "notice": "Error against inferred cursor-to-target vectors, in the declared source coordinate units.",
+        "overflow": false,
+        "top": 12.1875,
+        "visible": 1,
+        "window": "Scored samples 5,125\u20135,148 of 29,379 \u00b7 24 samples"
+      },
+      {
+        "size": {
+          "width": 320,
+          "height": 740
+        },
+        "day": "0800",
+        "fragment": "#session-9",
+        "heading": "T11-day-0800",
+        "notice": "Error against inferred cursor-to-target vectors, in the declared source coordinate units.",
+        "overflow": false,
+        "top": 12.1875,
+        "visible": 1,
+        "window": "Scored samples 24,041\u201324,064 of 26,731 \u00b7 24 samples"
+      },
+      {
+        "size": {
+          "width": 320,
+          "height": 740
+        },
+        "day": "0758",
+        "fragment": "#session-10",
+        "heading": "T11-day-0758",
+        "notice": "Error against inferred cursor-to-target vectors, in the declared source coordinate units.",
+        "overflow": false,
+        "top": 12.1875,
+        "visible": 1,
+        "window": "Scored samples 12,015\u201312,038 of 28,902 \u00b7 24 samples"
+      },
+      {
+        "size": {
+          "width": 320,
+          "height": 740
+        },
+        "day": "0770",
+        "fragment": "#session-11",
+        "heading": "T11-day-0770",
+        "notice": "Error against inferred cursor-to-target vectors, in the declared source coordinate units.",
+        "overflow": false,
+        "top": 12.1875,
+        "visible": 1,
+        "window": "Scored samples 17,118\u201317,141 of 29,140 \u00b7 24 samples"
+      },
+      {
+        "size": {
+          "width": 320,
+          "height": 740
+        },
+        "day": "0675",
+        "fragment": "#session-12",
+        "heading": "T11-day-0675",
+        "notice": "Error against inferred cursor-to-target vectors, in the declared source coordinate units.",
+        "overflow": false,
+        "top": 12.1875,
+        "visible": 1,
+        "window": "Scored samples 25,120\u201325,143 of 25,561 \u00b7 24 samples"
+      }
+    ],
+    "keyboard": {
+      "focus": "session-2-heading",
+      "fragment": "#session-2",
+      "visible": [
+        "session-2"
+      ]
+    },
+    "history": {
+      "fragment": "#session-1",
+      "visible": [
+        "session-1"
+      ]
+    },
+    "samples": {
+      "headers": [
+        "Sample ID",
+        "Timestamp",
+        "Inferred target (x, y)",
+        "Baseline (x, y)",
+        "Candidate (x, y)",
+        "Baseline error",
+        "Candidate error",
+        "block-12:bin-008453",
+        "block-12:bin-008454",
+        "block-12:bin-008455",
+        "block-12:bin-008456",
+        "block-12:bin-008457",
+        "block-12:bin-008458",
+        "block-12:bin-008459",
+        "block-12:bin-008460",
+        "block-12:bin-008461",
+        "block-12:bin-008462",
+        "block-12:bin-008463",
+        "block-12:bin-008464",
+        "block-12:bin-008465",
+        "block-12:bin-008466",
+        "block-12:bin-008467",
+        "block-12:bin-008468",
+        "block-12:bin-008469",
+        "block-12:bin-008470",
+        "block-12:bin-008471",
+        "block-12:bin-008472",
+        "block-12:bin-008473",
+        "block-12:bin-008474",
+        "block-12:bin-008475",
+        "block-12:bin-008479"
+      ],
+      "open": true,
+      "overflow": false,
+      "rows": 24
+    },
+    "fullTrace": {
+      "open": true
+    },
+    "reload": {
+      "fragment": "#session-1",
+      "visible": [
+        "session-1"
+      ]
+    },
+    "console": []
+  },
+  "publication_audit": {
+    "status": "passed",
+    "artifact_hashes_checked": 64,
+    "source_mat_files_independently_checked": 87,
+    "all_three_indy_files_match_revision": "b5869bbca061af34ca5ed427b7bd28d6f5c98850",
+    "original_human_report_sha256": "23b5c0541ffd61a5eec79b36e8330650ee8d88d2f3d63693c30d9e431847ff1d"
+  },
+  "hosted_ci": {
+    "status": "passed",
+    "prior_attempt": {
+      "run_id": 40760143557,
+      "revision": "ca4695da8e139643bc2baba2208a0609bd05b0e4",
+      "outcome": "Workflow YAML rejected before jobs; unquoted colon-space in pip command. Corrected with a block scalar, no experiment source changes."
+    },
+    "tested_revision": "7c3ee88f3f6af19d90985af4bc4eff8590420544",
+    "platform": "ubuntu-24.04",
+    "run_url": "https://github.com/logannye/bci-regression-workbench/actions/runs/40761033642",
+    "jobs": {
+      "core_python_3_10": {
+        "discovered": 173,
+        "passed": 123,
+        "optional_skipped": 50
+      },
+      "core_python_3_12": {
+        "discovered": 173,
+        "passed": 123,
+        "optional_skipped": 50
+      },
+      "core_python_3_14": {
+        "discovered": 173,
+        "passed": 123,
+        "optional_skipped": 50
+      },
+      "datarepo_python_3_11": {
+        "discovered": 173,
+        "passed": 125,
+        "optional_skipped": 48,
+        "real_arrow_parquet_example_and_reproduction": "passed"
+      },
+      "human_python_3_12": {
+        "producer_and_audit_passed": 18,
+        "target_semantics_passed": 11,
+        "skipped": 0
+      }
+    },
+    "additional_checks": [
+      "Recurring pinned-reference synthetic comparisons and reproduction",
+      "UI fixture generation, score reproduction and JavaScript syntax",
+      "Pure Python wheel build and installed-package import"
+    ],
+    "publication_validation": {
+      "status": "passed",
+      "run_url": "https://github.com/logannye/bci-regression-workbench/actions/runs/40761033791",
+      "deployment": "Skipped on pull requests; main deployment must be checked separately"
+    }
+  },
+  "limits": [
+    "Browser acceptance tests the published report, not usability with Neuralink engineers.",
+    "Hosted software checks use synthetic fixtures; the real recording run and independent audit were executed locally on the recorded platform.",
+    "No models were refitted for publication."
+  ]
+}

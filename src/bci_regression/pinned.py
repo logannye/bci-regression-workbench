@@ -145,6 +145,8 @@ def _read_pin(path):
             payload_fields = ({"evaluation_id", "units", "coordinates", "horizon_ms", "purpose", "source_ref", "records"}
                               if name == "evaluation.json" else
                               {"run_id", "evaluation_fingerprint", "units", "coordinates", "horizon_ms", "provenance", "records"})
+            if isinstance(doc["payload"], dict) and "target_kind" in doc["payload"]:
+                payload_fields.add("target_kind")
             _keys(doc["payload"], payload_fields, f"{name} payload")
             records = doc["payload"]["records"]
             if not isinstance(records, list):

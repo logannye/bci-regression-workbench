@@ -1,24 +1,25 @@
 {
   "schema_version": 1,
-  "publication_id": "indy-public-demo-localization-v1",
+  "publication_id": "mindful-t11-human-v1",
   "prepared_on": "2026-10-28",
-  "source_revision": "772d008ee7e1c78bdae67c48723b696548c3f354",
-  "original_report_sha256": "791b5eb1af655f3e816f49a91851f88ca0db0f8c884ba7f2f6506f8359da7bba",
-  "comparison_sha256": "235b6a56cda4460938c690532dfee932b8b4df01d1477bd88927ebca5a0fb410",
-  "comparator_source_digest": "d4ec0e5f7c3b5fee2a65157dec7129b633de1a6a055dfb5614ea0054beba3206",
-  "modification": "Added only a marked hosting notice and its styles, with public-demo context, attribution, and evidence links. Removing the notice recovers the original report byte for byte.",
-  "scope": "Static saved public report and aggregate session CSV. Includes bounded derived sample previews, not raw recordings, model binaries, or full prediction/label bundles.",
+  "source_revision": "ca4695da8e139643bc2baba2208a0609bd05b0e4",
+  "protocol_freeze_revision": "6e983e142a47d828c8f1ec2fb4c800e3406ffee7",
+  "protocol_sha256": "9f51616b54b1af3dc884f4ccd51baa79ccb0f2789800aff676dafd93d68267b6",
+  "original_report_sha256": "23b5c0541ffd61a5eec79b36e8330650ee8d88d2f3d63693c30d9e431847ff1d",
+  "comparison_sha256": "ba351f189f4f2f12580cc3de8bbf049831ab807913e43331e388da2dbd2def5e",
+  "comparator_source_digest": "884aa0f214a7cea0460a0f3717c98d1c9e057be81cff40c138af01477c0a9be5",
+  "target_kind": "inferred_cursor_to_target_vector",
+  "modification": "Added only a marked hosting notice with attribution and links. Removing the notice recovers the generated report byte for byte.",
+  "scope": "Static report with bounded sample previews and aggregate scores. No raw recordings, full labels/predictions or model files.",
   "dataset": {
-    "doi": "10.5281/zenodo.3854034",
-    "license": "CC-BY-4.0",
-    "version": 2
+    "doi": "10.5061/dryad.n2z34tn5s",
+    "license": "CC0-1.0",
+    "version_id": 324345,
+    "archive_sha256": "6d12b5dbcf9cac654ff1d0679e9753bf042b56cd5b8852eb31236b3cdecf7332"
   },
   "files": {
-    "index.html": "098293df89ff3d316bf5787ad85ca266af2308ec83d9d952dea417e8b2e42616",
-    "session_metrics.csv": "464b24ae5fea8b9d0bfe106b17f785fd11db461e9aa025d53dd657f6c97f9870"
+    "index.html": "9b4e8e98d82075e0ef76f27f27d5c251f5392a9f529ffd44a8667d011e1cb7ae",
+    "session_metrics.csv": "b62a7d28e42d91d2e048ed74480fa58447fb8765e557a03713ca216461a0b95f"
   },
-  "previous_publication_id": "indy-public-demo-redesign-v1",
-  "previous_report_sha256": "655c89377c123eca73708ffb7971d5c3f4c4ac4dccf28452ee978264c5dc1ff8",
-  "localization_rule": "Largest positive net added squared error in 24 consecutive scored samples; whole session if shorter; earliest exact tie.",
-  "scoring_preservation": "All result fields except comparator_source_digest are identical to the prior saved public replay; original bundle unchanged. No refit or inference."
+  "preserved_indy_publication": "indy/publication.json"
 }

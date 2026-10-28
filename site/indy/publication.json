@@ -1,0 +1,24 @@
+{
+  "schema_version": 1,
+  "publication_id": "indy-public-demo-localization-v1",
+  "prepared_on": "2026-10-28",
+  "source_revision": "772d008ee7e1c78bdae67c48723b696548c3f354",
+  "original_report_sha256": "791b5eb1af655f3e816f49a91851f88ca0db0f8c884ba7f2f6506f8359da7bba",
+  "comparison_sha256": "235b6a56cda4460938c690532dfee932b8b4df01d1477bd88927ebca5a0fb410",
+  "comparator_source_digest": "d4ec0e5f7c3b5fee2a65157dec7129b633de1a6a055dfb5614ea0054beba3206",
+  "modification": "Added only a marked hosting notice and its styles, with public-demo context, attribution, and evidence links. Removing the notice recovers the original report byte for byte.",
+  "scope": "Static saved public report and aggregate session CSV. Includes bounded derived sample previews, not raw recordings, model binaries, or full prediction/label bundles.",
+  "dataset": {
+    "doi": "10.5281/zenodo.3854034",
+    "license": "CC-BY-4.0",
+    "version": 2
+  },
+  "files": {
+    "index.html": "098293df89ff3d316bf5787ad85ca266af2308ec83d9d952dea417e8b2e42616",
+    "session_metrics.csv": "464b24ae5fea8b9d0bfe106b17f785fd11db461e9aa025d53dd657f6c97f9870"
+  },
+  "previous_publication_id": "indy-public-demo-redesign-v1",
+  "previous_report_sha256": "655c89377c123eca73708ffb7971d5c3f4c4ac4dccf28452ee978264c5dc1ff8",
+  "localization_rule": "Largest positive net added squared error in 24 consecutive scored samples; whole session if shorter; earliest exact tie.",
+  "scoring_preservation": "All result fields except comparator_source_digest are identical to the prior saved public replay; original bundle unchanged. No refit or inference."
+}

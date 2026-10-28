@@ -1,0 +1,398 @@
+{
+  "status": "passed",
+  "protocol_sha256": "9f51616b54b1af3dc884f4ccd51baa79ccb0f2789800aff676dafd93d68267b6",
+  "audit_source_sha256": "b168125b19dcea99a43c39572ce4f5572e256bc158401a31b9891d2ae14c2e8e",
+  "input_files_verified": 87,
+  "training_rows": 85423,
+  "model_checks": {
+    "baseline": {
+      "n_training_rows": 85423,
+      "feature_mean_max_abs_error": 0.0,
+      "feature_scale_max_abs_error": 2.998206127813319e-10,
+      "target_mean_max_abs_error": 0.0,
+      "normalized_optimality_residual": 5.0306980803327406e-17
+    },
+    "candidate": {
+      "n_training_rows": 85423,
+      "feature_mean_max_abs_error": 0.0,
+      "feature_scale_max_abs_error": 2.998206127813319e-10,
+      "target_mean_max_abs_error": 0.0,
+      "normalized_optimality_residual": 4.597017211338539e-17
+    }
+  },
+  "maximum_prediction_error": {
+    "baseline": 0.0,
+    "candidate": 0.0
+  },
+  "sessions": [
+    {
+      "session_id": "T11-day-0675",
+      "n_expected": 25561,
+      "baseline_rmse": 0.26896311964783326,
+      "candidate_rmse": 0.2429362957538857,
+      "delta": -0.02602682389394756
+    },
+    {
+      "session_id": "T11-day-0689",
+      "n_expected": 28479,
+      "baseline_rmse": 0.2673919148072713,
+      "candidate_rmse": 0.25176385214127284,
+      "delta": -0.015628062665998477
+    },
+    {
+      "session_id": "T11-day-0692",
+      "n_expected": 28132,
+      "baseline_rmse": 0.25634109532564825,
+      "candidate_rmse": 0.2388974624756847,
+      "delta": -0.01744363284996356
+    },
+    {
+      "session_id": "T11-day-0702",
+      "n_expected": 27129,
+      "baseline_rmse": 0.2962072312110179,
+      "candidate_rmse": 0.277242877743444,
+      "delta": -0.018964353467573858
+    },
+    {
+      "session_id": "T11-day-0709",
+      "n_expected": 28794,
+      "baseline_rmse": 0.31456643589043315,
+      "candidate_rmse": 0.30096514288182274,
+      "delta": -0.013601293008610404
+    },
+    {
+      "session_id": "T11-day-0715",
+      "n_expected": 28946,
+      "baseline_rmse": 0.33517896243884787,
+      "candidate_rmse": 0.3198458438865959,
+      "delta": -0.015333118552251945
+    },
+    {
+      "session_id": "T11-day-0727",
+      "n_expected": 29379,
+      "baseline_rmse": 0.4711652226084825,
+      "candidate_rmse": 0.4494069168035341,
+      "delta": -0.021758305804948364
+    },
+    {
+      "session_id": "T11-day-0751",
+      "n_expected": 14260,
+      "baseline_rmse": 0.2679819475029532,
+      "candidate_rmse": 0.2489410705118786,
+      "delta": -0.019040876991074568
+    },
+    {
+      "session_id": "T11-day-0758",
+      "n_expected": 28902,
+      "baseline_rmse": 0.6592264876881643,
+      "candidate_rmse": 0.6354618726763117,
+      "delta": -0.023764615011852563
+    },
+    {
+      "session_id": "T11-day-0770",
+      "n_expected": 29140,
+      "baseline_rmse": 0.5886795680189316,
+      "candidate_rmse": 0.5639828522263117,
+      "delta": -0.024696715792619894
+    },
+    {
+      "session_id": "T11-day-0783",
+      "n_expected": 29279,
+      "baseline_rmse": 0.5366027173509939,
+      "candidate_rmse": 0.531411532186154,
+      "delta": -0.005191185164839851
+    },
+    {
+      "session_id": "T11-day-0800",
+      "n_expected": 26731,
+      "baseline_rmse": 0.5157491775703683,
+      "candidate_rmse": 0.49250378228018304,
+      "delta": -0.023245395290185267
+    }
+  ],
+  "pooled": {
+    "baseline_rmse": 0.42970635423895753,
+    "candidate_rmse": 0.41185712014681,
+    "delta": -0.01784923409214756,
+    "n_samples": 324732
+  },
+  "evidence_files": [
+    {
+      "path": "protocol.json",
+      "size_bytes": 22736,
+      "sha256": "9f51616b54b1af3dc884f4ccd51baa79ccb0f2789800aff676dafd93d68267b6"
+    },
+    {
+      "path": "inputs.json",
+      "size_bytes": 15094,
+      "sha256": "07a02ea6f15d8bbe56b9d2655f5ff2f7c132daee05789ea9da3bb5cee22eb580"
+    },
+    {
+      "path": "predictions-ready.json",
+      "size_bytes": 6368,
+      "sha256": "15e8ae391f29596498fa33efc2649b7e40ff5c6c04f4f77d5005c23f8ddc07fa"
+    },
+    {
+      "path": "models/baseline.json",
+      "size_bytes": 25301,
+      "sha256": "bbc675df9b738c1d2036a4228581757066011a297dfc0cb1722af7c2a87c020d"
+    },
+    {
+      "path": "models/candidate.json",
+      "size_bytes": 100140,
+      "sha256": "5931f5b7b3dff4abea55cfc9afa147750c3ecfe6c252531429e0fa416a0834da"
+    },
+    {
+      "path": "comparison/evaluation.json",
+      "size_bytes": 94829704,
+      "sha256": "e3f44aa94c93c59f642d74a6bd3f3c555ce453cf64f4ca01e246d669fca4a7bf"
+    },
+    {
+      "path": "comparison/baseline.json",
+      "size_bytes": 61675634,
+      "sha256": "eae0de565dd13d37eb600abb2c5c09add7bdbe188a890204f6b066955a137d01"
+    },
+    {
+      "path": "comparison/candidate.json",
+      "size_bytes": 61583821,
+      "sha256": "c99ede034c324d34fe2d991565078ea7c23b5aa07d269abce295eb1e915a074e"
+    },
+    {
+      "path": "predictions/baseline/T11-day-0675-block-06.npz",
+      "size_bytes": 238180,
+      "sha256": "42ea7dda2d37d108d81c8fef1fd248f9b684e3e107276e8a05a50b817a518a01"
+    },
+    {
+      "path": "predictions/candidate/T11-day-0675-block-06.npz",
+      "size_bytes": 238084,
+      "sha256": "c760c6cee020644d9965e9c7be8021e8a90a57559f0dab8b7d0eac583360008c"
+    },
+    {
+      "path": "predictions/baseline/T11-day-0675-block-07.npz",
+      "size_bytes": 193212,
+      "sha256": "0db980ea05e1af9ec601a8f0207264f78595d1df5025977598e3e1dcf40edecd"
+    },
+    {
+      "path": "predictions/candidate/T11-day-0675-block-07.npz",
+      "size_bytes": 193132,
+      "sha256": "0d6ba54e034227401a29cd273ac08aeb1dd2123338500580cc2591e7c49965d2"
+    },
+    {
+      "path": "predictions/baseline/T11-day-0689-block-13.npz",
+      "size_bytes": 237578,
+      "sha256": "0c8045693f5623936ef60dd35025fe6d442166f7a344a90ee744cf0687003132"
+    },
+    {
+      "path": "predictions/candidate/T11-day-0689-block-13.npz",
+      "size_bytes": 237427,
+      "sha256": "44028b890996d10a2cabd115260bdead05a5794c35aa1c9173bf9cc88c155bbd"
+    },
+    {
+      "path": "predictions/baseline/T11-day-0689-block-14.npz",
+      "size_bytes": 242912,
+      "sha256": "bb4641ad9ae4830bc638ceb815ba63de42e41d0bdd93271c4c4d08b7d2aded66"
+    },
+    {
+      "path": "predictions/candidate/T11-day-0689-block-14.npz",
+      "size_bytes": 242870,
+      "sha256": "b5d6444cd3da5eccb37fd0334670e71191197b0ea90a974692981511c4acaa6c"
+    },
+    {
+      "path": "predictions/baseline/T11-day-0692-block-06.npz",
+      "size_bytes": 244680,
+      "sha256": "3e95df2e6d79f0cc7d9eb5f4d7c3e52daadb262bcebbca5857a5d7966c192c94"
+    },
+    {
+      "path": "predictions/candidate/T11-day-0692-block-06.npz",
+      "size_bytes": 244219,
+      "sha256": "b2b900153f1ceb9bf89dcbd921db38609b3befa3bdb5432b48705d12024a18be"
+    },
+    {
+      "path": "predictions/baseline/T11-day-0692-block-07.npz",
+      "size_bytes": 230089,
+      "sha256": "69f387802d70760550c2e687130cec6a29a1d7d3159385bccd0f1b0b463d626d"
+    },
+    {
+      "path": "predictions/candidate/T11-day-0692-block-07.npz",
+      "size_bytes": 229679,
+      "sha256": "abb2c5c211873ae54ecf6ecbbd42a56952d71c73e643101e9f4f5c0c1863da64"
+    },
+    {
+      "path": "predictions/baseline/T11-day-0702-block-09.npz",
+      "size_bytes": 234317,
+      "sha256": "189fb953d9f7cc6949aaa6816d184c81e7461ce0fcece45bf4b8981378eb5f91"
+    },
+    {
+      "path": "predictions/candidate/T11-day-0702-block-09.npz",
+      "size_bytes": 234140,
+      "sha256": "6e80ccfad19c39df66215c19d58b3479854304fe35fab453f5c609443e4191ab"
+    },
+    {
+      "path": "predictions/baseline/T11-day-0702-block-10.npz",
+      "size_bytes": 223520,
+      "sha256": "c39696a44e55d75a08aa52df14756d23c1672fd9cdebdb0adc4b9724cadc2569"
+    },
+    {
+      "path": "predictions/candidate/T11-day-0702-block-10.npz",
+      "size_bytes": 223476,
+      "sha256": "d939bd82d870f79bab5ea9de88ce2b466daffc5a8ecf875353c0731f4a1e9aa8"
+    },
+    {
+      "path": "predictions/baseline/T11-day-0709-block-06.npz",
+      "size_bytes": 241580,
+      "sha256": "1b1ed76d82152dd45e97323feabee01b86db20eaeafa34cb5465bc7858435bd2"
+    },
+    {
+      "path": "predictions/candidate/T11-day-0709-block-06.npz",
+      "size_bytes": 241500,
+      "sha256": "414ab9119a4f1e311539ee2c069596959b83a28767d00c1a9229886e944efac4"
+    },
+    {
+      "path": "predictions/baseline/T11-day-0709-block-07.npz",
+      "size_bytes": 244262,
+      "sha256": "742da2e6ac4f18e7157c065cc5f70d18d33a522e75bd62d4a18f8ffe1be9ceab"
+    },
+    {
+      "path": "predictions/candidate/T11-day-0709-block-07.npz",
+      "size_bytes": 244216,
+      "sha256": "ff0474111b9cd57eef14b931f14c7b0a9da4276d18c8213511bec2b4f174dbfb"
+    },
+    {
+      "path": "predictions/baseline/T11-day-0715-block-10.npz",
+      "size_bytes": 243331,
+      "sha256": "385125ee572c0a1c1d6968c94db22b863ccd2ec600cb07f79ceb1e90d47db4c1"
+    },
+    {
+      "path": "predictions/candidate/T11-day-0715-block-10.npz",
+      "size_bytes": 243070,
+      "sha256": "d8d6f9cc1dae8501cf2b348014b22281d178339ee533c00dcec690a36e95da02"
+    },
+    {
+      "path": "predictions/baseline/T11-day-0715-block-11.npz",
+      "size_bytes": 245047,
+      "sha256": "4614398da4fb18f31aaa77e6bd326ea05b60d6d54ba8ad80749aee73bab8f103"
+    },
+    {
+      "path": "predictions/candidate/T11-day-0715-block-11.npz",
+      "size_bytes": 244646,
+      "sha256": "297b0e3978e6c2cdae651b1b6bb1e65989c20fa840b3b9a727802309bad1d849"
+    },
+    {
+      "path": "predictions/baseline/T11-day-0727-block-08.npz",
+      "size_bytes": 246547,
+      "sha256": "068ee7a135ef845940be6b7504b1d1dd9502f0ac8a7b1bbdbcf07d67e49e0e26"
+    },
+    {
+      "path": "predictions/candidate/T11-day-0727-block-08.npz",
+      "size_bytes": 246469,
+      "sha256": "beb38c91f2dbce7600a3a5e82b5d2e2256f3d8a05a508337c7bc6903d81a3e51"
+    },
+    {
+      "path": "predictions/baseline/T11-day-0727-block-09.npz",
+      "size_bytes": 248400,
+      "sha256": "63fe20c10cdf82ee16a85fd015a6f5ddfbb6072d6b6063de6ed1e4831b019ba6"
+    },
+    {
+      "path": "predictions/candidate/T11-day-0727-block-09.npz",
+      "size_bytes": 248282,
+      "sha256": "1a54ec6cc37774df6893a0a93aa50174671ba162b24fd13b55d6f396c03f6821"
+    },
+    {
+      "path": "predictions/baseline/T11-day-0751-block-16.npz",
+      "size_bytes": 240575,
+      "sha256": "a3b14fde198c758f8a3dec221e3808452fc77be91ac7bf97fee0533017ab909a"
+    },
+    {
+      "path": "predictions/candidate/T11-day-0751-block-16.npz",
+      "size_bytes": 240459,
+      "sha256": "3a473ad03ffd7ef06f864bbe37620cf1b01935f2436264ffcc442ca224bad3f4"
+    },
+    {
+      "path": "predictions/baseline/T11-day-0758-block-16.npz",
+      "size_bytes": 244186,
+      "sha256": "54eda9cc92b5c37beb9b62a23633eb32713a1aedafd58da4e1232db51ef64500"
+    },
+    {
+      "path": "predictions/candidate/T11-day-0758-block-16.npz",
+      "size_bytes": 244011,
+      "sha256": "164d4659e49cdcad53616fe0a4efc5f847a6c1b177e9264c5110bc359e38d699"
+    },
+    {
+      "path": "predictions/baseline/T11-day-0758-block-18.npz",
+      "size_bytes": 242385,
+      "sha256": "bf394087f5c5eeec60ab9a572db535a832ec078bbcc2ffb7acc180dc8964a62a"
+    },
+    {
+      "path": "predictions/candidate/T11-day-0758-block-18.npz",
+      "size_bytes": 242247,
+      "sha256": "b31d3d3abed675f0718d456dcdfc758ce138eb642942a1d75a3351a84171594a"
+    },
+    {
+      "path": "predictions/baseline/T11-day-0770-block-05.npz",
+      "size_bytes": 247497,
+      "sha256": "de225dff8ff1e17297ed5900802d9d23f3a2f81b4abc299e43e69b37f7fc1c15"
+    },
+    {
+      "path": "predictions/candidate/T11-day-0770-block-05.npz",
+      "size_bytes": 246665,
+      "sha256": "d9aab3cc0d336641ffb38815e460a4ac807a1229f110fdbee478d1a2d35543dd"
+    },
+    {
+      "path": "predictions/baseline/T11-day-0770-block-06.npz",
+      "size_bytes": 243859,
+      "sha256": "4f775238a4548ec5c839c5c7f6e16f908ca19051d27e7cc3cc83bdf1d4c0ab78"
+    },
+    {
+      "path": "predictions/candidate/T11-day-0770-block-06.npz",
+      "size_bytes": 243048,
+      "sha256": "a3992f7f490bfba15fe8bc7b91dca3bb4e8aba1bb003a84a30aed62224d35609"
+    },
+    {
+      "path": "predictions/baseline/T11-day-0783-block-12.npz",
+      "size_bytes": 245747,
+      "sha256": "de28a8ef1b6d45670ac7262a3c8934744b41a8fe920342838b83ef1e4b386c82"
+    },
+    {
+      "path": "predictions/candidate/T11-day-0783-block-12.npz",
+      "size_bytes": 245628,
+      "sha256": "1fca74343c682036496baa8915d1376c2dba79990624594e99f45f95f4c61da0"
+    },
+    {
+      "path": "predictions/baseline/T11-day-0783-block-14.npz",
+      "size_bytes": 247892,
+      "sha256": "81b1195240d26227d0d8686a58dfaa05b465d5dcbab282d342dd2dfac9861fa7"
+    },
+    {
+      "path": "predictions/candidate/T11-day-0783-block-14.npz",
+      "size_bytes": 247715,
+      "sha256": "7a0ff8d56467b6e4d1ab6128873d8576dc3d33f4f81aa795adc360acca886d00"
+    },
+    {
+      "path": "predictions/baseline/T11-day-0800-block-03.npz",
+      "size_bytes": 210663,
+      "sha256": "150ed39bdef6203c8699beeedafed521a4ea3cd26d66ba745b253564fa126895"
+    },
+    {
+      "path": "predictions/candidate/T11-day-0800-block-03.npz",
+      "size_bytes": 210431,
+      "sha256": "4193ee599773ee2875da2950977cb3b8d2132625c7038a885b86bb13890f0310"
+    },
+    {
+      "path": "predictions/baseline/T11-day-0800-block-04.npz",
+      "size_bytes": 239973,
+      "sha256": "cac7510125aca3d4d88af6ce30e3ee149a6db93646cf1aac5766ccdb8fffb6a7"
+    },
+    {
+      "path": "predictions/candidate/T11-day-0800-block-04.npz",
+      "size_bytes": 239748,
+      "sha256": "4bd682ad584df3130798bc291b7a55e88eb6618aa2080f3d28b5067cf12edb97"
+    },
+    {
+      "path": "comparison/comparison.json",
+      "size_bytes": 150263557,
+      "sha256": "ba351f189f4f2f12580cc3de8bbf049831ab807913e43331e388da2dbd2def5e"
+    }
+  ],
+  "scope": "Original file hashes, trial masks, retained targets, source-only preprocessing, saved ridge optimality, predictions and scores. No refit.",
+  "limitation": "This audit verifies saved mathematical evidence, not when a human inspected labels or whether the historical participant would benefit from a different live decoder."
+}
