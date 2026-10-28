@@ -1,0 +1,56 @@
+name: Public recording demo
+
+on:
+  pull_request:
+    paths:
+      - 'examples/public_recording/**'
+      - 'tests/test_public_*.py'
+      - 'docs/public-demo/protocol-v1.json'
+      - 'requirements-public-demo.txt'
+      - '.github/workflows/public-demo.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  frozen-comparison:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    env:
+      PYTHONPATH: src:.
+      OPENBLAS_NUM_THREADS: '1'
+      OMP_NUM_THREADS: '1'
+      MKL_NUM_THREADS: '1'
+      NUMEXPR_NUM_THREADS: '1'
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
+        with:
+          python-version: '3.11'
+      - name: Install pinned binary wheels
+        run: |
+          python -m pip install --only-binary=:all: -r requirements-public-demo.txt
+      - name: Verify producer against synthetic fixtures before recording access
+        run: |
+          python - <<'PY'
+          import unittest
+          suite = unittest.defaultTestLoader.discover('tests')
+          result = unittest.TextTestRunner(verbosity=2).run(suite)
+          producer_skips = [test.id() for test, reason in result.skipped if 'test_public_' in test.id()]
+          if not result.wasSuccessful() or producer_skips:
+              raise SystemExit('Public producer tests must pass with no skips')
+          PY
+      - name: Run the frozen public comparison
+        run: |
+          python examples/public_recording/run.py --input-dir "$RUNNER_TEMP/indy-inputs" --output-dir "$RUNNER_TEMP/indy-demo"
+          python -m pip freeze > "$RUNNER_TEMP/indy-demo/environment.txt"
+          git rev-parse HEAD > "$RUNNER_TEMP/indy-demo/revision.txt"
+      - name: Preserve derived evidence and failure receipts
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        if: always()
+        with:
+          name: indy-public-demo-evidence
+          path: ${{ runner.temp }}/indy-demo
+          retention-days: 30
+          if-no-files-found: warn
