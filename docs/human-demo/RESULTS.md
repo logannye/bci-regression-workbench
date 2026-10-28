@@ -33,7 +33,7 @@ Both models were fitted once on training rows only. All evaluation predictions w
 
 The independent auditor verified all 87 source MATLAB file hashes, the complete masks and target values, source-only feature and target statistics, saved ridge optimality without refitting, every saved prediction, and all session and pooled scores. Reconstructed predictions matched exactly on the tested platform. Independent pooled arithmetic differs only by floating-point summation rounding.
 
-Local preflight: 173 tests discovered, 164 passed, 9 optional-dependency skips. All human producer, audit and target-semantics tests ran. Default velocity identities, formula, localization and rendered fixture remain compatible. Hosted checks and browser acceptance are recorded separately in the validation receipt.
+Local preflight: 173 tests discovered, 164 passed, 9 optional-dependency skips. All human producer, audit and target-semantics tests ran. Default velocity identities, formula, localization and rendered fixture remain compatible. Hosted checks and browser acceptance are recorded separately in the [validation receipt](validation-v1.json).
 
 The macOS Accelerate wheel produced a numerical exception on a finite synthetic matrix test before any recording fit. Switching to the same pinned NumPy version’s OpenBLAS wheel resolved it. No model guard, data selection or scientific setting was changed.
 

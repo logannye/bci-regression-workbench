@@ -586,11 +586,52 @@
     "original_human_report_sha256": "23b5c0541ffd61a5eec79b36e8330650ee8d88d2f3d63693c30d9e431847ff1d"
   },
   "hosted_ci": {
-    "status": "pending",
+    "status": "passed",
     "prior_attempt": {
       "run_id": 40760143557,
       "revision": "ca4695da8e139643bc2baba2208a0609bd05b0e4",
       "outcome": "Workflow YAML rejected before jobs; unquoted colon-space in pip command. Corrected with a block scalar, no experiment source changes."
+    },
+    "tested_revision": "7c3ee88f3f6af19d90985af4bc4eff8590420544",
+    "platform": "ubuntu-24.04",
+    "run_url": "https://github.com/logannye/bci-regression-workbench/actions/runs/40761033642",
+    "jobs": {
+      "core_python_3_10": {
+        "discovered": 173,
+        "passed": 123,
+        "optional_skipped": 50
+      },
+      "core_python_3_12": {
+        "discovered": 173,
+        "passed": 123,
+        "optional_skipped": 50
+      },
+      "core_python_3_14": {
+        "discovered": 173,
+        "passed": 123,
+        "optional_skipped": 50
+      },
+      "datarepo_python_3_11": {
+        "discovered": 173,
+        "passed": 125,
+        "optional_skipped": 48,
+        "real_arrow_parquet_example_and_reproduction": "passed"
+      },
+      "human_python_3_12": {
+        "producer_and_audit_passed": 18,
+        "target_semantics_passed": 11,
+        "skipped": 0
+      }
+    },
+    "additional_checks": [
+      "Recurring pinned-reference synthetic comparisons and reproduction",
+      "UI fixture generation, score reproduction and JavaScript syntax",
+      "Pure Python wheel build and installed-package import"
+    ],
+    "publication_validation": {
+      "status": "passed",
+      "run_url": "https://github.com/logannye/bci-regression-workbench/actions/runs/40761033791",
+      "deployment": "Skipped on pull requests; main deployment must be checked separately"
     }
   },
   "limits": [
