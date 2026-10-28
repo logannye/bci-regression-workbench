@@ -8,7 +8,7 @@ The product consumes keyed outputs from the user's existing evaluator. Do not re
 
 Do not expand the design with dashboards, timing benchmarks, synthetic stress platforms, broad adapters, automated diagnosis, adaptation, calibration experiments, new model research, or deployment gates. Reproducibility and input validity are requirements of the one benefit. A second independent benefit requires an explicit user change to scope.
 
-The first comparison/report/scoring-reproduction slice and synthetic example are implemented. Public-recording evaluation and Neuralink integration remain unperformed. Keep documentation honest about implemented behavior, planned work, and measured results. Verify executable examples before documenting them. The optional datarepo environment requires its own real hosted validation; core tests do not establish that integration works.
+The first comparison/report/scoring-reproduction slice, synthetic workflow, and optional datarepo integration have passed the checks recorded in [Validation](docs/VALIDATION.md). Public-recording evaluation, intended-engineer usability, and Neuralink integration remain unperformed. Keep documentation honest about implemented behavior, planned work, and measured results. Verify executable examples before documenting them. Continue validating the optional datarepo environment separately; core tests alone do not establish that integration works.
 
 ## Evaluation discipline
 

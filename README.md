@@ -4,7 +4,7 @@
 
 Call a small Python function at the end of an existing evaluation job. It compares saved two-dimensional velocity predictions on the same declared samples, writes a session-level RMSE report, and preserves the evidence needed to recompute it. Your evaluator continues to own model execution and data access.
 
-**Status: started, in progress.** The first implementation includes keyed comparison, a self-contained HTML report, CSV results, and scoring reproduction from a JSON bundle. The demonstration uses constructed predictions. No public neuroscience dataset or Neuralink integration has been evaluated.
+**Status: started, in progress.** The first implementation includes keyed comparison, a self-contained HTML report, CSV results, and scoring reproduction from a JSON bundle. The demonstration uses constructed predictions. Hosted tests, packaging, and the optional datarepo example pass; see [Validation](docs/VALIDATION.md). No public neuroscience dataset or Neuralink internal integration has been evaluated.
 
 An independent open-source project by Logan Nye, designed for Neuralink's BCI ML engineering team. (This is not an official Neuralink project or an implemented integration with its internal systems.)
 
@@ -89,13 +89,13 @@ recomputed = reproduce("runs/api-example")
 print(recomputed["complete"])
 ```
 
-`reproduce` verifies the saved artifacts and compares recomputed results with the recorded result within the numerical tolerance. It raises an error for changed evidence or a mismatched result. This reproduces scoring; regenerating predictions remains the original evaluator's responsibility.
+`reproduce` requires the same comparator source content, verifies saved artifacts, and compares recomputed results with the recorded result within the numerical tolerance. Retain the tested source revision with your run artifacts. It raises an error for changed evidence or a mismatched result. This reproduces scoring; regenerating predictions remains the original evaluator's responsibility.
 
 The report lists invalid sessions prominently and sorts valid sessions by descending candidate-minus-baseline RMSE. Missing or duplicate required predictions never shrink the scoring set silently. Any invalid required session makes the comparison incomplete. The metric is `sqrt(mean((predicted_vx − target_vx)² + (predicted_vy − target_vy)²))`; positive candidate-minus-baseline differences mean higher error.
 
 ## Optional datarepo example
 
-[examples/datarepo_example.py](examples/datarepo_example.py) exercises Neuralink's upstream [datarepo](https://github.com/neuralinkcorp/datarepo) Parquet interface with synthetic prediction tables. Its optional environment is pinned in [requirements-datarepo.txt](requirements-datarepo.txt). Hosted integration validation is pending; do not infer it has passed from the core demonstration.
+[examples/datarepo_example.py](examples/datarepo_example.py) exercises Neuralink's upstream [datarepo](https://github.com/neuralinkcorp/datarepo) Parquet interface with synthetic prediction tables. Its optional environment is pinned in [requirements-datarepo.txt](requirements-datarepo.txt). The real datarepo example and all 67 tests passed in its Python 3.11 hosted environment; see the exact source and platform in [Validation](docs/VALIDATION.md).
 
 The core accepts record mappings directly and does not require a catalog migration. The table boundary also supports collected Polars and Arrow tables when those libraries are available. Datarepo is a narrow source integration, not a replacement evaluation framework.
 

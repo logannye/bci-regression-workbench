@@ -1,6 +1,6 @@
 # Design
 
-Status: the first comparison, report, and scoring-reproduction slice is implemented. The demonstration uses synthetic predictions. Public-recording evaluation and a Neuralink integration remain unperformed.
+Status: the first comparison, report, and scoring-reproduction slice is implemented and validated with synthetic predictions. Hosted datarepo integration and report-interaction checks also passed at the revision recorded in [Validation](VALIDATION.md). Public-recording evaluation and a Neuralink integration remain unperformed.
 
 ## Product boundary
 
@@ -33,7 +33,7 @@ Select and save the baseline once for a fixed evaluation set, then load that exa
 
 Missing or malformed saved bundles raise an error during loading. A successfully loaded baseline bound to incompatible evaluation semantics makes the comparison invalid. Neither path silently runs a model, selects another baseline, or shrinks the evaluation cohort.
 
-The optional [datarepo example](../examples/datarepo_example.py) uses upstream `ParquetTable` to query synthetic prediction/target files and feeds the collected tables to the same core. Its dependencies are pinned in [requirements-datarepo.txt](../requirements-datarepo.txt); a real run of that integration awaits hosted validation. Existing users can pass collected tables directly. Raw recordings and existing catalogs stay where they are.
+The optional [datarepo example](../examples/datarepo_example.py) uses upstream `ParquetTable` to query synthetic prediction/target files and feeds the collected tables to the same core. Its pinned [environment](../requirements-datarepo.txt) passed a real hosted Parquet-load, comparison, and reproduction run; see [Validation](VALIDATION.md) for the tested revision and platform. Existing users can pass collected tables directly. Raw recordings and existing catalogs stay where they are.
 
 ## Alignment and scoring
 

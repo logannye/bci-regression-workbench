@@ -1,6 +1,6 @@
 # Evaluation
 
-Status: scoring and validity rules are implemented, with synthetic fixtures and a local workflow example. Public-recording evaluation remains planned. Implementation checks are not neural-decoder performance results.
+Status: scoring and validity rules are implemented and have passed synthetic checks locally and in hosted CI. The real datarepo/Parquet integration and scoring reproduction also passed at the revisions/platforms in [Validation](VALIDATION.md). Public-recording evaluation remains planned. Implementation checks are not neural-decoder performance results.
 
 ## One task and one primary metric
 
@@ -42,7 +42,7 @@ If any required session is invalid, mark the overall comparison incomplete. Vali
 
 ## Acceptance cases
 
-These cases test implementation correctness. The core/report cases have corresponding synthetic tests; actual validation runs and their platforms must be recorded separately. They are not a second scientific benchmark or a general fault-injection feature.
+These cases test implementation correctness. The core/report cases have corresponding synthetic tests; completed runs and their platforms are recorded in [Validation](VALIDATION.md). They are not a second scientific benchmark or a general fault-injection feature.
 
 | Case | Required observation |
 | --- | --- |
@@ -53,9 +53,9 @@ These cases test implementation correctness. The core/report cases have correspo
 | Row order and target identity | Permuting file rows preserves results when keys match; incompatible targets or horizons are rejected. |
 | Scoring reproduction | A fresh environment recovers the same session rows and scores from preserved predictions and labels without model loading. |
 | One public-data demonstration — planned | A fixed baseline/candidate comparison produces a complete, inspectable report with documented source and model provenance. Improvement is not required. |
-| Recurring workflow — synthetic example implemented | A sample producer saves the pinned baseline once, loads it for a subsequent candidate ID, and creates the report as part of its normal invocation. The one-open, one-session-selection interaction remains a usability check, not an established Neuralink workflow. |
+| Recurring workflow — synthetic example checked | A sample producer saves the pinned baseline once, loads it for a subsequent candidate ID, and creates the report as part of its normal invocation. Browser inspection confirmed the session table is visible on opening and one session-row selection reaches its trace. This is an example interaction check, not intended-engineer usability evidence or an established Neuralink workflow. |
 
-The standard-library tests and [basic example](../examples/basic_comparison.py) exercise constructed outputs. The optional real datarepo/Parquet example awaits hosted validation. Freeze the future public-data demonstration before running its separate prediction producer. Report failures, unchanged results, and limitations as observed; do not select a flattering subset of sessions after looking at scores.
+The standard-library tests and [basic example](../examples/basic_comparison.py) exercise constructed outputs. Hosted runs also exercised the optional real datarepo/Parquet example, and a downloaded CI artifact was score-reproduced locally; see [Validation](VALIDATION.md). Freeze the future public-data demonstration before running its separate prediction producer. Report failures, unchanged results, and limitations as observed; do not select a flattering subset of sessions after looking at scores.
 
 ## Interpretation
 

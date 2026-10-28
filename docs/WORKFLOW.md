@@ -1,6 +1,6 @@
 # Workflow
 
-Status: the Python integration point, local report, and saved-baseline synthetic example are implemented. The workflow below is a proposed fit for Neuralink; its internal evaluator, experiment tracker, and review interfaces remain unknown.
+Status: the Python integration point, local report, and saved-baseline synthetic example are implemented and checked as recorded in [Validation](VALIDATION.md). The workflow below remains a proposed fit for Neuralink; its internal evaluator, experiment tracker, and review interfaces are unknown.
 
 ## Fit the existing model-change loop
 
@@ -56,7 +56,7 @@ This demonstrates the product's reuse path. It does not execute neural models or
 
 ## Friction budget
 
-These remain usability acceptance goals. The synthetic script provides the integration shape; actual engineer adoption has not been measured:
+These goals are checked in the synthetic workflow, with browser interaction evidence in [Validation](VALIDATION.md). They are not measurements of setup effort, usability, or adoption by an intended engineer:
 
 - After setup, zero additional manual commands to produce a comparison.
 - One action to open the report and one to inspect a session.
@@ -65,4 +65,4 @@ These remain usability acceptance goals. The synthetic script provides the integ
 - No new server, login, data migration, or dependency on Neuralink's Electron fork.
 - No silent baseline replacement, evaluation-set changes, or deletion of invalid sessions in pursuit of convenience.
 
-Check report interaction in the synthetic example and retain the same flow for the future public-recording demonstration. Verify actual integration effort with an engineer before claiming it fits Neuralink's workflow. The key unknowns are retained prediction granularity, stable sample identities, and how the team names a reference run and evaluation set.
+Browser inspection of the synthetic report confirmed that the session table is visible on opening and a single session-row selection reaches the paired error trace. Retain this flow for the future public-recording demonstration. Verify actual integration effort with an engineer before claiming it fits Neuralink's workflow. The key unknowns are retained prediction granularity, stable sample identities, and how the team names a reference run and evaluation set.
