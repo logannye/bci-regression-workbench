@@ -4,7 +4,7 @@
 
 Call a small Python function at the end of an existing evaluation job. It compares saved two-dimensional velocity predictions on the same declared samples, writes a session-level RMSE report, and preserves the evidence needed to recompute it. Your evaluator continues to own model execution and data access.
 
-**Status: started, in progress.** The implementation includes keyed comparison, a self-contained HTML report, CSV results, scoring reproduction, and a reusable pinned check for an existing evaluator. The synthetic example, real datarepo integration, and a frozen public neural-recording comparison have passed their checks. See [implementation validation](docs/VALIDATION.md), [pinned-hook validation](docs/PINNED-VALIDATION.md), and [public-demo results](docs/public-demo/RESULTS.md). Neuralink internal integration and intended-engineer usability remain untested.
+**Status: started, in progress.** The implementation includes keyed comparison, a self-contained two-pane HTML report, CSV results, scoring reproduction, and a reusable pinned check for an existing evaluator. The report keeps every session beside its selected evidence, with responsive layout, keyboard navigation, and collapsible supporting details. The synthetic example, real datarepo integration, and a frozen public neural-recording comparison have passed their checks. See [implementation validation](docs/VALIDATION.md), [pinned-hook validation](docs/PINNED-VALIDATION.md), and [public-demo results](docs/public-demo/RESULTS.md). Neuralink internal integration and intended-engineer usability remain untested.
 
 An independent open-source project by Logan Nye, designed for Neuralink's BCI ML engineering team. (This is not an official Neuralink project or an implemented integration with its internal systems.)
 
@@ -30,7 +30,7 @@ PYTHONPATH=src python3 examples/basic_comparison.py --output-dir runs/demo --can
 
 The core uses only Python's standard library. No dependency installation or native compilation is needed. Start with a new example directory. Each candidate comparison needs a new candidate ID; existing comparison outputs are never overwritten.
 
-The initialization command saves the evaluation, baseline, column mapping, and reporting tolerance once. Both ordinary candidate commands load that same pin and generate their reports as part of evaluation. They construct only candidate predictions and write separate run directories. Repeating initialization refuses to replace the reference. The fixture improves pooled RMSE while worsening a shorter session. Open the report path printed by the script, then select the worsened session to inspect its paired errors and sample references.
+The initialization command saves the evaluation, baseline, column mapping, and reporting tolerance once. Both ordinary candidate commands load that same pin and generate their reports as part of evaluation. They construct only candidate predictions and write separate run directories. Repeating initialization refuses to replace the reference. The fixture improves pooled RMSE while worsening a shorter session. Open the report path printed by the script, then select the worsened session to inspect its paired errors and sample references. On desktop, the session list stays beside a scrollable evidence pane; on narrow screens, selecting a session brings its stacked evidence into view.
 
 This tradeoff checks the comparator's behavior. It is not a result about neural decoding performance.
 
@@ -81,7 +81,7 @@ Each comparison directory contains:
 
 | Artifact | Purpose |
 | --- | --- |
-| `report.html` | Local report with identities, completeness, every session, and linked error traces and sample previews. No server or external assets. |
+| `report.html` | Two-pane local report with identities, completeness, every session, selected error traces, and collapsible sample previews. No server or external assets. |
 | `session_metrics.csv` | The full session comparison table. |
 | `evaluation.json`, `baseline.json`, `candidate.json` | Retained targets, eligibility, predictions, and declared identities. |
 | `comparison.json`, `manifest.json` | Results, comparison settings, environment information, and content hashes. |
@@ -95,7 +95,7 @@ recomputed = reproduce("runs/demo/candidate-001/session-regressions")
 print(recomputed["complete"])
 ```
 
-`reproduce` requires the same comparator source content, verifies saved artifacts, and compares recomputed results with the recorded result within the numerical tolerance. Retain the tested source revision with your run artifacts. It raises an error for changed evidence or a mismatched result. This reproduces scoring; regenerating predictions remains the original evaluator's responsibility.
+`reproduce` requires the same comparator source content, verifies saved artifacts, and compares recomputed results with the recorded result within the numerical tolerance. Retain the tested source revision with your run artifacts. The renderer is included in this identity: a UI update needs a new output bundle, while older bundles and pins continue to use their recorded source. See [report compatibility and validation](docs/REPORT-UI.md). It raises an error for changed evidence or a mismatched result. This reproduces scoring; regenerating predictions remains the original evaluator's responsibility.
 
 The report lists invalid sessions prominently and sorts valid sessions by descending candidate-minus-baseline RMSE. Missing or duplicate required predictions never shrink the scoring set silently. Any invalid required session makes the comparison incomplete. The metric is `sqrt(mean((predicted_vx − target_vx)² + (predicted_vy − target_vy)²))`; positive candidate-minus-baseline differences mean higher error.
 

@@ -48,7 +48,7 @@ The first report view answers:
 
 Sort valid sessions by descending candidate-minus-baseline RMSE in velocity units, with invalid sessions prominently listed. Keep the full table available. A pooled score is secondary context. When no session exceeds tolerance, say so without labeling the candidate safe or ready to ship.
 
-A session-row link jumps to its detail within the same report. `reproduce(bundle_dir)` verifies the saved artifacts and recomputes the comparison without loading models. Users return to their existing evaluator when they need to regenerate predictions or investigate model internals.
+A session-row link selects its evidence in the adjacent pane, or in the stacked pane on narrow screens. The selected session has a direct URL fragment; native anchors keep every session accessible without JavaScript. Supporting samples and full provenance remain available in disclosures. See [Report interface](REPORT-UI.md) for the interaction and evidence-compatibility contract. `reproduce(bundle_dir)` verifies the saved artifacts and recomputes the comparison without loading models. Users return to their existing evaluator when they need to regenerate predictions or investigate model internals.
 
 ## Implemented example
 

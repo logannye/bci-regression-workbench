@@ -70,7 +70,7 @@ The comparator can verify this pairing and arithmetic. Prediction files cannot e
 
 ## One output, with supporting detail
 
-The returned dictionary includes the session table, comparison identities, completeness, issues, pooled context when complete, and paired samples from valid sessions. A self-contained local report shows baseline/candidate IDs, evaluation-set identity, completeness, and the sessions with increased error. It lists every session and links directly to its paired error trace and supporting sample references. That detail substantiates a regression; it does not diagnose its cause.
+The returned dictionary includes the session table, comparison identities, completeness, issues, pooled context when complete, and paired samples from valid sessions. A self-contained local report shows baseline/candidate IDs, evaluation-set identity, completeness, and the sessions with increased error. It lists every session beside a selected-session evidence pane, with the signed RMSE change prominent and supporting sample references available in a disclosure. The small, fixed selection script progressively enhances native session links; no external assets or network requests are needed. That detail substantiates a regression; it does not diagnose its cause.
 
 With `output_dir`, the call writes `report.html`, `session_metrics.csv`, `evaluation.json`, `baseline.json`, `candidate.json`, `comparison.json`, and `manifest.json`. The bundle retains the actual predictions, targets, eligibility, declared provenance, artifact hashes, comparator version/source digest, Python version, and platform. The output directory must not already exist. Data redistribution remains governed by source licenses.
 

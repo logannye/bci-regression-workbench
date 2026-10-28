@@ -32,6 +32,13 @@ jobs:
           python examples/basic_comparison.py --output-dir "$RUNNER_TEMP/basic-demo" --initialize
           python examples/basic_comparison.py --output-dir "$RUNNER_TEMP/basic-demo"
           python examples/basic_comparison.py --output-dir "$RUNNER_TEMP/basic-demo" --candidate-id candidate-002
+      - name: Generate UI acceptance states and reproduce their scores
+        env:
+          PYTHONPATH: src
+        run: |
+          python tests/report_ui_fixtures.py --output-dir "$RUNNER_TEMP/report-ui"
+          python -c "from pathlib import Path; from bci_regression.report import _SCRIPT; Path('$RUNNER_TEMP/report.js').write_text(_SCRIPT)"
+          node --check "$RUNNER_TEMP/report.js"
       - name: Build and smoke-test the pure Python wheel
         run: |
           python -m pip wheel --no-deps . --wheel-dir "$RUNNER_TEMP/wheels"

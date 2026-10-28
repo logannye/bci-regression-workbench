@@ -48,6 +48,17 @@ The synthetic workflow already demonstrates baseline reuse, but each integrator 
 
 Local validation passed: 110 tests passed with nine optional-dependency skips, two recurring synthetic candidates reused unchanged reference bytes, and the saved public outputs produced identical scores through the hook. All four hosted jobs also passed; see [Pinned-hook validation](PINNED-VALIDATION.md) for the exact tested revision, counts, and optional skips. Its acceptance concerns less repeated integration code and preserved comparison semantics, not measured setup time or adoption by a Neuralink engineer. The engineer presentation and workflow questions in milestone 3 remain open.
 
+## 5. Refine the report interface
+
+- [x] Implement a responsive two-pane session/evidence view over the existing comparison results.
+- [x] Emphasize signed RMSE changes and preserve full session coverage, input-validity states, and descriptive-only reporting.
+- [x] Add keyboard-accessible selection, direct links/history, collapsed supporting evidence, and a no-script fallback.
+- [x] Validate eight report states across three viewport sizes and a longer session list; repair observed navigation/layout issues.
+- [x] Reproduce original public evidence with archived source and a separate new report bundle with identical scoring results.
+- [ ] Complete hosted tests, fixture reproduction, script syntax, packaging, and optional datarepo validation at the new revision.
+
+See [Report interface](REPORT-UI.md) for local results and source-compatibility requirements. This iteration changes presentation and interaction only.
+
 ## Current state
 
 The first two milestones are complete for the previously tested synthetic workflow, including hosted core checks, real datarepo/Parquet integration, report interaction, and scoring reproduction; see [Validation](VALIDATION.md). The public-recording experiment and reproduction are also complete, with all selected sessions preserved in [Public demonstration results](public-demo/RESULTS.md). Models were trained and executed only by the separate example producer. The focused reusable-reference change passed its own local tests, saved-output replay, and hosted checks in [Pinned-hook validation](PINNED-VALIDATION.md). Intended-engineer presentation/usability validation and Neuralink integration remain unperformed.
