@@ -4,6 +4,8 @@
 
 Optimize for exactly one benefit: find sessions where a fixed candidate decoder performs worse than a fixed baseline on identical recorded inputs, and reproduce those findings.
 
+The product consumes keyed outputs from the user's existing evaluator. Do not require model loading, a custom decoder runner, or a new training environment. Reproduction means recomputing scores from preserved predictions and labels; regenerating predictions remains the producer's responsibility. A public example may generate predictions separately.
+
 Do not expand the design with dashboards, timing benchmarks, synthetic stress platforms, broad adapters, automated diagnosis, adaptation, calibration experiments, new model research, or deployment gates. Reproducibility and input validity are requirements of the one benefit. A second independent benefit requires an explicit user change to scope.
 
 This repository currently contains a specification only. Keep documentation honest about implemented behavior, planned work, and measured results. Do not add installation instructions or executable command examples until they work.
@@ -11,7 +13,7 @@ This repository currently contains a specification only. Keep documentation hone
 ## Evaluation discipline
 
 - Follow docs/EVALUATION.md. Freeze the dataset, partitions, metric, preprocessing, artifacts, and thresholds before opening evaluation results.
-- Keep evaluation labels outside decoder code; require causal inputs and fixed state-reset rules.
+- In the public example, keep evaluation labels outside decoder code and require causal inputs and declared reset rules. For imported outputs, record producer-supplied protocol provenance; do not claim the comparator independently verifies model execution or training independence.
 - Preserve every selected session in results, including invalid rows. Do not hide failed comparisons or change denominators to improve scores.
 - Use synthetic fixtures to verify the evaluator, not to claim biological robustness or decoder improvement.
 - Record tested revision, dependency environment, platform, and reproduction evidence.

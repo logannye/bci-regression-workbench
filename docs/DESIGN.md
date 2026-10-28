@@ -2,55 +2,49 @@
 
 Status: proposed, not implemented.
 
-## Core behavior
+## Product boundary
 
-Given a baseline, a candidate, and a fixed set of sessions, return an inspectable answer to where the candidate's prediction error increased. All design decisions must support this behavior or the validity of its evidence.
+The existing evaluator owns model loading, preprocessing, inference, accelerator use, state resets, and prediction generation. The workbench consumes its frozen outputs, validates that they can be scored together, and identifies session-level RMSE increases.
 
-## Inputs
+The primary entry point is one Python comparison function called at evaluation completion. It accepts baseline outputs, candidate outputs, and a frozen evaluation specification; it returns the comparison table and saves the report and scoring evidence. This is an interface contract, not a currently callable API.
 
-### Session manifest
+No model adapter or access to model binaries is required. Baseline and candidate may run in different model environments. The same comparison function can be called from an existing job runner without a separate orchestration system. A standalone CLI, native application, and hosted UI are outside the first implementation.
 
-The manifest selects explicit session IDs and source identities before candidate evaluation. It records:
+## Minimal input contract
 
-- Dataset identity, reuse terms, subject/session grouping, and evaluation membership.
-- Immutable file hashes or retained source versions, plus the source catalog revision.
-- Ordered sample IDs, timestamps, input feature names/order, and trial/reset boundaries.
-- Two-dimensional target velocity, units, coordinate convention, and fixed prediction horizon.
-- Predeclared valid-sample masks and reasons for any exclusions.
-- The development/evaluation split and the provenance of preprocessing parameters.
+| Input | Required contents |
+| --- | --- |
+| Evaluation table | Session ID, stable sample ID, target timestamp, target vx/vy, and the predeclared eligibility mask with exclusion reasons. |
+| Baseline predictions | Session ID, sample ID, predicted vx/vy; one finite prediction per required scoring key. Its bundle binds the output digest to the producer-declared evaluation-set identity, units, coordinates, and horizon. |
+| Candidate predictions | The same output schema and its own bound evaluation/target-semantics declaration. |
+| Comparison specification | Explicit baseline/candidate run identities and output digests; evaluation-table content identity; target units, coordinates, prediction horizon, and reporting/numerical tolerances. |
 
-Selection by an unrecorded query against mutable "latest" data is insufficient for reproduction. Historical training overlap cannot be inferred from model weights: supplied training provenance must establish the comparison's declared held-out status, or the report must say that status is unverified.
+Scope the first implementation to typed tables and Parquet files. A one-time mapping translates the existing evaluator's column names. Do not introduce a general plugin or ingestion system.
 
-### Fixed decoder pair
+The evaluation-set identity binds sample keys, targets, target semantics, and eligibility, not just a name such as "test." Capture a reference to the shared source recordings. Model/checkpoint identity, generation-code revision, preprocessing configuration, training provenance, and state policy are supplied by the producer when available. Record absent provenance as unverified; do not make engineers re-enter metadata already emitted by their evaluator.
 
-Both artifacts include configuration and fitted preprocessing parameters. The adapter exposes only initialization/reset and chronological prediction. There is no fitting, label access, or update method in version one.
+Input representation and preprocessing may legitimately change between models. Those differences must be recorded, but the comparison requires the same evaluation examples and target semantics, not identical internal feature arrays.
 
-The evaluator owns labels. Each prediction uses only input available up to its declared prediction time. Fitted normalizers and other learned transforms must come from the declared training procedure. No full-evaluation-session normalization or future-looking smoothing is permitted.
+## Baseline and data access
 
-Use one simple decoder family for the first implementation. Both versions receive identical feature arrays and sample identities. Each starts from its specified initial state at the same session/trial boundaries; candidate state must never leak into baseline state or across runs.
+Select and pin the baseline once for a fixed evaluation set. Resolve any human-readable alias to an immutable run identity before comparison and show that identity in the report. Never automatically substitute the latest or best-looking run. A baseline change must be explicit.
 
-## datarepo's role
+Reuse saved baseline predictions. A missing or incompatible baseline produces an actionable comparison error; the tool does not silently run a model, select another baseline, or shrink the evaluation cohort.
 
-Use the upstream [datarepo](https://github.com/neuralinkcorp/datarepo) interfaces to resolve explicit sessions and expose typed comparison rows. Keep recordings in their existing files. Pin the tested dependency revision/version when the implementation begins.
+Use upstream [datarepo](https://github.com/neuralinkcorp/datarepo) as a thin table-loading example for exported prediction/target Parquet and the resulting comparison rows. Existing users can pass their queried typed tables directly. Record file content hashes and pin the tested dependency version when implemented. Raw recordings and existing catalogs stay where they are.
 
-For the first local Parquet integration, record file content hashes and reject changed sources. If the chosen dataset requires Delta-backed access, reuse its existing transaction-version support and require retained historical files. Implement only the source path actually needed by the selected dataset.
+## Alignment and scoring
 
-The scoring path should operate on validated arrays after loading. No custom data lake, universal ingestion layer, replacement catalog, hosted service, or credentials manager is required. A `datarepo` catalog alone does not guarantee immutable inputs.
+The declared evaluation table drives the comparison. Join by stable session/sample keys, never file row position, nearest timestamp, or the intersection of available predictions. Report extra rows and apply only the evaluation manifest's explicit selection rule. Missing or duplicate required predictions invalidate the affected session.
 
-## Comparison procedure
+Verify each bundle's declared evaluation-set identity, target units, coordinates, and prediction horizon against the frozen specification. Check output dimensions, finite values, and content identities. These checks compare producer declarations; numerical values alone cannot establish their physical meaning. Compute the metric in [Evaluation](EVALUATION.md) on identical eligible keys for both runs. Preserve every selected session, including invalid rows. An invalid required session makes the overall comparison incomplete.
 
-1. Resolve and validate the full manifest and model artifacts.
-2. For each session, feed the same causally available feature sequence to each fixed decoder.
-3. Match predictions to the predeclared sample IDs and verify dimensions and finite values.
-4. Score both outputs on the same valid-sample mask using the one metric in [Evaluation](EVALUATION.md).
-5. Emit every session's result, including explicit invalid results. Sort valid comparisons by the candidate-minus-baseline error difference.
+The comparator can verify this pairing and arithmetic. Prediction files cannot establish whether inference was causal, reset rules were followed, or training avoided evaluation data. Those are producer-owned protocol claims and must be attributed as such. Unknown training provenance does not prevent descriptive scoring, but it prevents describing the result as verified held-out evaluation.
 
-No wall-clock pacing or latency measurement is needed. "Replay" means ordered, causal evaluation of recorded inputs.
+## One output, with supporting detail
 
-## Outputs
+The Python return value is the full session table. A self-contained local report shows baseline/candidate IDs, evaluation-set identity, completeness, and the sessions with increased error. It lists every session and offers a direct session detail containing the paired error trace and supporting sample references. That detail substantiates a regression; it does not diagnose its cause.
 
-The first output is a plain table with session ID, evaluated sample count, baseline RMSE, candidate RMSE, absolute difference, validity, and any reason for invalidity. A small report explains the metric and highlights regressions under the predeclared reporting tolerance. All sessions remain visible.
+The same call writes the result table, report, and comparison specification beside the existing evaluation artifacts. The scoring bundle retains predictions, targets, masks, code/environment identity, and source hashes or retained immutable references. It must contain enough evidence to recompute the table without model loading. Data redistribution remains governed by source licenses.
 
-The reproduction bundle records the manifest, source/model digests, configurations, code revision, dependency environment, valid masks, paired predictions, labels or resolvable label references, and result table. Raw data redistribution is subject to its license; reproducibility may require the reader to retrieve permitted source files separately.
-
-The report identifies an affected session and a measurable difference. It does not claim to explain the biological cause or approve a model update. The minimal interface and exact file formats will be implemented only after the evaluation specification and dataset are fixed.
+Recomputing saved scores is the version-one reproducibility promise. Re-running model inference belongs to the original evaluator. Preserve its supplied configuration/artifact references for an engineer to use there, without automatically executing embedded commands.
