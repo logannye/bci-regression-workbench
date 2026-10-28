@@ -75,9 +75,9 @@ See [Localization](LOCALIZATION.md) for the fixed contract and validation. This 
 - [x] Add an explicitly bound inferred cursor-to-target vector kind while preserving default velocity behavior and all scoring/localization arithmetic.
 - [x] Run the two frozen ridge models, preserve every selected day's result, and independently audit the exports and scores.
 - [x] Reproduce the human comparison with the recorded source and validate the actual desktop/mobile report.
-- [ ] Publish the bounded human report as the primary demo and preserve the completed Indy report and experiment separately.
+- [x] Publish the bounded human report as the primary demo and preserve the completed Indy report and experiment separately.
 
-The target is a displacement proxy in native dataset coordinate units, not measured intention or velocity. Both example models are distinct from T11's original online LSTM. Recorded human BCI use provides relevant source data; the offline comparison does not establish improved live control. A favorable candidate result is not an acceptance requirement. Execution and publication status must be recorded from completed evidence, not inferred from this plan.
+The target is a displacement proxy in native dataset coordinate units, not measured intention or velocity. Both example models are distinct from T11's original online LSTM. Recorded human BCI use provides relevant source data; the offline comparison does not establish improved live control. A favorable candidate result is not an acceptance requirement. The [validation receipt](human-demo/validation-v1.json) records completed local, hosted, browser and live-publication checks. Publication followed PR #4; all six live files matched the reviewed snapshot.
 
 ## Current state
 

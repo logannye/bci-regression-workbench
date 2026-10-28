@@ -638,5 +638,84 @@
     "Browser acceptance tests the published report, not usability with Neuralink engineers.",
     "Hosted software checks use synthetic fixtures; the real recording run and independent audit were executed locally on the recorded platform.",
     "No models were refitted for publication."
-  ]
+  ],
+  "final_pull_request_checks": {
+    "revision": "8885a4d381f566a90c89058762edbab2c078164f",
+    "status": "passed",
+    "comparison_validation": "https://github.com/logannye/bci-regression-workbench/actions/runs/40761222408",
+    "publication_validation": "https://github.com/logannye/bci-regression-workbench/actions/runs/40761222512",
+    "jobs_passed": [
+      "core (3.10)",
+      "core (3.12)",
+      "core (3.14)",
+      "datarepo",
+      "human-demo",
+      "validate"
+    ]
+  },
+  "merged_validation": {
+    "revision": "32f1492aea0227f53b5448f1afe599c5ffd8f47f",
+    "status": "passed",
+    "run_url": "https://github.com/logannye/bci-regression-workbench/actions/runs/40761364183",
+    "pull_request": "https://github.com/logannye/bci-regression-workbench/pull/4"
+  },
+  "live_publication": {
+    "merge_revision": "32f1492aea0227f53b5448f1afe599c5ffd8f47f",
+    "url": "https://logannye.github.io/bci-regression-workbench/",
+    "deployment_run": "https://github.com/logannye/bci-regression-workbench/actions/runs/40761364111",
+    "status": "passed",
+    "files": [
+      {
+        "path": "index.html",
+        "status": 200,
+        "bytes": 422492,
+        "sha256": "9b4e8e98d82075e0ef76f27f27d5c251f5392a9f529ffd44a8667d011e1cb7ae",
+        "matches_committed_file": true
+      },
+      {
+        "path": "indy/index.html",
+        "status": 200,
+        "bytes": 110430,
+        "sha256": "098293df89ff3d316bf5787ad85ca266af2308ec83d9d952dea417e8b2e42616",
+        "matches_committed_file": true
+      },
+      {
+        "path": "indy/publication.json",
+        "status": 200,
+        "bytes": 1619,
+        "sha256": "2e7f57e8dcbc500d6282b5ecabd295ca41e65a9a23c930a0435f712dc9d0634d",
+        "matches_committed_file": true
+      },
+      {
+        "path": "indy/session_metrics.csv",
+        "status": 200,
+        "bytes": 374,
+        "sha256": "464b24ae5fea8b9d0bfe106b17f785fd11db461e9aa025d53dd657f6c97f9870",
+        "matches_committed_file": true
+      },
+      {
+        "path": "publication.json",
+        "status": 200,
+        "bytes": 1408,
+        "sha256": "09079203acc89544773f94d35162c19456c4dd4b0f689608729bd89c5de7f9af",
+        "matches_committed_file": true
+      },
+      {
+        "path": "session_metrics.csv",
+        "status": 200,
+        "bytes": 1241,
+        "sha256": "b62a7d28e42d91d2e048ed74480fa58447fb8765e557a03713ca216461a0b95f",
+        "matches_committed_file": true
+      }
+    ],
+    "browser_checks": {
+      "human_sessions": 12,
+      "expected_and_scored_samples": 324732,
+      "inferred_target_notice_visible": true,
+      "session_selection": "passed",
+      "linked_indy_sessions": 3,
+      "linked_indy_samples": 14052,
+      "console_errors_and_warnings": []
+    }
+  }
 }
