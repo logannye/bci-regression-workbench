@@ -24,15 +24,17 @@ Completed for the synthetic example at the revision recorded in [Validation](VAL
 
 ## 3. Demonstrate on public recordings
 
-- [ ] Select one multi-session dataset with compatible neural features and two-dimensional velocity labels; verify access and reuse terms.
-- [ ] Establish the example's grouping, training/evaluation boundaries, source identities, and target semantics before candidate evaluation.
-- [ ] Use two fixed decoder artifacts in a separate example producer; keep its inference logic out of the product interface.
-- [ ] Freeze the comparison specification, produce predictions, and preserve all session results.
-- [ ] Reproduce the scores from the output bundle and record the tested revision/platform.
+- [x] Select one multi-session dataset with compatible neural features and two-dimensional velocity labels; verify access and reuse terms.
+- [x] Establish the example's grouping, training/evaluation boundaries, source identities, and target semantics before candidate evaluation.
+- [x] Use two fixed decoder artifacts in a separate example producer; keep its inference logic out of the product interface.
+- [x] Freeze the comparison specification, produce predictions, and preserve all session results.
+- [x] Reproduce the scores from the output bundle and record the tested revision/platform.
 - [ ] Present the workflow and record the remaining questions about a real engineer's output format and baseline conventions.
 
-Done when another engineer can inspect and recompute a public-data comparison and understand the small output mapping needed to try their own permitted results.
+The public experiment is complete: source-only ridge fits on the September 15 recording produced a complete comparison for September 16, September 21, and September 27, with 4,684 eligible samples per session. All three candidate RMSE values were lower; the descriptive report uses `tolerance=None` and does not force a regression. The independent audit and score reproduction passed hosted and locally. [Public demonstration results](public-demo/RESULTS.md) records the exact run and evidence.
+
+The remaining step is to present that evidence to an intended engineer and record the output-format and baseline-convention questions. No such usability or integration validation is claimed.
 
 ## Current state
 
-The first two milestones are complete for the tested synthetic workflow, including hosted core checks, real datarepo/Parquet integration, report interaction, and scoring reproduction. Exact evidence and remaining limits are in [Validation](VALIDATION.md). No public neuroscience dataset has been evaluated, no decoder has been trained or executed by the product, and no intended-engineer usability study or Neuralink integration has been performed.
+The first two milestones are complete for the tested synthetic workflow, including hosted core checks, real datarepo/Parquet integration, report interaction, and scoring reproduction; see [Validation](VALIDATION.md). The public-recording experiment and reproduction are also complete, with all selected sessions preserved in [Public demonstration results](public-demo/RESULTS.md). Models were trained and executed only by the separate example producer. Intended-engineer presentation/usability validation and Neuralink integration remain unperformed.

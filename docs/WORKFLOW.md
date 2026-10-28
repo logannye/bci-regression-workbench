@@ -1,6 +1,6 @@
 # Workflow
 
-Status: the Python integration point, local report, and saved-baseline synthetic example are implemented and checked as recorded in [Validation](VALIDATION.md). The workflow below remains a proposed fit for Neuralink; its internal evaluator, experiment tracker, and review interfaces are unknown.
+Status: the Python integration point, local report, and saved-baseline synthetic example are implemented and checked as recorded in [Validation](VALIDATION.md). A separate public-recording producer has also exported fixed predictions into the same comparison/report path, with independent audit and scoring reproduction recorded in [Public demonstration results](public-demo/RESULTS.md). The workflow below remains a proposed fit for Neuralink; its internal evaluator, experiment tracker, and review interfaces are unknown.
 
 ## Fit the existing model-change loop
 
@@ -54,6 +54,8 @@ Start with a fresh example directory. The first invocation saves the evaluation 
 
 This demonstrates the product's reuse path. It does not execute neural models or establish integration with any team's evaluator.
 
+The completed [public-recording demonstration](public-demo/RESULTS.md) supplies real neural-recording predictions through the same interface. Its separate producer fits two fixed ridge models on one source recording and exports predictions for three evaluation sessions before scoring. All three candidate session RMSE values were lower, and `tolerance=None` preserves descriptive deltas. The saved bundle supports scoring reproduction without rerunning either model; see the [reproduction instructions](public-demo/REPRODUCE.md). This demonstrates the output contract on public recordings, not adoption by an intended engineer.
+
 ## Friction budget
 
 These goals are checked in the synthetic workflow, with browser interaction evidence in [Validation](VALIDATION.md). They are not measurements of setup effort, usability, or adoption by an intended engineer:
@@ -65,4 +67,4 @@ These goals are checked in the synthetic workflow, with browser interaction evid
 - No new server, login, data migration, or dependency on Neuralink's Electron fork.
 - No silent baseline replacement, evaluation-set changes, or deletion of invalid sessions in pursuit of convenience.
 
-Browser inspection of the synthetic report confirmed that the session table is visible on opening and a single session-row selection reaches the paired error trace. Retain this flow for the future public-recording demonstration. Verify actual integration effort with an engineer before claiming it fits Neuralink's workflow. The key unknowns are retained prediction granularity, stable sample identities, and how the team names a reference run and evaluation set.
+Browser inspection of the synthetic report confirmed that the session table is visible on opening and a single session-row selection reaches the paired error trace. The public-recording demonstration uses the same report structure. Verify actual integration effort with an engineer before claiming it fits Neuralink's workflow. The key unknowns are retained prediction granularity, stable sample identities, and how the team names a reference run and evaluation set.

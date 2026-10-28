@@ -1,10 +1,12 @@
 # Design
 
-Status: the first comparison, report, and scoring-reproduction slice is implemented and validated with synthetic predictions. Hosted datarepo integration and report-interaction checks also passed at the revision recorded in [Validation](VALIDATION.md). Public-recording evaluation and a Neuralink integration remain unperformed.
+Status: the comparison, report, and scoring-reproduction slice is implemented and validated with synthetic predictions and a completed public-recording demonstration. Hosted datarepo integration and synthetic report-interaction checks passed at the revision recorded in [Validation](VALIDATION.md). The public run, independent audit, and scoring reproduction are recorded in [Public demonstration results](public-demo/RESULTS.md). Intended-engineer usability and Neuralink integration remain unperformed.
 
 ## Product boundary
 
 The existing evaluator owns model loading, preprocessing, inference, accelerator use, state resets, and prediction generation. The workbench consumes its frozen outputs, validates that they can be scored together, and identifies session-level RMSE increases.
+
+The [public-recording example](../examples/public_recording/run.py) demonstrates this boundary with a separate, frozen ridge-model producer. It exports both models' predictions before reading evaluation target values, then passes those saved outputs to the same comparison API. Its model fitting and independent protocol audit are example-specific; they do not add a model runner to the product or establish training provenance for arbitrary imported outputs.
 
 The entry point is `compare(evaluation, baseline, candidate, *, tolerance=None, numerical_tolerance=1e-12, output_dir=None, description="")`. It accepts an `EvaluationSet` and two `PredictionSet` objects and returns a result dictionary. The complete session table is `result["sessions"]`. Supplying a new `output_dir` also writes the report and scoring evidence; omitting it performs an in-memory comparison.
 

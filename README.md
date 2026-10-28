@@ -4,13 +4,19 @@
 
 Call a small Python function at the end of an existing evaluation job. It compares saved two-dimensional velocity predictions on the same declared samples, writes a session-level RMSE report, and preserves the evidence needed to recompute it. Your evaluator continues to own model execution and data access.
 
-**Status: started, in progress.** The first implementation includes keyed comparison, a self-contained HTML report, CSV results, and scoring reproduction from a JSON bundle. The demonstration uses constructed predictions. Hosted tests, packaging, and the optional datarepo example pass; see [Validation](docs/VALIDATION.md). No public neuroscience dataset or Neuralink internal integration has been evaluated.
+**Status: started, in progress.** The first implementation includes keyed comparison, a self-contained HTML report, CSV results, and scoring reproduction from a JSON bundle. The synthetic example, real datarepo integration, and a frozen public neural-recording comparison have passed their checks. See [implementation validation](docs/VALIDATION.md) and [public-demo results](docs/public-demo/RESULTS.md). Neuralink internal integration and intended-engineer usability remain untested.
 
 An independent open-source project by Logan Nye, designed for Neuralink's BCI ML engineering team. (This is not an official Neuralink project or an implemented integration with its internal systems.)
 
 The intended user is a Neuralink BCI ML engineer reviewing a proposed decoder change to determine whether or not it is worth keeping. It is informed by Neuralink's public [ML role](https://job-boards.greenhouse.io/neuralink/jobs/5663271003), which explicitly mentions building evaluation infrastructure for model updates.
 
 > On the same recorded sessions, where did candidate B become WORSE than baseline A?
+
+## Public recording demonstration
+
+A prospectively frozen comparison trained both ridge decoders on one public Indy recording day and evaluated three later days. The candidate added recent neural history. Its error was lower on all three sessions, with all 14,052 expected evaluation bins scored; no session-level increase was observed. The full comparison and independent prediction audit reproduced on Linux and macOS without refitting.
+
+[Read the per-session results and limits](docs/public-demo/RESULTS.md), [inspect the frozen plan](docs/public-demo/PLAN.md), or [reproduce the evidence](docs/public-demo/REPRODUCE.md). This is offline decoding of measured physical-reaching velocity from one macaque, not a Neuralink participant evaluation. The core library continues to consume existing predictions; the example producer is separate.
 
 ## Try the synthetic demonstration
 
@@ -105,9 +111,9 @@ The single benefit is exposing reproducible session-level regressions in existin
 
 ## What will determine whether the project is practically useful
 
-Tests and the constructed demonstration are implementation checks. A frozen public-recording demonstration and validation with an intended engineer remain future work. No Neuralink data or model code is included.
+Tests and the constructed demonstration are implementation checks. The public-recording demonstration is complete; validation with an intended engineer remains future work. No Neuralink data or model code is included.
 
-If the future public recordings contain physical reaching rather than attempted cursor movement, that demonstration will be described as an offline movement-decoding example, not a Neuralink participant evaluation. Deployment decisions remain outside this first iteration; any future expansion should depend on practical feedback from the ML engineering team.
+The selected public recordings contain physical reaching and are described as an offline movement-decoding example. Deployment decisions remain outside this first iteration; any future expansion should depend on practical feedback from the ML engineering team.
 
 Run the standard-library checks with:
 

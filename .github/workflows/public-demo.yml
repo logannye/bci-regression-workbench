@@ -1,13 +1,9 @@
 name: Public recording demo
 
 on:
-  pull_request:
-    paths:
-      - 'examples/public_recording/**'
-      - 'tests/test_public_*.py'
-      - 'docs/public-demo/protocol-v1.json'
-      - 'requirements-public-demo.txt'
-      - '.github/workflows/public-demo.yml'
+  # Recording fits are explicit experiments, not an automatic consequence of
+  # documentation pushes. The original prospective execution is retained in
+  # the public-demo result record; dispatch again only for a declared rerun.
   workflow_dispatch:
 
 permissions:
