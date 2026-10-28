@@ -68,6 +68,17 @@ See [Report interface](REPORT-UI.md) for local/hosted results and source-compati
 
 See [Localization](LOCALIZATION.md) for the fixed contract and validation. This is an exploratory way to locate evidence, not an additional session regression flag or a causal explanation.
 
+## 7. Demonstrate the same workflow on public human BCI recordings
+
+- [x] Verify MINDFUL access, archive identity, T11 session structure, labels, trial bounds, and released exclusions.
+- [x] Commit the [human evaluation plan](human-demo/PLAN.md) before fitting or comparing models: earliest three days for training, all twelve later days for evaluation, with 324,732 eligible evaluation samples.
+- [x] Add an explicitly bound inferred cursor-to-target vector kind while preserving default velocity behavior and all scoring/localization arithmetic.
+- [ ] Run the two frozen ridge models, preserve every selected day's result, and independently audit the exports and scores.
+- [ ] Reproduce the human comparison with the recorded source and validate the actual desktop/mobile report.
+- [ ] Publish the bounded human report as the primary demo and preserve the completed Indy report and experiment separately.
+
+The target is a displacement proxy in native dataset coordinate units, not measured intention or velocity. Both example models are distinct from T11's original online LSTM. Recorded human BCI use provides relevant source data; the offline comparison does not establish improved live control. A favorable candidate result is not an acceptance requirement. Execution and publication status must be recorded from completed evidence, not inferred from this plan.
+
 ## Current state
 
-The first two milestones are complete for the previously tested synthetic workflow, including hosted core checks, real datarepo/Parquet integration, report interaction, and scoring reproduction; see [Validation](VALIDATION.md). The public-recording experiment and reproduction are also complete, with all selected sessions preserved in [Public demonstration results](public-demo/RESULTS.md). Models were trained and executed only by the separate example producer. The focused reusable-reference change passed its own local tests, saved-output replay, and hosted checks in [Pinned-hook validation](PINNED-VALIDATION.md). Intended-engineer presentation/usability validation and Neuralink integration remain unperformed.
+The first two milestones are complete for the previously tested synthetic workflow, including hosted core checks, real datarepo/Parquet integration, report interaction, and scoring reproduction; see [Validation](VALIDATION.md). The Indy experiment and reproduction are also complete, with all selected sessions preserved in [Indy results](public-demo/RESULTS.md). Models were trained and executed only by the separate example producer. The human experiment has its own frozen protocol and does not replace that evidence. The focused reusable-reference change passed its own local tests, saved-output replay, and hosted checks in [Pinned-hook validation](PINNED-VALIDATION.md). Intended-engineer presentation/usability validation and Neuralink integration remain unperformed.

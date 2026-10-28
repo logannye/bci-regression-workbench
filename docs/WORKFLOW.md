@@ -23,6 +23,8 @@ Repeated comparisons belong to a declared development regression set. They do no
 
 An engineer maps the current evaluator's session/sample keys and two-dimensional predictions to the small table contract. Both constructors accept `columns={"canonical_name": "source_name"}` for explicit renaming. The evaluation table supplies the reference labels and fixed eligible set. The integration code can pass run/configuration metadata already emitted by the evaluator through `provenance`; the workbench does not discover that metadata automatically.
 
+Declare label meaning at this boundary. The default `target_kind="velocity"` preserves the existing velocity contract. A producer exporting inferred cursor-to-target displacement instead supplies `target_kind="inferred_cursor_to_target_vector"` and the native coordinate units when constructing its `EvaluationSet`. Existing canonical component names and column mapping remain available. The kind is bound to evaluation and prediction identities, so a velocity pin cannot silently become an inferred-vector pin. See [target semantics](EVALUATION.md#declared-target-semantics).
+
 The engineer exports an `EvaluationSet` and baseline `PredictionSet` while running the baseline's actual evaluation. `PinnedComparison.create(reference_dir, evaluation=..., baseline=..., prediction_columns=..., tolerance=...)` persists them together with fixed reporting settings. It rejects incomplete baseline coverage and refuses any existing reference directory. New settings or a new evaluation set require an explicit new pin.
 
 At evaluator startup, `PinnedComparison.load(reference_dir)` verifies the pin's content hashes and configuration. At evaluation completion, call:
@@ -46,7 +48,7 @@ The first report view answers:
 2. Is the comparison complete, and which sessions became worse beyond the chosen tolerance?
 3. Which session should I inspect first, and what exact observations support that finding?
 
-Sort valid sessions by descending candidate-minus-baseline RMSE in velocity units, with invalid sessions prominently listed. Keep the full table available. A pooled score is secondary context. When no session exceeds tolerance, say so without labeling the candidate safe or ready to ship.
+Sort valid sessions by descending candidate-minus-baseline RMSE in the declared target units, with invalid sessions prominently listed. Keep the full table available. A pooled score is secondary context. When no session exceeds tolerance, say so without labeling the candidate safe or ready to ship.
 
 A session-row link selects its evidence in the adjacent pane, or in the stacked pane on narrow screens. The selected session has a direct URL fragment; native anchors keep every session accessible without JavaScript. Supporting samples and full provenance remain available in disclosures. See [Report interface](REPORT-UI.md) for the interaction and evidence-compatibility contract. `reproduce(bundle_dir)` verifies the saved artifacts and recomputes the comparison without loading models. Users return to their existing evaluator when they need to regenerate predictions or investigate model internals.
 
@@ -66,7 +68,9 @@ Start with a fresh example directory. Initialization stores the evaluation, base
 
 The fixture uses the producer's `recording`, `bin`, `vx`, and `vy` fields. They are mapped once at initialization. The normal candidate path constructs its actual evaluation identity and predictions, then adds one comparison call. It contains no reference creation, baseline prediction construction, or repeated settings entry. This verifies a concrete integration pattern, not integration with Neuralink's evaluator.
 
-The completed [public-recording demonstration](public-demo/RESULTS.md) supplies real neural-recording predictions through the same interface. Its separate producer fits two fixed ridge models on one source recording and exports predictions for three evaluation sessions before scoring. All three candidate session RMSE values were lower, and `tolerance=None` preserves descriptive deltas. The saved bundle supports scoring reproduction without rerunning either model; see the [reproduction instructions](public-demo/REPRODUCE.md). This demonstrates the output contract on public recordings, not adoption by an intended engineer.
+The completed [Indy demonstration](public-demo/RESULTS.md) supplies real neural-recording predictions through the same interface. Its separate producer fits two fixed ridge models on one source recording and exports predictions for three evaluation sessions before scoring. All three candidate session RMSE values were lower, and `tolerance=None` preserves descriptive deltas. The saved bundle supports scoring reproduction without rerunning either model; see the [reproduction instructions](public-demo/REPRODUCE.md). This demonstrates the output contract on public recordings, not adoption by an intended engineer.
+
+The separately [frozen human example](human-demo/PLAN.md) follows the same interface using MINDFUL T11 cursor recordings. It trains two fixed ridge decoders on the first three days and evaluates both on all twelve later days with the same 324,732 eligible samples. The baseline uses the current neural bin and the candidate adds recent history. Its evaluation explicitly declares inferred cursor-to-target vectors; the report explains that these are displacement proxies, not measured intended velocities. It does not compare against the original online decoder or infer how a different decoder would perform during live feedback. No extra daily workflow or report controls are introduced.
 
 ## Friction budget
 

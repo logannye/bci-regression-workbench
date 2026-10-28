@@ -2,7 +2,7 @@
 
 **See which recording sessions got worse after a decoder change, even when the overall score improves.**
 
-### [Explore the public demo →](https://logannye.github.io/bci-regression-workbench/)
+### [Explore the human BCI demo →](https://logannye.github.io/bci-regression-workbench/)
 
 **No installation or account required.** Open a completed comparison using public neural recordings, select a session, and inspect the baseline and candidate side by side.
 
@@ -11,11 +11,11 @@ A better average can hide a worse recording day. BCI Regression Workbench gives 
 | At a glance | |
 | --- | --- |
 | **Use it when** | Reviewing a proposed decoder change after running your normal offline evaluation. |
-| **Give it** | Fixed reference labels, sample eligibility, and baseline/candidate velocity predictions keyed by session and sample. |
+| **Give it** | Fixed two-dimensional reference labels, sample eligibility, and baseline/candidate predictions keyed by session and sample. |
 | **Get back** | An interactive HTML report, a CSV of session scores, and a saved bundle for reproducing the comparison. |
 | **Daily workflow** | Pin the baseline and column mapping once. Each candidate evaluation writes its own report. |
 
-**Existing evaluator → saved predictions → session comparison → inspect changed sessions.** Your model code, inference environment, and data access stay in your existing evaluation workflow. The current metric is two-dimensional velocity RMSE: lower means less prediction error.
+**Existing evaluator → saved predictions → session comparison → inspect changed sessions.** Your model code, inference environment, and data access stay in your existing evaluation workflow. The metric is two-dimensional vector RMSE: lower means closer agreement with the declared reference labels. Velocity remains the default target type; the human demo explicitly declares inferred cursor-to-target vectors.
 
 An independent open-source project by Logan Nye, designed for Neuralink's BCI ML engineering team. It has no official Neuralink affiliation or internal integration. The [sources and assumptions](docs/SOURCES.md) explain the public evidence behind this intended use.
 
@@ -27,11 +27,13 @@ An independent open-source project by Logan Nye, designed for Neuralink's BCI ML
 2. **Select a recording session.** The evidence pane immediately shows where the candidate added the most error in a fixed 24-scored-sample window, with exact sample IDs, timestamps, and a full-resolution paired trace. The session's original scores remain visible. If no window has net added error, the report says so.
 3. **Expand the evidence you need.** Open **Supporting samples** for that window's values, **Full-session trace** for context, or **Identity & scoring details** for run identities and provenance. A local loss can occur in an overall-improved session; it does not change the session's regression flag. See the [fixed localization rule and checks](docs/LOCALIZATION.md).
 
-The [hosted report](https://logannye.github.io/bci-regression-workbench/) compares two fixed ridge decoders trained on one public Indy recording day and evaluated on three later days. The candidate adds recent neural history. **All three sessions have lower candidate error; all 14,052 expected evaluation bins were scored.** This example contains no session-level error increase, and its differences are descriptive because no regression-reporting threshold was specified. The separate [synthetic example](#try-the-synthetic-demonstration) deliberately includes a worsened session to demonstrate that failure case.
+The [human demo](https://logannye.github.io/bci-regression-workbench/) uses MINDFUL T11: public implanted-BCI recordings from one person performing a cursor task. Its [frozen evaluation plan](docs/human-demo/PLAN.md) compares a ridge decoder using the current neural bin with one adding three previous bins. Both train on the earliest three recording days and evaluate on **all twelve later days, with 324,732 eligible samples**. The model comparison follows the same pin-baseline, export-candidate, inspect-session workflow.
 
-The experiment was frozen before evaluation, and the saved comparison and independent prediction audit reproduced on Linux and macOS without refitting. [Read the results and limits](docs/public-demo/RESULTS.md), [inspect the frozen plan](docs/public-demo/PLAN.md), or [reproduce the evidence](docs/public-demo/REPRODUCE.md).
+**Human targets are inferred cursor-to-target displacement vectors, not measured intended velocities.** Lower error means closer agreement with that proxy. The two example models are not the participant's original online LSTM decoder. Although the source recordings were collected during actual BCI use, our comparison is offline and cannot establish better live control. The released neural features include noncausal preprocessing, so this is not a timing or end-to-end causality demonstration.
 
-The recordings capture physical reaching by one macaque. This demonstrates an offline comparison workflow; it does not establish performance on Neuralink participants or in interactive BCI control. The hosted page is a completed report to explore, not a service for uploading recordings or running models.
+The earlier [Indy macaque demo](https://logannye.github.io/bci-regression-workbench/indy/) remains available with its original evidence. Two fixed ridge decoders trained on one recording day and evaluated on three later days; **all three sessions had lower candidate error, with all 14,052 expected evaluation bins scored**. Its experiment was frozen before evaluation, and the saved comparison and independent prediction audit reproduced on Linux and macOS without refitting. [Results and limits](docs/public-demo/RESULTS.md), [frozen plan](docs/public-demo/PLAN.md), and [reproduction instructions](docs/public-demo/REPRODUCE.md) preserve that completed experiment.
+
+The separate [synthetic example](#try-the-synthetic-demonstration) deliberately includes a worsened session. Real-data demos retain every selected session and do not require a favorable result or a regression. These independent public datasets do not establish performance on Neuralink participants. The hosted pages are reports to explore, not services for uploading recordings or running models.
 
 ## Try the synthetic demonstration
 
@@ -54,6 +56,8 @@ This tradeoff checks the comparator's behavior. It is not a result about neural 
 Map your evaluator's output columns and pin its baseline once. Each subsequent evaluation supplies the candidate outputs and current evaluation identity, then writes a report beside the job's other artifacts. The core uses Python's standard library and runs locally without an account or server.
 
 Inputs are records keyed by `session_id` and `sample_id`. The evaluation table holds fixed targets and eligibility; each prediction bundle binds its outputs to that evaluation identity. Columns can be mapped once from the existing evaluator's names.
+
+For inferred cursor-to-target vectors, set `target_kind="inferred_cursor_to_target_vector"` when constructing the evaluation and declare the source coordinate units. The default remains `target_kind="velocity"`. The kind is bound to the saved evaluation and predictions; a changed kind requires a new reference. The report labels inferred vectors explicitly while the scoring formula and session workflow stay the same. See [target semantics](docs/EVALUATION.md#declared-target-semantics) for the narrow supported distinction.
 
 The reusable hook keeps the reference and reporting settings in a verified local directory. The integration outline is:
 
@@ -88,7 +92,7 @@ The daily call needs no baseline selection, column mapping, or tolerance entry. 
 
 The original `EvaluationSet`, `PredictionSet`, and `compare` APIs remain available for callers that already manage this configuration. Both paths produce the same report format. The hook only organizes saved inputs and settings; it cannot verify that exported outputs came from the declared model or that the producer supplied truthful metadata.
 
-The returned dictionary contains all session rows under `result["sessions"]`, completeness, issues, pooled context when complete, and paired samples. A reporting tolerance is an absolute increase in RMSE in the declared velocity units; `tolerance=None` reports descriptive differences without categorical regression flags.
+The returned dictionary contains all session rows under `result["sessions"]`, completeness, issues, pooled context when complete, and paired samples. A reporting tolerance is an absolute increase in RMSE in the declared target units; `tolerance=None` reports descriptive differences without categorical regression flags.
 
 ## Read and reproduce the result
 
@@ -126,9 +130,9 @@ The single benefit is exposing reproducible session-level regressions in existin
 
 ## What will determine whether the project is practically useful
 
-Tests and the constructed demonstration are implementation checks. The public-recording demonstration is complete. The pinned hook addresses observed integration boilerplate; whether an intended engineer has stable keyed exports, needs this view, or already has an equivalent remains unvalidated. No Neuralink data or model code is included.
+Tests and the constructed demonstration are implementation checks. The completed Indy demonstration and the separately frozen human experiment retain distinct evidence and target definitions. The pinned hook addresses observed integration boilerplate; whether an intended engineer has stable keyed exports, needs this view, or already has an equivalent remains unvalidated. No Neuralink data or model code is included.
 
-The selected public recordings contain physical reaching and are described as an offline movement-decoding example. Deployment decisions remain outside this first iteration; any future expansion should depend on practical feedback from the ML engineering team.
+The public examples cover macaque physical reaching and human implanted-BCI cursor recordings. Both support bounded offline comparisons. Deployment decisions remain outside this first iteration; any future expansion should depend on practical feedback from the ML engineering team.
 
 Run the standard-library checks with:
 
