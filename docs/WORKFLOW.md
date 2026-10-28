@@ -1,6 +1,6 @@
 # Workflow
 
-Status: proposed user experience. Neuralink's internal evaluator, experiment tracker, and review interfaces are not known to us.
+Status: the Python integration point, local report, and saved-baseline synthetic example are implemented. The workflow below is a proposed fit for Neuralink; its internal evaluator, experiment tracker, and review interfaces remain unknown.
 
 ## Fit the existing model-change loop
 
@@ -21,15 +21,15 @@ Repeated comparisons belong to a declared development regression set. They do no
 
 ## One-time integration
 
-An engineer maps the current evaluator's session/sample keys and two-dimensional predictions to the small table contract. The evaluation table supplies the reference labels and fixed eligible set. The mapping also captures available run and configuration identities automatically.
+An engineer maps the current evaluator's session/sample keys and two-dimensional predictions to the small table contract. Both constructors accept `columns={"canonical_name": "source_name"}` for explicit renaming. The evaluation table supplies the reference labels and fixed eligible set. The integration code can pass run/configuration metadata already emitted by the evaluator through `provenance`; the workbench does not discover that metadata automatically.
 
-The engineer selects a baseline output bundle and fixes the evaluation identity and error tolerance in versioned configuration. If the evaluator does not retain keyed predictions, it must first add an output export. This is real setup work; the public evidence does not tell us whether Neuralink already has that output.
+The engineer creates and saves an `EvaluationSet` and baseline `PredictionSet` while exporting the baseline's actual evaluation. Later invocations use their `load` methods, preserving the original evaluation binding. The error tolerance is fixed in the caller's versioned configuration. If the evaluator does not retain keyed predictions, it must first add an output export. This is real setup work; the public evidence does not tell us whether Neuralink already has that output.
 
-Finally, add the comparison call at evaluation completion and save its artifacts in the job's existing output location. A framework-specific callback, new experiment tracker, and new UI destination are unnecessary.
+Finally, call `compare(evaluation, baseline, candidate, tolerance=..., output_dir=...)` at evaluation completion. Use a new comparison directory beside the job's existing artifacts. The return value is a result dictionary, including `result["sessions"]` and `result["complete"]`. A framework-specific callback, new experiment tracker, and new UI destination are unnecessary.
 
 ## Recurring experience
 
-The engineer runs the same candidate evaluation command as before. Baseline predictions are reused. The comparison appears beside the ordinary results without a second model run or manual file collection.
+After that integration, the engineer runs the same candidate evaluation command as before. Saved baseline predictions are reused. The comparison appears beside the ordinary results without a second model run or manual file collection.
 
 The first report view answers:
 
@@ -39,11 +39,24 @@ The first report view answers:
 
 Sort valid sessions by descending candidate-minus-baseline RMSE in velocity units, with invalid sessions prominently listed. Keep the full table available. A pooled score is secondary context. When no session exceeds tolerance, say so without labeling the candidate safe or ready to ship.
 
-A session selection opens its detail within the same report. The evidence bundle allows recomputation of the comparison. Users return to their existing evaluator when they need to regenerate predictions or investigate model internals.
+A session-row link jumps to its detail within the same report. `reproduce(bundle_dir)` verifies the saved artifacts and recomputes the comparison without loading models. Users return to their existing evaluator when they need to regenerate predictions or investigate model internals.
+
+## Implemented example
+
+From the repository root:
+
+```sh
+PYTHONPATH=src python3 examples/basic_comparison.py --output-dir runs/demo
+PYTHONPATH=src python3 examples/basic_comparison.py --output-dir runs/demo --candidate-id candidate-002
+```
+
+Start with a fresh example directory. The first invocation saves the evaluation and baseline under `runs/demo/pinned/`. The second loads those files and saves a separate comparison for the same synthetic predictions under a new candidate ID. Each invocation prints its report path and verifies scoring reproduction. Existing candidate comparison directories are not overwritten.
+
+This demonstrates the product's reuse path. It does not execute neural models or establish integration with any team's evaluator.
 
 ## Friction budget
 
-These are acceptance goals, not performance claims:
+These remain usability acceptance goals. The synthetic script provides the integration shape; actual engineer adoption has not been measured:
 
 - After setup, zero additional manual commands to produce a comparison.
 - One action to open the report and one to inspect a session.
@@ -52,4 +65,4 @@ These are acceptance goals, not performance claims:
 - No new server, login, data migration, or dependency on Neuralink's Electron fork.
 - No silent baseline replacement, evaluation-set changes, or deletion of invalid sessions in pursuit of convenience.
 
-Measure this flow in the public demonstration. Verify the actual integration effort with an engineer before claiming it fits Neuralink's workflow. The key unknowns are retained prediction granularity, stable sample identities, and how the team names a reference run and evaluation set.
+Check report interaction in the synthetic example and retain the same flow for the future public-recording demonstration. Verify actual integration effort with an engineer before claiming it fits Neuralink's workflow. The key unknowns are retained prediction granularity, stable sample identities, and how the team names a reference run and evaluation set.

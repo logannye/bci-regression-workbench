@@ -4,21 +4,23 @@ The project has one core benefit: identify and reproduce session-level predictio
 
 ## 1. Build the smallest correct comparison
 
-- [ ] Fix the keyed prediction/target contract and one metric in [Design](DESIGN.md) and [Evaluation](EVALUATION.md).
-- [ ] Implement the Python comparison function over typed tables, with explicit baseline and evaluation-set identities.
-- [ ] Verify hand-calculated scores, the hidden-session tradeoff, keyed alignment, and invalid-evidence cases on synthetic outputs.
-- [ ] Save sufficient evidence to recompute the full comparison without a model environment.
+- [x] Fix the keyed prediction/target contract and one metric in [Design](DESIGN.md) and [Evaluation](EVALUATION.md).
+- [x] Implement the Python comparison function over typed tables, with explicit baseline and evaluation-set identities.
+- [x] Verify hand-calculated scores, the hidden-session tradeoff, keyed alignment, and invalid-evidence cases with local standard-library tests.
+- [x] Save sufficient evidence to recompute the full comparison without a model environment, including comparator source binding.
 
-Done when a constructed pooled improvement cannot hide a session regression and incomplete evidence cannot disappear from the report.
+Implemented and checked with synthetic outputs. A constructed pooled improvement remains accompanied by its session regression, and invalid evidence remains visible. These checks establish comparator behavior, not neural-model performance.
 
 ## 2. Fit the recurring evaluation workflow
 
-- [ ] Add the thin Parquet/datarepo loading example and one-time output-column mapping.
-- [ ] Produce the full session table and a self-contained local report with direct session detail.
-- [ ] Demonstrate pinned-baseline reuse at the end of a sample evaluation job, with no manual comparison step.
-- [ ] Check the action counts and baseline/error behavior in [Workflow](WORKFLOW.md).
+- [x] Add explicit output-column mapping and the optional Parquet/datarepo example source.
+- [x] Produce the full session table and a self-contained local report with direct session detail.
+- [x] Add a synthetic producer example that loads the pinned evaluation/baseline for later candidate comparisons and verifies scoring reproduction.
+- [ ] Complete the optional real datarepo/Parquet run in its pinned hosted environment and record its revision/platform.
+- [ ] Record the report-interaction check and action counts in [Workflow](WORKFLOW.md).
+- [ ] Record clean hosted reproduction of the core example at the tested source revision.
 
-Done when the ordinary evaluation produces the report automatically, a reader can open it and select a session, and the saved comparison reproduces in a clean environment. This validates the example workflow, not an untested Neuralink integration.
+The implementation exists; optional integration and hosted evidence remain distinct validation tasks. The workflow milestone is complete when the example produces its report automatically, a reader can open it and select a session, and the saved comparison reproduces at the recorded source revision. This validates the example workflow, not a Neuralink integration.
 
 ## 3. Demonstrate on public recordings
 
@@ -33,4 +35,4 @@ Done when another engineer can inspect and recompute a public-data comparison an
 
 ## Current state
 
-All implementation milestones are open. This repository is a planning artifact. No dataset has been downloaded, decoder trained, model evaluated, or Neuralink integration tested.
+The core comparison/report/scoring-reproduction slice and synthetic example are implemented. Local standard-library checks cover the comparison contract; optional datarepo validation is pending separately. No public neuroscience dataset has been evaluated, no decoder has been trained or executed by the product, and no Neuralink integration has been tested.

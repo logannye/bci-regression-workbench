@@ -1,12 +1,12 @@
 # Design
 
-Status: proposed, not implemented.
+Status: the first comparison, report, and scoring-reproduction slice is implemented. The demonstration uses synthetic predictions. Public-recording evaluation and a Neuralink integration remain unperformed.
 
 ## Product boundary
 
 The existing evaluator owns model loading, preprocessing, inference, accelerator use, state resets, and prediction generation. The workbench consumes its frozen outputs, validates that they can be scored together, and identifies session-level RMSE increases.
 
-The primary entry point is one Python comparison function called at evaluation completion. It accepts baseline outputs, candidate outputs, and a frozen evaluation specification; it returns the comparison table and saves the report and scoring evidence. This is an interface contract, not a currently callable API.
+The entry point is `compare(evaluation, baseline, candidate, *, tolerance=None, numerical_tolerance=1e-12, output_dir=None, description="")`. It accepts an `EvaluationSet` and two `PredictionSet` objects and returns a result dictionary. The complete session table is `result["sessions"]`. Supplying a new `output_dir` also writes the report and scoring evidence; omitting it performs an in-memory comparison.
 
 No model adapter or access to model binaries is required. Baseline and candidate may run in different model environments. The same comparison function can be called from an existing job runner without a separate orchestration system. A standalone CLI, native application, and hosted UI are outside the first implementation.
 
@@ -19,23 +19,25 @@ No model adapter or access to model binaries is required. Baseline and candidate
 | Candidate predictions | The same output schema and its own bound evaluation/target-semantics declaration. |
 | Comparison specification | Explicit baseline/candidate run identities and output digests; evaluation-table content identity; target units, coordinates, prediction horizon, and reporting/numerical tolerances. |
 
-Scope the first implementation to typed tables and Parquet files. A one-time mapping translates the existing evaluator's column names. Do not introduce a general plugin or ingestion system.
+`EvaluationSet.from_records` and `PredictionSet.from_records` accept mapping records, collected Polars DataFrames, or Arrow tables. Their optional `columns` mapping uses canonical field name → source column name. Lazy queries must be collected explicitly by the caller. `bci_regression.tables.load_parquet` reads one explicit local Parquet file when PyArrow is available. The core requires no third-party dependencies.
 
-The evaluation-set identity binds sample keys, targets, target semantics, and eligibility, not just a name such as "test." Capture a reference to the shared source recordings. Model/checkpoint identity, generation-code revision, preprocessing configuration, training provenance, and state policy are supplied by the producer when available. Record absent provenance as unverified; do not make engineers re-enter metadata already emitted by their evaluator.
+The evaluation fingerprint binds sample keys, targets, target semantics, eligibility, declared purpose, and optional `source_ref`, not just a name such as "test." Eligibility defaults to true; explicit exclusions require reasons. Model/checkpoint identity, generation-code revision, preprocessing configuration, training provenance, and state policy can be supplied in each prediction set's `provenance` mapping. The report labels this provenance as producer-supplied and unverified; the tool does not discover it automatically.
+
+Creating a `PredictionSet` binds its records to the supplied `EvaluationSet`. Do this when exporting predictions from their actual evaluation. Load a saved baseline with `PredictionSet.load` for later comparisons; reconstructing old predictions against a new evaluation object would make a new declaration that the tool cannot independently justify.
 
 Input representation and preprocessing may legitimately change between models. Those differences must be recorded, but the comparison requires the same evaluation examples and target semantics, not identical internal feature arrays.
 
 ## Baseline and data access
 
-Select and pin the baseline once for a fixed evaluation set. Resolve any human-readable alias to an immutable run identity before comparison and show that identity in the report. Never automatically substitute the latest or best-looking run. A baseline change must be explicit.
+Select and save the baseline once for a fixed evaluation set, then load that exact bundle for later candidates. The report shows the run identity and content digest. The caller owns any human-readable alias resolution; the workbench does not select a baseline or substitute a latest or best-looking run. A baseline change must be explicit.
 
-Reuse saved baseline predictions. A missing or incompatible baseline produces an actionable comparison error; the tool does not silently run a model, select another baseline, or shrink the evaluation cohort.
+Missing or malformed saved bundles raise an error during loading. A successfully loaded baseline bound to incompatible evaluation semantics makes the comparison invalid. Neither path silently runs a model, selects another baseline, or shrinks the evaluation cohort.
 
-Use upstream [datarepo](https://github.com/neuralinkcorp/datarepo) as a thin table-loading example for exported prediction/target Parquet and the resulting comparison rows. Existing users can pass their queried typed tables directly. Record file content hashes and pin the tested dependency version when implemented. Raw recordings and existing catalogs stay where they are.
+The optional [datarepo example](../examples/datarepo_example.py) uses upstream `ParquetTable` to query synthetic prediction/target files and feeds the collected tables to the same core. Its dependencies are pinned in [requirements-datarepo.txt](../requirements-datarepo.txt); a real run of that integration awaits hosted validation. Existing users can pass collected tables directly. Raw recordings and existing catalogs stay where they are.
 
 ## Alignment and scoring
 
-The declared evaluation table drives the comparison. Join by stable session/sample keys, never file row position, nearest timestamp, or the intersection of available predictions. Report extra rows and apply only the evaluation manifest's explicit selection rule. Missing or duplicate required predictions invalidate the affected session.
+The declared evaluation table drives the comparison. Alignment uses stable session/sample keys, never file row position, nearest timestamp, or the intersection of available predictions. Predictions for explicitly ineligible keys are counted as excluded. Unexpected keys make the comparison incomplete; they also invalidate an affected declared session when it can be identified. Missing or duplicate required predictions invalidate the affected session.
 
 Verify each bundle's declared evaluation-set identity, target units, coordinates, and prediction horizon against the frozen specification. Check output dimensions, finite values, and content identities. These checks compare producer declarations; numerical values alone cannot establish their physical meaning. Compute the metric in [Evaluation](EVALUATION.md) on identical eligible keys for both runs. Preserve every selected session, including invalid rows. An invalid required session makes the overall comparison incomplete.
 
@@ -43,8 +45,10 @@ The comparator can verify this pairing and arithmetic. Prediction files cannot e
 
 ## One output, with supporting detail
 
-The Python return value is the full session table. A self-contained local report shows baseline/candidate IDs, evaluation-set identity, completeness, and the sessions with increased error. It lists every session and offers a direct session detail containing the paired error trace and supporting sample references. That detail substantiates a regression; it does not diagnose its cause.
+The returned dictionary includes the session table, comparison identities, completeness, issues, pooled context when complete, and paired samples from valid sessions. A self-contained local report shows baseline/candidate IDs, evaluation-set identity, completeness, and the sessions with increased error. It lists every session and links directly to its paired error trace and supporting sample references. That detail substantiates a regression; it does not diagnose its cause.
 
-The same call writes the result table, report, and comparison specification beside the existing evaluation artifacts. The scoring bundle retains predictions, targets, masks, code/environment identity, and source hashes or retained immutable references. It must contain enough evidence to recompute the table without model loading. Data redistribution remains governed by source licenses.
+With `output_dir`, the call writes `report.html`, `session_metrics.csv`, `evaluation.json`, `baseline.json`, `candidate.json`, `comparison.json`, and `manifest.json`. The bundle retains the actual predictions, targets, eligibility, declared provenance, artifact hashes, comparator version/source digest, Python version, and platform. The output directory must not already exist. Data redistribution remains governed by source licenses.
 
-Recomputing saved scores is the version-one reproducibility promise. Re-running model inference belongs to the original evaluator. Preserve its supplied configuration/artifact references for an engineer to use there, without automatically executing embedded commands.
+`reproduce(bundle_dir, *, output_dir=None)` checks artifact hashes and the comparator source identity, then recomputes the saved comparison. Evidence and coverage must match exactly; declared numerical tolerance applies only to computed errors and scores. An optional new output directory saves another copy of the reproduced comparison. Re-running inference belongs to the original evaluator; supplied provenance is never executed.
+
+Reproduction requires the same `__init__.py`, `core.py`, `tables.py`, and `report.py` source content, not merely the same package version. Retain the tested Git revision with the run evidence and check out that revision when reproducing later. The manifest records a source digest and environment information; it does not automatically record the Git commit.

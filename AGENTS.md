@@ -2,18 +2,19 @@
 
 ## Product constraint
 
-Optimize for exactly one benefit: find sessions where a fixed candidate decoder performs worse than a fixed baseline on identical recorded inputs, and reproduce those findings.
+Optimize for exactly one benefit: find sessions where a fixed candidate decoder performs worse than a fixed baseline on identical declared recording samples, and reproduce those score comparisons.
 
 The product consumes keyed outputs from the user's existing evaluator. Do not require model loading, a custom decoder runner, or a new training environment. Reproduction means recomputing scores from preserved predictions and labels; regenerating predictions remains the producer's responsibility. A public example may generate predictions separately.
 
 Do not expand the design with dashboards, timing benchmarks, synthetic stress platforms, broad adapters, automated diagnosis, adaptation, calibration experiments, new model research, or deployment gates. Reproducibility and input validity are requirements of the one benefit. A second independent benefit requires an explicit user change to scope.
 
-This repository currently contains a specification only. Keep documentation honest about implemented behavior, planned work, and measured results. Do not add installation instructions or executable command examples until they work.
+The first comparison/report/scoring-reproduction slice and synthetic example are implemented. Public-recording evaluation and Neuralink integration remain unperformed. Keep documentation honest about implemented behavior, planned work, and measured results. Verify executable examples before documenting them. The optional datarepo environment requires its own real hosted validation; core tests do not establish that integration works.
 
 ## Evaluation discipline
 
 - Follow docs/EVALUATION.md. Freeze the dataset, partitions, metric, preprocessing, artifacts, and thresholds before opening evaluation results.
-- In the public example, keep evaluation labels outside decoder code and require causal inputs and declared reset rules. For imported outputs, record producer-supplied protocol provenance; do not claim the comparator independently verifies model execution or training independence.
+- In a future public-recording example, keep evaluation labels outside decoder code and require causal inputs and declared reset rules. Current synthetic fixtures construct predictions directly. For imported outputs, record producer-supplied protocol provenance; do not claim the comparator independently verifies model execution or training independence.
+- Bind prediction outputs to their evaluation identity when exported. Reuse saved baseline bundles through loading; never relabel old predictions against a changed evaluation set to make a comparison pass.
 - Preserve every selected session in results, including invalid rows. Do not hide failed comparisons or change denominators to improve scores.
 - Use synthetic fixtures to verify the evaluator, not to claim biological robustness or decoder improvement.
 - Record tested revision, dependency environment, platform, and reproduction evidence.

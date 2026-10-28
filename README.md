@@ -1,80 +1,112 @@
 # BCI Regression Workbench
 
-**Find the recording sessions where a new decoder performs worse, and reproduce each finding.**
+**Find the recording sessions where a candidate decoder performs worse, even when its pooled score improves. Reproduce each reported difference.**
 
-An independent open-source project by Logan Nye, designed for presentation to Neuralink's BCI ML engineering team. This is not an official Neuralink project or an implemented integration with its internal systems.
+Call a small Python function at the end of an existing evaluation job. It compares saved two-dimensional velocity predictions on the same declared samples, writes a session-level RMSE report, and preserves the evidence needed to recompute it. Your evaluator continues to own model execution and data access.
 
-**Status: project specification only.** The repository contains the proposed scope, design, and evaluation plan. No comparison library, output importer, report generator, or scientific results have been implemented yet.
+**Status:** the first implementation includes keyed comparison, a self-contained HTML report, CSV results, and scoring reproduction from a JSON bundle. The demonstration uses constructed predictions. No public neuroscience dataset or Neuralink integration has been evaluated.
 
-## One benefit
+This is Logan Nye's independent open-source project, intended for presentation to Neuralink's BCI ML team. Neuralink's public [ML role](https://job-boards.greenhouse.io/neuralink/jobs/5663271003) includes model-update evaluation infrastructure; that establishes relevance, not a confirmed gap in its internal tools or endorsement of this project.
 
-A decoder update can improve an overall score while making particular recording sessions worse. An engineer needs to see those regressions before deciding what to investigate or test next.
+## Try the synthetic demonstration
 
-The workbench will compare saved predictions from baseline and candidate evaluations on the same declared recording samples. Its output will identify which sessions became worse, show the size of each change, and preserve the evidence needed to recompute those differences.
+From the repository root, with Python 3.10 or later:
 
-Reproducibility supports that single benefit. It is not a separate experiment-management platform.
+```sh
+PYTHONPATH=src python3 examples/basic_comparison.py --output-dir runs/demo
+PYTHONPATH=src python3 examples/basic_comparison.py --output-dir runs/demo --candidate-id candidate-002
+```
 
-## Form factor: a small step in the existing evaluation job
+The core uses only Python's standard library. No dependency installation or native compilation is needed. Start with a new example directory. Each candidate comparison needs a new candidate ID; existing comparison outputs are never overwritten.
 
-The primary interface will be a Python comparison function called after the engineer's normal evaluation finishes. It consumes keyed predictions and targets, returns the session comparison table, and writes a self-contained report beside the existing evaluation artifacts.
+The first invocation creates a pinned evaluation set and baseline. The second reuses their saved bundles and writes the same constructed candidate predictions under a new run ID, demonstrating baseline reuse. The fixture improves pooled RMSE while worsening a shorter session. Open the report path printed by the script, then select the worsened session to inspect its paired errors and sample references.
 
-Engineers keep their model code, inference environment, data access, and evaluation command. They do not load a model into this tool. A one-time output mapping and pinned baseline enable the recurring path: run evaluation as usual, then open the comparison report. No new account, server, or dashboard is needed.
+This tradeoff checks the comparator's behavior. It is not a result about neural decoding performance.
 
-See [Workflow](docs/WORKFLOW.md) for the intended user experience and first-time setup.
+## Add the comparison to an evaluation job
 
-## Built for a specific engineering decision
+Inputs are records keyed by `session_id` and `sample_id`. The evaluation table holds fixed targets and eligibility; each prediction bundle binds its outputs to that evaluation identity. Columns can be mapped once from the existing evaluator's names.
 
-The intended user is a Neuralink BCI ML engineer reviewing a proposed decoder change. Neuralink's public [ML role](https://job-boards.greenhouse.io/neuralink/jobs/5663271003) explicitly includes building evaluation infrastructure for model updates. That supports the relevance of the problem; it does not establish a gap in their existing internal tools.
+This complete Python example uses two synthetic samples. Run it with this repository's `src` on `PYTHONPATH`:
 
-The question this project will answer is:
+```python
+from bci_regression import EvaluationSet, PredictionSet, compare
 
-> On the same recorded sessions, where did candidate B become worse than baseline A?
+keys = [("session-a", "sample-0"), ("session-b", "sample-0")]
+evaluation = EvaluationSet.from_records(
+    [{"session_id": s, "sample_id": k, "timestamp": 0.0,
+      "target_vx": 0.0, "target_vy": 0.0} for s, k in keys],
+    evaluation_id="synthetic-example-v1", units="cm/s",
+    coordinates="x-right,y-up", horizon_ms=0, purpose="synthetic",
+)
 
-It will not decide whether a model is ready to deploy. Recorded replay cannot recreate how a person changes their behavior in response to a different decoder.
+def prediction_rows(values):
+    return [{"session_id": s, "sample_id": k,
+             "predicted_vx": vx, "predicted_vy": 0.0}
+            for (s, k), vx in zip(keys, values)]
 
-## First version
+baseline = PredictionSet.from_records(
+    prediction_rows([3.0, 1.0]), run_id="baseline-v1", evaluation=evaluation,
+)
+candidate = PredictionSet.from_records(
+    prediction_rows([1.0, 2.0]), run_id="candidate-v1", evaluation=evaluation,
+)
+result = compare(
+    evaluation, baseline, candidate, tolerance=0.1,
+    output_dir="runs/api-example",
+    description="Synthetic arithmetic example; no model execution.",
+)
+print(result["complete"], result["sessions"])
+```
 
-| Decision | Scope |
+For subsequent candidates, load `EvaluationSet.load("runs/api-example/evaluation.json")` and `PredictionSet.load("runs/api-example/baseline.json")`, then create only the new candidate bundle from the normal evaluator's outputs. Do not recreate or relabel an old baseline against a changed evaluation set. The basic demonstration exercises this saved-baseline path.
+
+The returned dictionary contains all session rows under `result["sessions"]`, completeness, issues, pooled context when complete, and paired samples. A reporting tolerance is an absolute increase in RMSE in the declared velocity units; `tolerance=None` reports descriptive differences without categorical regression flags.
+
+## Read and reproduce the result
+
+Each comparison directory contains:
+
+| Artifact | Purpose |
 | --- | --- |
-| Task | Compare existing two-dimensional movement-velocity predictions with fixed reference labels. |
-| Public demonstration | One multi-session dataset and two fixed decoders; dataset selection and reuse terms remain to be verified. The demonstration's prediction producer is separate from the product. |
-| Inputs | Keyed baseline predictions, candidate predictions, and a frozen evaluation table. Model binaries are not required for scoring. |
-| Primary metric | Per-session velocity vector RMSE, in declared physical units. |
-| Comparison | Paired predictions on identical, predeclared sample identities. |
-| Output | A session comparison table, a short local report, and evidence to reproduce the scoring. |
-| Neuralink repository used | A thin `datarepo` example reads the required prediction/target tables and exposes comparison rows. The core also accepts typed tables directly; no catalog migration is required. |
+| `report.html` | Local report with identities, completeness, every session, and linked error traces and sample previews. No server or external assets. |
+| `session_metrics.csv` | The full session comparison table. |
+| `evaluation.json`, `baseline.json`, `candidate.json` | Retained targets, eligibility, predictions, and declared identities. |
+| `comparison.json`, `manifest.json` | Results, comparison settings, environment information, and content hashes. |
 
-If the public recordings contain physical reaching rather than attempted cursor movement, the demonstration will be described as an offline movement-decoding example. It will not be presented as a Neuralink participant evaluation.
+Recompute a saved comparison without loading a decoder:
 
-## Intended workflow
+```python
+from bci_regression import reproduce
 
-1. Once, map existing evaluation outputs and explicitly pin a baseline and evaluation set.
-2. Run the normal candidate evaluation; its final step invokes the comparison.
-3. Open the report beside the normal evaluation results, with baseline and evaluation-set identities visible.
-4. Select a worsened session to inspect its paired errors and exact supporting samples.
-5. Recompute the comparison from the preserved predictions, targets, and comparison specification.
+recomputed = reproduce("runs/api-example")
+print(recomputed["complete"])
+```
 
-These steps describe planned behavior. There is no executable interface yet. The product reproduces score comparisons; regenerating model predictions remains the existing evaluator's responsibility.
+`reproduce` verifies the saved artifacts and compares recomputed results with the recorded result within the numerical tolerance. It raises an error for changed evidence or a mismatched result. This reproduces scoring; regenerating predictions remains the original evaluator's responsibility.
 
-## What would make the project useful
+The report lists invalid sessions prominently and sorts valid sessions by descending candidate-minus-baseline RMSE. Missing or duplicate required predictions never shrink the scoring set silently. Any invalid required session makes the comparison incomplete. The metric is `sqrt(mean((predicted_vx − target_vx)² + (predicted_vy − target_vy)²))`; positive candidate-minus-baseline differences mean higher error.
 
-The first demonstration must expose a deliberately constructed tradeoff: the candidate's pooled error improves while its error on a known session worsens. It must show that result without dropping difficult samples, changing the scoring set, or hiding invalid sessions.
+## Optional datarepo example
 
-A clean environment must then reproduce the scores from preserved outputs within a declared numerical tolerance. The constructed tradeoff tests the workbench; it is not evidence of a better neural decoder. After initial integration, the target is zero additional manual comparison commands, one action to open the report, and one action to inspect a session. These are usability acceptance goals, not measured results.
+[examples/datarepo_example.py](examples/datarepo_example.py) exercises Neuralink's upstream [datarepo](https://github.com/neuralinkcorp/datarepo) Parquet interface with synthetic prediction tables. Its optional environment is pinned in [requirements-datarepo.txt](requirements-datarepo.txt). Hosted integration validation is pending; do not infer it has passed from the core demonstration.
 
-## Explicitly outside the project scope
+The core accepts record mappings directly and does not require a catalog migration. The table boundary also supports collected Polars and Arrow tables when those libraries are available. Datarepo is a narrow source integration, not a replacement evaluation framework.
 
-No model execution framework, dashboards, latency benchmarking, fault-injection platform, automatic root-cause diagnosis, drift monitoring, new decoder research, online adaptation, calibration study, live implant integration, or release-approval system. Neuralink's historical Electron fork is not a dependency.
+## Scope and evidence
 
-## Project documents
+The single benefit is exposing reproducible session-level regressions in existing outputs. The tool does not train or run models, diagnose a biological cause, measure latency, or approve deployment. Producer-supplied metadata cannot independently establish causal inference or training/evaluation independence. Offline prediction error does not establish interactive BCI performance.
 
-- [Design](docs/DESIGN.md): the minimum inputs, comparison procedure, and outputs.
-- [Workflow](docs/WORKFLOW.md): one-time integration and the recurring evaluation experience.
-- [Evaluation](docs/EVALUATION.md): metric, validity rules, and acceptance cases.
-- [Implementation plan](docs/PLAN.md): the short path from specification to a useful demonstration.
-- [Sources and assumptions](docs/SOURCES.md): public evidence and unresolved integration questions.
-- [Contributor instructions](AGENTS.md): the scope guardrail and development constraints.
+Tests and the constructed demonstration are implementation checks. A frozen public-recording demonstration and validation with an intended engineer remain future work. No Neuralink data or model code is included.
+
+Run the standard-library checks with:
+
+```sh
+PYTHONPATH=src python3 -m unittest discover -s tests -v
+```
+
+See [Design](docs/DESIGN.md), [Workflow](docs/WORKFLOW.md), [Evaluation](docs/EVALUATION.md), [Implementation plan](docs/PLAN.md), and [Sources and assumptions](docs/SOURCES.md) for the contract and evidence boundaries. Contributors should read [AGENTS.md](AGENTS.md).
 
 ## License
 
-[MIT](LICENSE). Dependency and dataset licenses apply separately. No Neuralink code or data is vendored in this initial repository.
+[MIT](LICENSE). Dependency and dataset licenses apply separately.
