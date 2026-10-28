@@ -116,6 +116,7 @@ def run(output_dir: Path) -> None:
         tolerance=0.1,
         numerical_tolerance=1e-12,
         output_dir=output_dir / "comparison",
+        description="Synthetic datarepo integration example. Constructed predictions; no neural recordings or model execution.",
     )
     if not result["complete"]:
         raise AssertionError("Synthetic fixture must produce a complete comparison")
