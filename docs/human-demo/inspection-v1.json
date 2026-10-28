@@ -1,0 +1,877 @@
+{
+  "stage": "structural_and_target_semantics_inspection_before_model_fit",
+  "no_decoder_fits_or_scores": true,
+  "dataset_archive_sha256": "6d12b5dbcf9cac654ff1d0679e9753bf042b56cd5b8852eb31236b3cdecf7332",
+  "blocks": [
+    {
+      "day": 658,
+      "block": "Block_05",
+      "task": "circleOfCircles",
+      "n_bins": 15209,
+      "n_channels": 192,
+      "task_n_bins": 15209,
+      "trials": 72,
+      "excluded_trials": 0,
+      "trial_bins": 14905,
+      "excluded_trial_bins": 0,
+      "min_trial_index": 270,
+      "max_trial_index": 15174,
+      "overlap_trials": false,
+      "nonfinite_features": 0,
+      "negative_features": 0,
+      "nonfinite_targets": 0,
+      "zero_targets": 287,
+      "target_norm_range": [
+        0.0,
+        0.6960747838020325
+      ],
+      "max_difference_from_displacement": 2.9802322387695312e-08,
+      "max_difference_from_unit_direction": 1.0,
+      "files": {
+        "data.mat": "1ce7ca1f2cd723dcf1b1f5ca3d32d717e0b9ef67176dbf6888bf24c2a0b4f6c5",
+        "task.mat": "a997c1eadfbdfb4355c91b4ed59fe27e8c0cb5b466c3313e2c36a0e757121cd9",
+        "info.mat": "74670ac465938ecfe771d4f7074f924bd8e099cb8a93e23fd745c961612096c5"
+      }
+    },
+    {
+      "day": 658,
+      "block": "Block_07",
+      "task": "circleOfCircles",
+      "n_bins": 15284,
+      "n_channels": 192,
+      "task_n_bins": 15284,
+      "trials": 80,
+      "excluded_trials": 2,
+      "trial_bins": 14927,
+      "excluded_trial_bins": 822,
+      "min_trial_index": 262,
+      "max_trial_index": 15188,
+      "overlap_trials": false,
+      "nonfinite_features": 0,
+      "negative_features": 0,
+      "nonfinite_targets": 0,
+      "zero_targets": 281,
+      "target_norm_range": [
+        0.0,
+        0.742767333984375
+      ],
+      "max_difference_from_displacement": 2.977321855723858e-08,
+      "max_difference_from_unit_direction": 1.0,
+      "files": {
+        "data.mat": "ef1fbe1128dea98e0145d1a665866c096aa36549c7e8f966825e712fa1e18591",
+        "task.mat": "d558c9ee3f37331d3002f8b91d2bdd77bc56b46719cc6e5c4cd868357ca4edeb",
+        "info.mat": "fe1f5062d782217c822bcad6be8bbe498456296e73f328c2b4a3dcefedbc89f3"
+      }
+    },
+    {
+      "day": 665,
+      "block": "Block_06",
+      "task": "circleOfCircles",
+      "n_bins": 15160,
+      "n_channels": 192,
+      "task_n_bins": 15160,
+      "trials": 86,
+      "excluded_trials": 0,
+      "trial_bins": 14856,
+      "excluded_trial_bins": 0,
+      "min_trial_index": 261,
+      "max_trial_index": 15116,
+      "overlap_trials": false,
+      "nonfinite_features": 0,
+      "negative_features": 0,
+      "nonfinite_targets": 0,
+      "zero_targets": 281,
+      "target_norm_range": [
+        0.0,
+        0.5659595727920532
+      ],
+      "max_difference_from_displacement": 2.9685907065868378e-08,
+      "max_difference_from_unit_direction": 1.0,
+      "files": {
+        "data.mat": "c7843e1cfdf6dfff2ffafd1ecb25a5ac86b1ad165b18517ebd5695fa9b09a921",
+        "task.mat": "a367c97b78956043abafad00d70638e10b825285f68471f059fc0c9963a20172",
+        "info.mat": "f43df98fcb33748886cc132f79ae5634b58b885973e43072758ac2bf02a58b79"
+      }
+    },
+    {
+      "day": 665,
+      "block": "Block_07",
+      "task": "circleOfCircles",
+      "n_bins": 15157,
+      "n_channels": 192,
+      "task_n_bins": 15157,
+      "trials": 78,
+      "excluded_trials": 3,
+      "trial_bins": 14896,
+      "excluded_trial_bins": 765,
+      "min_trial_index": 262,
+      "max_trial_index": 15157,
+      "overlap_trials": false,
+      "nonfinite_features": 0,
+      "negative_features": 0,
+      "nonfinite_targets": 0,
+      "zero_targets": 280,
+      "target_norm_range": [
+        0.0,
+        0.6107843518257141
+      ],
+      "max_difference_from_displacement": 2.9685907065868378e-08,
+      "max_difference_from_unit_direction": 1.0,
+      "files": {
+        "data.mat": "e82dd573296ae281de69dc534645fd127eeaad7f810b3583e266c491f2eafc94",
+        "task.mat": "5aa54aa81c183d481741a533532b9dc72390152ad5b422dc585cf86caf04aee9",
+        "info.mat": "2546ec5da5dd5b1705f0b50b5bd8c8576211c645117f4b1db093fdebfcb6aaae"
+      }
+    },
+    {
+      "day": 672,
+      "block": "Block_19",
+      "task": "circleOfCircles",
+      "n_bins": 15134,
+      "n_channels": 192,
+      "task_n_bins": 15134,
+      "trials": 77,
+      "excluded_trials": 0,
+      "trial_bins": 14819,
+      "excluded_trial_bins": 0,
+      "min_trial_index": 267,
+      "max_trial_index": 15085,
+      "overlap_trials": false,
+      "nonfinite_features": 0,
+      "negative_features": 0,
+      "nonfinite_targets": 0,
+      "zero_targets": 312,
+      "target_norm_range": [
+        0.0,
+        0.5167580246925354
+      ],
+      "max_difference_from_displacement": 2.9802322387695312e-08,
+      "max_difference_from_unit_direction": 1.0,
+      "files": {
+        "data.mat": "1e28ea96278dad805c963f66d8bc9b600b4b9eb6aa52026cdbd9021486939e98",
+        "task.mat": "f824de49b1342ae7010663289c45dd614edc43cd5b693f44f61503a305363387",
+        "info.mat": "7e8554a6bf9b66eb5efac38a61aa073b271a7376d5a3a143ad814ceea5df0ffe"
+      }
+    },
+    {
+      "day": 672,
+      "block": "Block_20",
+      "task": "circleOfCircles",
+      "n_bins": 15134,
+      "n_channels": 192,
+      "task_n_bins": 15134,
+      "trials": 82,
+      "excluded_trials": 3,
+      "trial_bins": 14794,
+      "excluded_trial_bins": 786,
+      "min_trial_index": 266,
+      "max_trial_index": 15059,
+      "overlap_trials": false,
+      "nonfinite_features": 0,
+      "negative_features": 0,
+      "nonfinite_targets": 0,
+      "zero_targets": 285,
+      "target_norm_range": [
+        0.0,
+        0.6110681891441345
+      ],
+      "max_difference_from_displacement": 2.94130586553365e-08,
+      "max_difference_from_unit_direction": 1.0,
+      "files": {
+        "data.mat": "1969a007aac9c30fddcf5d9b6c3501021fee8e53e390639a20614f4b21f91440",
+        "task.mat": "85dc86ab68312a1e2204e83419a1ef065c6393212a67169b2bf99cac44e8b3ee",
+        "info.mat": "4533b719164e31ed897cd893001e40e142725701606eb6d34edaa4cf9fd21f27"
+      }
+    },
+    {
+      "day": 675,
+      "block": "Block_06",
+      "task": "circleOfCircles",
+      "n_bins": 15133,
+      "n_channels": 192,
+      "task_n_bins": 15133,
+      "trials": 88,
+      "excluded_trials": 2,
+      "trial_bins": 14714,
+      "excluded_trial_bins": 336,
+      "min_trial_index": 264,
+      "max_trial_index": 14977,
+      "overlap_trials": false,
+      "nonfinite_features": 0,
+      "negative_features": 0,
+      "nonfinite_targets": 0,
+      "zero_targets": 302,
+      "target_norm_range": [
+        0.0,
+        0.512263834476471
+      ],
+      "max_difference_from_displacement": 2.9802322387695312e-08,
+      "max_difference_from_unit_direction": 1.0,
+      "files": {
+        "data.mat": "79d975575201005c28be14029d4c65dcf53648b65b5f8f614f8948ea900840d2",
+        "task.mat": "2f7d0b4c4b58acfdc044827f65dcf6880fd607e78ecf2dacf660378f71cc3d5a",
+        "info.mat": "789c27439e27e2ce9495b4faed47559c9b854b7460d36dfc60945ebb0c1be02f"
+      }
+    },
+    {
+      "day": 675,
+      "block": "Block_07",
+      "task": "circleOfCircles",
+      "n_bins": 15134,
+      "n_channels": 192,
+      "task_n_bins": 15134,
+      "trials": 79,
+      "excluded_trials": 6,
+      "trial_bins": 14669,
+      "excluded_trial_bins": 3009,
+      "min_trial_index": 265,
+      "max_trial_index": 14933,
+      "overlap_trials": false,
+      "nonfinite_features": 0,
+      "negative_features": 0,
+      "nonfinite_targets": 0,
+      "zero_targets": 287,
+      "target_norm_range": [
+        0.0,
+        1.112472414970398
+      ],
+      "max_difference_from_displacement": 2.9802322387695312e-08,
+      "max_difference_from_unit_direction": 1.0,
+      "files": {
+        "data.mat": "9dc2d764b5781478367d6de9f3abb39ca4ea07989f5910fcc3b612cc1e50c01b",
+        "task.mat": "343fb38990f2bf363fb199eac81c29a4c98a1815494001d9fa2f48c08a8ba83a",
+        "info.mat": "e96f3a29e1b75694d64d2ba87dc2acd559d3d8145ce43c7276c33befcc615cae"
+      }
+    },
+    {
+      "day": 689,
+      "block": "Block_13",
+      "task": "circleOfCircles",
+      "n_bins": 15208,
+      "n_channels": 192,
+      "task_n_bins": 15208,
+      "trials": 83,
+      "excluded_trials": 1,
+      "trial_bins": 14825,
+      "excluded_trial_bins": 501,
+      "min_trial_index": 290,
+      "max_trial_index": 15114,
+      "overlap_trials": false,
+      "nonfinite_features": 0,
+      "negative_features": 0,
+      "nonfinite_targets": 0,
+      "zero_targets": 310,
+      "target_norm_range": [
+        0.0,
+        0.5685722231864929
+      ],
+      "max_difference_from_displacement": 2.9802322387695312e-08,
+      "max_difference_from_unit_direction": 1.0,
+      "files": {
+        "data.mat": "f67539f31621f496a24c10e5b41433c2b9ccb206020e599442804e7fc0ad37d3",
+        "task.mat": "e41cfe30cd875777251d48c0cb27753451e2f312e4f2007d7ee568e7cb1f50b7",
+        "info.mat": "94ccbb965f5342a2dce2ba2daba75b4fc5b96e1211102be64b4497a1f36ff327"
+      }
+    },
+    {
+      "day": 689,
+      "block": "Block_14",
+      "task": "circleOfCircles",
+      "n_bins": 15233,
+      "n_channels": 192,
+      "task_n_bins": 15233,
+      "trials": 75,
+      "excluded_trials": 0,
+      "trial_bins": 14626,
+      "excluded_trial_bins": 0,
+      "min_trial_index": 322,
+      "max_trial_index": 14947,
+      "overlap_trials": false,
+      "nonfinite_features": 0,
+      "negative_features": 0,
+      "nonfinite_targets": 0,
+      "zero_targets": 376,
+      "target_norm_range": [
+        0.0,
+        0.67976313829422
+      ],
+      "max_difference_from_displacement": 2.9802322387695312e-08,
+      "max_difference_from_unit_direction": 1.0,
+      "files": {
+        "data.mat": "e038b2921921a4058dbc7f613a97e264393d3d336344d86cc8c07fb745f53d5e",
+        "task.mat": "c74b2ba6b4c9374a367629357f5cf311f73fe7904154ba33249d2941e0800809",
+        "info.mat": "de77c3f1df951e71b1215da4608d715524ae21fea9f1ca13e87fa07101f215a7"
+      }
+    },
+    {
+      "day": 692,
+      "block": "Block_06",
+      "task": "circleOfCircles",
+      "n_bins": 15133,
+      "n_channels": 192,
+      "task_n_bins": 15133,
+      "trials": 100,
+      "excluded_trials": 0,
+      "trial_bins": 14801,
+      "excluded_trial_bins": 0,
+      "min_trial_index": 261,
+      "max_trial_index": 15061,
+      "overlap_trials": false,
+      "nonfinite_features": 0,
+      "negative_features": 0,
+      "nonfinite_targets": 0,
+      "zero_targets": 284,
+      "target_norm_range": [
+        0.0,
+        0.5067570805549622
+      ],
+      "max_difference_from_displacement": 2.9685907065868378e-08,
+      "max_difference_from_unit_direction": 1.0,
+      "files": {
+        "data.mat": "d55c0cad4a75bea8457fc7ac41aee422ef2c6362d822c77121f879539cc53acd",
+        "task.mat": "98155ccd79f67cafe144a72538245d928d3e123aad5150fe23b57763798db383",
+        "info.mat": "33c61c60b54bd69ffb29213cc35c170332864584e06694818ad3869d005a5354"
+      }
+    },
+    {
+      "day": 692,
+      "block": "Block_07",
+      "task": "circleOfCircles",
+      "n_bins": 15134,
+      "n_channels": 192,
+      "task_n_bins": 15134,
+      "trials": 106,
+      "excluded_trials": 5,
+      "trial_bins": 14799,
+      "excluded_trial_bins": 865,
+      "min_trial_index": 261,
+      "max_trial_index": 15059,
+      "overlap_trials": false,
+      "nonfinite_features": 0,
+      "negative_features": 0,
+      "nonfinite_targets": 0,
+      "zero_targets": 284,
+      "target_norm_range": [
+        0.0,
+        0.5921642780303955
+      ],
+      "max_difference_from_displacement": 2.9569491744041443e-08,
+      "max_difference_from_unit_direction": 1.0,
+      "files": {
+        "data.mat": "e43e861903d135d389faa2338846027a0e934cb261f10cf9df904eaaf8697f39",
+        "task.mat": "65fbb66c15ffa849d594d9b2d6e0bdccd1845007216fc127d2f491d9160f91a2",
+        "info.mat": "7c80b769dfbecfb0231031761e954fa13e3a2d6daf44c2027c3a31f25860318d"
+      }
+    },
+    {
+      "day": 702,
+      "block": "Block_09",
+      "task": "circleOfCircles",
+      "n_bins": 15161,
+      "n_channels": 192,
+      "task_n_bins": 15161,
+      "trials": 65,
+      "excluded_trials": 2,
+      "trial_bins": 14865,
+      "excluded_trial_bins": 794,
+      "min_trial_index": 265,
+      "max_trial_index": 15129,
+      "overlap_trials": false,
+      "nonfinite_features": 0,
+      "negative_features": 0,
+      "nonfinite_targets": 0,
+      "zero_targets": 283,
+      "target_norm_range": [
+        0.0,
+        0.7621434330940247
+      ],
+      "max_difference_from_displacement": 2.9802322387695312e-08,
+      "max_difference_from_unit_direction": 1.0,
+      "files": {
+        "data.mat": "bb493ed7051caa497d132aae99dc976cacfa3303052252b1e41684aa0db07e69",
+        "task.mat": "5ca6200231bbfab42c2d30b20529adcfd5208c3ef3bb508e317fe1fb01728fa2",
+        "info.mat": "ca3c54ddec629542a50343078cbb57805bd33d0452549d7aa073c3b8af6fad58"
+      }
+    },
+    {
+      "day": 702,
+      "block": "Block_10",
+      "task": "circleOfCircles",
+      "n_bins": 15164,
+      "n_channels": 192,
+      "task_n_bins": 15164,
+      "trials": 53,
+      "excluded_trials": 3,
+      "trial_bins": 14901,
+      "excluded_trial_bins": 1504,
+      "min_trial_index": 264,
+      "max_trial_index": 15164,
+      "overlap_trials": false,
+      "nonfinite_features": 0,
+      "negative_features": 0,
+      "nonfinite_targets": 0,
+      "zero_targets": 276,
+      "target_norm_range": [
+        0.0,
+        0.7824694514274597
+      ],
+      "max_difference_from_displacement": 2.9802322387695312e-08,
+      "max_difference_from_unit_direction": 1.0,
+      "files": {
+        "data.mat": "8ebcc037e88e5de7234748d24aceceb001461e00d448486651d645b932601e95",
+        "task.mat": "5591e65d8e291d2b0e2d4ae187c610b33999a4a2ad6e3e81533e1e8af146f7c9",
+        "info.mat": "af878a3d684d61dd5cc53121aba10e0ed60272a2ad1e265b0a32b62e32f2576a"
+      }
+    },
+    {
+      "day": 709,
+      "block": "Block_06",
+      "task": "circleOfCircles",
+      "n_bins": 15162,
+      "n_channels": 192,
+      "task_n_bins": 15162,
+      "trials": 69,
+      "excluded_trials": 1,
+      "trial_bins": 14779,
+      "excluded_trial_bins": 258,
+      "min_trial_index": 262,
+      "max_trial_index": 15040,
+      "overlap_trials": false,
+      "nonfinite_features": 0,
+      "negative_features": 0,
+      "nonfinite_targets": 0,
+      "zero_targets": 276,
+      "target_norm_range": [
+        0.0,
+        0.5678225755691528
+      ],
+      "max_difference_from_displacement": 2.9802322387695312e-08,
+      "max_difference_from_unit_direction": 1.0,
+      "files": {
+        "data.mat": "3ee666bac09103b032ce3f620ae9ff356431d53407831a569346df8abd46c383",
+        "task.mat": "a991ad00fe4c3f28b656d9ff098e58dee10b19e34ac6b40e926b545dfc62f24d",
+        "info.mat": "b8b68aeb0bf04ad855484ceb5e94100dffa9417c73e59df715a6ed15edf95f62"
+      }
+    },
+    {
+      "day": 709,
+      "block": "Block_07",
+      "task": "circleOfCircles",
+      "n_bins": 15160,
+      "n_channels": 192,
+      "task_n_bins": 15160,
+      "trials": 62,
+      "excluded_trials": 0,
+      "trial_bins": 14663,
+      "excluded_trial_bins": 0,
+      "min_trial_index": 264,
+      "max_trial_index": 14926,
+      "overlap_trials": false,
+      "nonfinite_features": 0,
+      "negative_features": 0,
+      "nonfinite_targets": 0,
+      "zero_targets": 280,
+      "target_norm_range": [
+        0.0,
+        0.9049010872840881
+      ],
+      "max_difference_from_displacement": 2.9802322387695312e-08,
+      "max_difference_from_unit_direction": 1.0,
+      "files": {
+        "data.mat": "c75a478868d4e225cd48d8bd52bcc75f7acf5949a9f29f252a4769980489bae0",
+        "task.mat": "dd4be9aae3d45374f061687855bb3bc7bb220069476ff5c7040000b63d87539f",
+        "info.mat": "8f7da81d94baa07e526da141fa63b28ebb5c56d7d838db3d47e2a6e57f970360"
+      }
+    },
+    {
+      "day": 715,
+      "block": "Block_10",
+      "task": "circleOfCircles",
+      "n_bins": 15083,
+      "n_channels": 192,
+      "task_n_bins": 15083,
+      "trials": 75,
+      "excluded_trials": 0,
+      "trial_bins": 14648,
+      "excluded_trial_bins": 0,
+      "min_trial_index": 361,
+      "max_trial_index": 15008,
+      "overlap_trials": false,
+      "nonfinite_features": 0,
+      "negative_features": 0,
+      "nonfinite_targets": 0,
+      "zero_targets": 380,
+      "target_norm_range": [
+        0.0,
+        1.4338792562484741
+      ],
+      "max_difference_from_displacement": 2.9802322387695312e-08,
+      "max_difference_from_unit_direction": 1.0,
+      "files": {
+        "data.mat": "352375c10f837a663acb5718d466f0b6732f1ea071f08d97ac7739a7844e3c4d",
+        "task.mat": "f3959763863656da1f497029ec03d59b75800d7affe26da8bf9106608236acff",
+        "info.mat": "26ad709ff7af6565b3d77637b6bce9565a21d89db9d64f7d0bb0e7f8ca8bdba0"
+      }
+    },
+    {
+      "day": 715,
+      "block": "Block_11",
+      "task": "circleOfCircles",
+      "n_bins": 15233,
+      "n_channels": 192,
+      "task_n_bins": 15233,
+      "trials": 61,
+      "excluded_trials": 0,
+      "trial_bins": 14706,
+      "excluded_trial_bins": 0,
+      "min_trial_index": 264,
+      "max_trial_index": 14969,
+      "overlap_trials": false,
+      "nonfinite_features": 0,
+      "negative_features": 0,
+      "nonfinite_targets": 0,
+      "zero_targets": 278,
+      "target_norm_range": [
+        0.0,
+        1.0568691492080688
+      ],
+      "max_difference_from_displacement": 2.9802322387695312e-08,
+      "max_difference_from_unit_direction": 1.0,
+      "files": {
+        "data.mat": "03d83e9230bdd946a7647568af1ea5853a0ea779464df435958cb25f147ed7f1",
+        "task.mat": "e7eb0c6ea9b69d1e28da66872f2b57f9c1a9f4faf479373ab461019100a46116",
+        "info.mat": "514b1495ad05c858f22567d62a37a5170999e52a4b903bee590b4ad7229bc3e5"
+      }
+    },
+    {
+      "day": 727,
+      "block": "Block_08",
+      "task": "circleOfCircles",
+      "n_bins": 15210,
+      "n_channels": 192,
+      "task_n_bins": 15210,
+      "trials": 43,
+      "excluded_trials": 0,
+      "trial_bins": 14764,
+      "excluded_trial_bins": 0,
+      "min_trial_index": 270,
+      "max_trial_index": 15033,
+      "overlap_trials": false,
+      "nonfinite_features": 0,
+      "negative_features": 0,
+      "nonfinite_targets": 0,
+      "zero_targets": 278,
+      "target_norm_range": [
+        0.0,
+        1.1317720413208008
+      ],
+      "max_difference_from_displacement": 3.934837877750397e-08,
+      "max_difference_from_unit_direction": 1.0,
+      "files": {
+        "data.mat": "deee600ada483cc37480dc3ef0f54aa1684fcd236b601a674799062c2eefefc3",
+        "task.mat": "46d3f540bf4d90cf59789580e45c1c1261787d73c91a1b0cc5644dcb4ffb73c6",
+        "info.mat": "00baa98b190f3545400373af04741a3e93a41abc11c216d4893522f262c523e5"
+      }
+    },
+    {
+      "day": 727,
+      "block": "Block_09",
+      "task": "circleOfCircles",
+      "n_bins": 15184,
+      "n_channels": 192,
+      "task_n_bins": 15184,
+      "trials": 42,
+      "excluded_trials": 0,
+      "trial_bins": 14870,
+      "excluded_trial_bins": 0,
+      "min_trial_index": 263,
+      "max_trial_index": 15132,
+      "overlap_trials": false,
+      "nonfinite_features": 0,
+      "negative_features": 0,
+      "nonfinite_targets": 0,
+      "zero_targets": 271,
+      "target_norm_range": [
+        0.0,
+        1.1780239343643188
+      ],
+      "max_difference_from_displacement": 3.934837877750397e-08,
+      "max_difference_from_unit_direction": 1.0,
+      "files": {
+        "data.mat": "b17342d3c54a175177fba2aa30956804e3b8dda06225b567f155aff8a6e19c1f",
+        "task.mat": "eb2e72c2707defce7f72b68a4f94bcd9145f9c8b47c44147f30a669d62b7c09b",
+        "info.mat": "f68a0ec9e11e40523f86bc2af37870ec1c6b950eb22703fcf80df7b4ce81925f"
+      }
+    },
+    {
+      "day": 751,
+      "block": "Block_16",
+      "task": "circleOfCircles",
+      "n_bins": 15183,
+      "n_channels": 192,
+      "task_n_bins": 15183,
+      "trials": 70,
+      "excluded_trials": 1,
+      "trial_bins": 14789,
+      "excluded_trial_bins": 322,
+      "min_trial_index": 263,
+      "max_trial_index": 15051,
+      "overlap_trials": false,
+      "nonfinite_features": 0,
+      "negative_features": 0,
+      "nonfinite_targets": 0,
+      "zero_targets": 277,
+      "target_norm_range": [
+        0.0,
+        0.5292297601699829
+      ],
+      "max_difference_from_displacement": 2.949673216789961e-08,
+      "max_difference_from_unit_direction": 1.0,
+      "files": {
+        "data.mat": "f0bc2a8588fcbee96107bf0663d9d4e9ab4cf91fc27108f6e62157eeb3b0b909",
+        "task.mat": "c857c23e1ed116cd87596eacbe29b913884ee145b1a1b470d4d5d791472d238f",
+        "info.mat": "dde61299e98ca6c5fb08c29f5942efaea0f65ebcc835b7e87fc4662f8199b6fe"
+      }
+    },
+    {
+      "day": 758,
+      "block": "Block_16",
+      "task": "circleOfCircles",
+      "n_bins": 15161,
+      "n_channels": 192,
+      "task_n_bins": 15161,
+      "trials": 37,
+      "excluded_trials": 0,
+      "trial_bins": 14616,
+      "excluded_trial_bins": 0,
+      "min_trial_index": 271,
+      "max_trial_index": 14886,
+      "overlap_trials": false,
+      "nonfinite_features": 0,
+      "negative_features": 0,
+      "nonfinite_targets": 0,
+      "zero_targets": 270,
+      "target_norm_range": [
+        0.0,
+        1.6483956575393677
+      ],
+      "max_difference_from_displacement": 5.960464477539063e-08,
+      "max_difference_from_unit_direction": 0.9911785694632755,
+      "files": {
+        "data.mat": "c78520781cbdd75fcf68a60479662400aa209f7f20d34e231a9ad88c5f11f168",
+        "task.mat": "39b9b4deaf2fc013798bbc76c0ef5bb1276398101a58f5fd3001c57bfa59bec7",
+        "info.mat": "7dc32b3d6b594247fc21cd92fc599905a28b103f718f63bccdc215d30de6984e"
+      }
+    },
+    {
+      "day": 758,
+      "block": "Block_18",
+      "task": "circleOfCircles",
+      "n_bins": 15158,
+      "n_channels": 192,
+      "task_n_bins": 15158,
+      "trials": 33,
+      "excluded_trials": 0,
+      "trial_bins": 14496,
+      "excluded_trial_bins": 0,
+      "min_trial_index": 264,
+      "max_trial_index": 14759,
+      "overlap_trials": false,
+      "nonfinite_features": 0,
+      "negative_features": 0,
+      "nonfinite_targets": 0,
+      "zero_targets": 263,
+      "target_norm_range": [
+        0.0,
+        1.4490567445755005
+      ],
+      "max_difference_from_displacement": 3.934837877750397e-08,
+      "max_difference_from_unit_direction": 0.9783053264488321,
+      "files": {
+        "data.mat": "3c3984dfbf4d3d690dab108ac48a9285311b1737cb677450f357978071d4b623",
+        "task.mat": "f9ea860129ffb3a35d5be8fb0969a023c395cb0cc6faa246b8e1c4fcde01a783",
+        "info.mat": "1782d372a68666c40875b1aa6125650e90916c0f4455cfdca8046375ccc62a17"
+      }
+    },
+    {
+      "day": 770,
+      "block": "Block_05",
+      "task": "circleOfCircles",
+      "n_bins": 15183,
+      "n_channels": 192,
+      "task_n_bins": 15183,
+      "trials": 38,
+      "excluded_trials": 0,
+      "trial_bins": 14791,
+      "excluded_trial_bins": 0,
+      "min_trial_index": 266,
+      "max_trial_index": 15056,
+      "overlap_trials": false,
+      "nonfinite_features": 0,
+      "negative_features": 0,
+      "nonfinite_targets": 0,
+      "zero_targets": 265,
+      "target_norm_range": [
+        0.0,
+        1.5569406747817993
+      ],
+      "max_difference_from_displacement": 5.960464477539063e-08,
+      "max_difference_from_unit_direction": 0.9943119966500182,
+      "files": {
+        "data.mat": "68ded25db2cb9a4f514a0f2b8c52db6fd3651acc2468ede6ae1c960d632e4dcf",
+        "task.mat": "fb594e229784be5f2543cc6f9cf1380c509da6df03ea47bcbca36f469999adb6",
+        "info.mat": "27f221a9f7d13d5892808b24519ae406283168b6cffea6455035b1ed30811b3e"
+      }
+    },
+    {
+      "day": 770,
+      "block": "Block_06",
+      "task": "circleOfCircles",
+      "n_bins": 15184,
+      "n_channels": 192,
+      "task_n_bins": 15184,
+      "trials": 41,
+      "excluded_trials": 0,
+      "trial_bins": 14586,
+      "excluded_trial_bins": 0,
+      "min_trial_index": 261,
+      "max_trial_index": 14846,
+      "overlap_trials": false,
+      "nonfinite_features": 0,
+      "negative_features": 0,
+      "nonfinite_targets": 0,
+      "zero_targets": 281,
+      "target_norm_range": [
+        0.0,
+        1.5169100761413574
+      ],
+      "max_difference_from_displacement": 2.9802322387695312e-08,
+      "max_difference_from_unit_direction": 0.9771721664393022,
+      "files": {
+        "data.mat": "91526c00c3baee85d3fa0ecf3fcc39954b4f8999c28210c949a94b718dcd0322",
+        "task.mat": "dfb90c8fd2a9082e026b428369c8fc18ca8cd9d47cf917a0a30a57c1bb4354a8",
+        "info.mat": "061e23fb9cd9a0be4835ee78b77bbb6478678b97d2cb4870236f66a4647d03e2"
+      }
+    },
+    {
+      "day": 783,
+      "block": "Block_12",
+      "task": "circleOfCircles",
+      "n_bins": 15186,
+      "n_channels": 192,
+      "task_n_bins": 15186,
+      "trials": 37,
+      "excluded_trials": 1,
+      "trial_bins": 14821,
+      "excluded_trial_bins": 139,
+      "min_trial_index": 266,
+      "max_trial_index": 15086,
+      "overlap_trials": false,
+      "nonfinite_features": 0,
+      "negative_features": 0,
+      "nonfinite_targets": 0,
+      "zero_targets": 265,
+      "target_norm_range": [
+        0.0,
+        1.393684983253479
+      ],
+      "max_difference_from_displacement": 2.9802322387695312e-08,
+      "max_difference_from_unit_direction": 0.9748438626754123,
+      "files": {
+        "data.mat": "74d69953b8782c166e749cec68efc09f195096b41eac1cb50c80a9c2179f819b",
+        "task.mat": "ae4bc3490a9f4ebab5545f62cbf36b0af5964adc0b78c9236ec36d8d6ad63f5d",
+        "info.mat": "ef623d65aebd1060647e97a9c58b11bfc52e05030fd19ac6d07a73b491183b03"
+      }
+    },
+    {
+      "day": 783,
+      "block": "Block_14",
+      "task": "circleOfCircles",
+      "n_bins": 15285,
+      "n_channels": 192,
+      "task_n_bins": 15285,
+      "trials": 35,
+      "excluded_trials": 0,
+      "trial_bins": 14810,
+      "excluded_trial_bins": 0,
+      "min_trial_index": 264,
+      "max_trial_index": 15073,
+      "overlap_trials": false,
+      "nonfinite_features": 0,
+      "negative_features": 0,
+      "nonfinite_targets": 0,
+      "zero_targets": 263,
+      "target_norm_range": [
+        0.0,
+        1.3000284433364868
+      ],
+      "max_difference_from_displacement": 5.960464477539063e-08,
+      "max_difference_from_unit_direction": 0.9879360852055076,
+      "files": {
+        "data.mat": "3c65a66b31dd92f127658ebfacd80cdfb2a94ec37eaed50be178d985cf78b25f",
+        "task.mat": "c49d0dd431a9380dd11221744464d522a7c0fef13ef6814350974731687dd56b",
+        "info.mat": "1cbd669f1b557272bdf183a50377899b7c31dda4ca84ae127aeb788b07624af9"
+      }
+    },
+    {
+      "day": 800,
+      "block": "Block_03",
+      "task": "circleOfCircles",
+      "n_bins": 15161,
+      "n_channels": 192,
+      "task_n_bins": 15161,
+      "trials": 36,
+      "excluded_trials": 4,
+      "trial_bins": 14596,
+      "excluded_trial_bins": 2007,
+      "min_trial_index": 267,
+      "max_trial_index": 14862,
+      "overlap_trials": false,
+      "nonfinite_features": 0,
+      "negative_features": 0,
+      "nonfinite_targets": 0,
+      "zero_targets": 298,
+      "target_norm_range": [
+        0.0,
+        1.010627269744873
+      ],
+      "max_difference_from_displacement": 2.9802322387695312e-08,
+      "max_difference_from_unit_direction": 0.9735697623364075,
+      "files": {
+        "data.mat": "1be895843f6b293840c285dd0d3b69adc3a68c3d135906eafe4979f659e4fb7f",
+        "task.mat": "3445e6ef8a33ebc968f4ac2df3dc78fe3356ec6dce2d7c65f88679a0048325cd",
+        "info.mat": "e88b22df383961c5edbfde392905a097aaad5aea7f7171bf22ec9e294f009c65"
+      }
+    },
+    {
+      "day": 800,
+      "block": "Block_04",
+      "task": "circleOfCircles",
+      "n_bins": 15134,
+      "n_channels": 192,
+      "task_n_bins": 15134,
+      "trials": 36,
+      "excluded_trials": 1,
+      "trial_bins": 14577,
+      "excluded_trial_bins": 234,
+      "min_trial_index": 265,
+      "max_trial_index": 14841,
+      "overlap_trials": false,
+      "nonfinite_features": 0,
+      "negative_features": 0,
+      "nonfinite_targets": 0,
+      "zero_targets": 264,
+      "target_norm_range": [
+        0.0,
+        1.1393152475357056
+      ],
+      "max_difference_from_displacement": 5.960464477539063e-08,
+      "max_difference_from_unit_direction": 0.9822435657323256,
+      "files": {
+        "data.mat": "68bebf44a82278971f326a1f4ebe40539a9b923de8bb220b5a3d26b70b0c4568",
+        "task.mat": "c9a99174b1fbb2991c47eb1a0b93ae440429bc57c23f95cca80117d17d21931a",
+        "info.mat": "66de06b0a8f3a8513d190dbcc5c1391291352e6cf3cde71d0f5aa8a264a16695"
+      }
+    }
+  ]
+}
