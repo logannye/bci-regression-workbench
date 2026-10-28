@@ -30,7 +30,9 @@ The public-bundle argument is optional. The seven synthetic states cover a hidde
 
 ## Validation
 
-Local validation passed against renderer SHA256 `7e60809d927a997acc548540611ea8bac3763f19f8dfa229383c9920de62d97d`; hosted validation is pending.
+Local and hosted validation passed against implementation head `7ad88997c70e33997e10b062aff10729357b9210`, tested merge `2b483b2c1656eb11d463bda8735771547999eb16` (identical tree), and renderer SHA256 `7e60809d927a997acc548540611ea8bac3763f19f8dfa229383c9920de62d97d`.
+
+[Hosted run 40750485414](https://github.com/logannye/bci-regression-workbench/actions/runs/40750485414) passed all four jobs on Ubuntu 24.04. Python 3.10.22 / 3.12.15 / 3.14.9 each discovered 126 tests: 94 passed and 32 optional tests skipped. Python 3.11.17 with datarepo/Arrow passed 96 with 30 public-producer dependency skips. All 14 report tests passed in every environment. Seven synthetic UI states, recurring pinned comparisons, score reproduction, fixed-script syntax, and pure Python wheel installation passed. The hosted datarepo bundle also score-reproduced on local macOS. Optional skips are not passes; the frozen public producer was not rerun. See the [aggregate receipt](validation/report-ui-v1.json) and [optional environment](validation/2026-10-28-report-datarepo-environment.txt).
 
 - Python 3.14.6 on macOS Darwin 25.2.0 arm64: 126 tests discovered, 117 passed, nine optional-dependency skips. All 14 report-specific tests passed. Node 24.3.0 syntax-checked the fixed script.
 - Eight real-comparator fixture states passed browser checks at 1265 × 712, 390 × 844, and 320 × 740 in the ChatGPT in-app browser: 24 state/viewport combinations, no document-wide horizontal overflow or browser console errors. Narrow score tables scroll locally when required; chart labels retain 12px text.

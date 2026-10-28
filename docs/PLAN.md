@@ -55,9 +55,9 @@ Local validation passed: 110 tests passed with nine optional-dependency skips, t
 - [x] Add keyboard-accessible selection, direct links/history, collapsed supporting evidence, and a no-script fallback.
 - [x] Validate eight report states across three viewport sizes and a longer session list; repair observed navigation/layout issues.
 - [x] Reproduce original public evidence with archived source and a separate new report bundle with identical scoring results.
-- [ ] Complete hosted tests, fixture reproduction, script syntax, packaging, and optional datarepo validation at the new revision.
+- [x] Complete hosted tests, fixture reproduction, script syntax, packaging, and optional datarepo validation at the new revision.
 
-See [Report interface](REPORT-UI.md) for local results and source-compatibility requirements. This iteration changes presentation and interaction only.
+See [Report interface](REPORT-UI.md) for local/hosted results and source-compatibility requirements. This iteration changes presentation and interaction only.
 
 ## Current state
 

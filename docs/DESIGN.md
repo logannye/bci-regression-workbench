@@ -1,6 +1,6 @@
 # Design
 
-Status: the core comparison, report, and scoring-reproduction slice is implemented and validated with synthetic predictions and a completed public-recording demonstration. Hosted datarepo integration and synthetic report-interaction checks passed at the revision recorded in [Validation](VALIDATION.md). The public run, independent audit, and scoring reproduction are recorded in [Public demonstration results](public-demo/RESULTS.md). The reusable `PinnedComparison` integration layer described below passed local and hosted checks recorded in [Pinned-hook validation](PINNED-VALIDATION.md). Intended-engineer usability and Neuralink integration remain unperformed.
+Status: the core comparison, report, and scoring-reproduction slice is implemented and validated with synthetic predictions and a completed public-recording demonstration. Hosted datarepo integration and synthetic report-interaction checks passed at the revision recorded in [Validation](VALIDATION.md). The public run, independent audit, and scoring reproduction are recorded in [Public demonstration results](public-demo/RESULTS.md). The reusable `PinnedComparison` integration layer described below passed local and hosted checks recorded in [Pinned-hook validation](PINNED-VALIDATION.md). The two-pane report passed the browser and hosted checks in [Report interface](REPORT-UI.md). Intended-engineer usability and Neuralink integration remain unperformed.
 
 ## Product boundary
 
