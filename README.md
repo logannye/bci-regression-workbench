@@ -1,22 +1,37 @@
 # BCI Regression Workbench
 
-**Find the recording sessions where a candidate decoder performs worse, even when its pooled score improves. Reproduce each reported difference.**
+**See which recording sessions got worse after a decoder change, even when the overall score improves.**
 
-Call a small Python function at the end of an existing evaluation job. It compares saved two-dimensional velocity predictions on the same declared samples, writes a session-level RMSE report, and preserves the evidence needed to recompute it. Your evaluator continues to own model execution and data access.
+### [Explore the public demo →](https://logannye.github.io/bci-regression-workbench/)
 
-**Status: started, in progress.** The implementation includes keyed comparison, a self-contained two-pane HTML report, CSV results, scoring reproduction, and a reusable pinned check for an existing evaluator. The report keeps every session beside its selected evidence, with responsive layout, keyboard navigation, and collapsible supporting details. The synthetic example, real datarepo integration, and a frozen public neural-recording comparison have passed their checks. See [implementation validation](docs/VALIDATION.md), [pinned-hook validation](docs/PINNED-VALIDATION.md), and [public-demo results](docs/public-demo/RESULTS.md). Neuralink internal integration and intended-engineer usability remain untested.
+**No installation or account required.** Open a completed comparison using public neural recordings, select a session, and inspect the baseline and candidate side by side.
 
-An independent open-source project by Logan Nye, designed for Neuralink's BCI ML engineering team. (This is not an official Neuralink project or an implemented integration with its internal systems.)
+A better average can hide a worse recording day. BCI Regression Workbench gives an ML engineer a repeatable session-by-session check at the end of an existing evaluation job. It compares both decoders on the same declared samples and preserves the inputs needed to recompute every score.
 
-The intended user is a Neuralink BCI ML engineer reviewing a proposed decoder change to determine whether or not it is worth keeping. It is informed by Neuralink's public [ML role](https://job-boards.greenhouse.io/neuralink/jobs/5663271003), which explicitly mentions building evaluation infrastructure for model updates.
+| At a glance | |
+| --- | --- |
+| **Use it when** | Reviewing a proposed decoder change after running your normal offline evaluation. |
+| **Give it** | Fixed reference labels, sample eligibility, and baseline/candidate velocity predictions keyed by session and sample. |
+| **Get back** | An interactive HTML report, a CSV of session scores, and a saved bundle for reproducing the comparison. |
+| **Daily workflow** | Pin the baseline and column mapping once. Each candidate evaluation writes its own report. |
 
-> On the same recorded sessions, where did candidate B become WORSE than baseline A?
+**Existing evaluator → saved predictions → session comparison → inspect changed sessions.** Your model code, inference environment, and data access stay in your existing evaluation workflow. The current metric is two-dimensional velocity RMSE: lower means less prediction error.
 
-## Public recording demonstration
+An independent open-source project by Logan Nye, designed for Neuralink's BCI ML engineering team. It has no official Neuralink affiliation or internal integration. The [sources and assumptions](docs/SOURCES.md) explain the public evidence behind this intended use.
 
-A prospectively frozen comparison trained both ridge decoders on one public Indy recording day and evaluated three later days. The candidate added recent neural history. Its error was lower on all three sessions, with all 14,052 expected evaluation bins scored; no session-level increase was observed. The full comparison and independent prediction audit reproduced on Linux and macOS without refitting.
+**Status: working prototype.** Comparison, pinned-baseline reuse, the two-pane report, score reproduction, and the optional datarepo integration have passed their documented checks. See [implementation validation](docs/VALIDATION.md), [pinned-hook validation](docs/PINNED-VALIDATION.md), and [report validation](docs/REPORT-UI.md). Practical use by Neuralink engineers remains untested.
 
-[Read the per-session results and limits](docs/public-demo/RESULTS.md), [inspect the frozen plan](docs/public-demo/PLAN.md), or [reproduce the evidence](docs/public-demo/REPRODUCE.md). This is offline decoding of measured physical-reaching velocity from one macaque, not a Neuralink participant evaluation. The core library continues to consume existing predictions; the example producer is separate.
+## Explore the demo in a minute
+
+1. **Read the Change column.** It shows candidate minus baseline RMSE. Positive means higher error; negative means lower error. Coverage shows whether all expected samples were scored.
+2. **Select a recording session.** The adjacent evidence pane shows its two scores and paired error traces. The session list remains visible on desktop; mobile stacks the same information.
+3. **Expand the evidence you need.** Open **Supporting samples** for a small sample preview, or **Identity & scoring details** for run identities, metric definitions, and provenance.
+
+The [hosted report](https://logannye.github.io/bci-regression-workbench/) compares two fixed ridge decoders trained on one public Indy recording day and evaluated on three later days. The candidate adds recent neural history. **All three sessions have lower candidate error; all 14,052 expected evaluation bins were scored.** This example contains no session-level error increase, and its differences are descriptive because no regression-reporting threshold was specified. The separate [synthetic example](#try-the-synthetic-demonstration) deliberately includes a worsened session to demonstrate that failure case.
+
+The experiment was frozen before evaluation, and the saved comparison and independent prediction audit reproduced on Linux and macOS without refitting. [Read the results and limits](docs/public-demo/RESULTS.md), [inspect the frozen plan](docs/public-demo/PLAN.md), or [reproduce the evidence](docs/public-demo/REPRODUCE.md).
+
+The recordings capture physical reaching by one macaque. This demonstrates an offline comparison workflow; it does not establish performance on Neuralink participants or in interactive BCI control. The hosted page is a completed report to explore, not a service for uploading recordings or running models.
 
 ## Try the synthetic demonstration
 
@@ -36,7 +51,7 @@ This tradeoff checks the comparator's behavior. It is not a result about neural 
 
 ## Add the comparison to an evaluation job
 
-Engineers on the BCI team can keep their model code, inference environment, data access, and evaluation command. They do not need to load a model into this tool. A one-time output mapping and pinned baseline enable a recurring path: run evaluation as usual, then open the comparison report. No new account, server, or dashboard is needed; it is meant to fit conveniently within their existing workflows with as few extra clicks as possible.
+Map your evaluator's output columns and pin its baseline once. Each subsequent evaluation supplies the candidate outputs and current evaluation identity, then writes a report beside the job's other artifacts. The core uses Python's standard library and runs locally without an account or server.
 
 Inputs are records keyed by `session_id` and `sample_id`. The evaluation table holds fixed targets and eligibility; each prediction bundle binds its outputs to that evaluation identity. Columns can be mapped once from the existing evaluator's names.
 
@@ -101,7 +116,7 @@ The report lists invalid sessions prominently and sorts valid sessions by descen
 
 ## Optional datarepo example
 
-[examples/datarepo_example.py](examples/datarepo_example.py) exercises Neuralink's upstream [datarepo](https://github.com/neuralinkcorp/datarepo) Parquet interface with synthetic prediction tables. Its optional environment is pinned in [requirements-datarepo.txt](requirements-datarepo.txt). The real datarepo example and all 67 tests passed in its Python 3.11 hosted environment; see the exact source and platform in [Validation](docs/VALIDATION.md).
+[examples/datarepo_example.py](examples/datarepo_example.py) exercises Neuralink's upstream [datarepo](https://github.com/neuralinkcorp/datarepo) Parquet interface with synthetic prediction tables. Its optional environment is pinned in [requirements-datarepo.txt](requirements-datarepo.txt). Hosted validation exercises real Arrow/Parquet tables separately from the standard-library core; see the tested source and environment in [Validation](docs/VALIDATION.md) and [report validation](docs/REPORT-UI.md).
 
 The core accepts record mappings directly and does not require a catalog migration. The table boundary also supports collected Polars and Arrow tables when those libraries are available. Datarepo is a narrow source integration, not a replacement evaluation framework.
 

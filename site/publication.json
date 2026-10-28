@@ -1,0 +1,20 @@
+{
+  "schema_version": 1,
+  "publication_id": "indy-public-demo-redesign-v1",
+  "prepared_on": "2026-10-28",
+  "source_revision": "046b62d01cb3b0427e9398fa4181ca27a688b5b0",
+  "original_report_sha256": "655c89377c123eca73708ffb7971d5c3f4c4ac4dccf28452ee978264c5dc1ff8",
+  "comparison_sha256": "7842bf7893193111a036e93d61de0389821fbbb0d2501e45d61721effe23da25",
+  "comparator_source_digest": "5c6a86d830784a9f4479c6f9da47990c2ac18ee35227e7a6dc36eacf9cfccaae",
+  "modification": "Added only a marked hosting notice and its styles, with public-demo context, attribution, and evidence links. Removing the notice recovers the original report byte for byte.",
+  "scope": "Static saved public report and aggregate session CSV. Includes bounded derived sample previews, not raw recordings, model binaries, or full prediction/label bundles.",
+  "dataset": {
+    "doi": "10.5281/zenodo.3854034",
+    "license": "CC-BY-4.0",
+    "version": 2
+  },
+  "files": {
+    "index.html": "285087dfb30938ac05e90f968f1ad444ace54f729db36f9b5acb8517417e02d8",
+    "session_metrics.csv": "464b24ae5fea8b9d0bfe106b17f785fd11db461e9aa025d53dd657f6c97f9870"
+  }
+}
