@@ -2,7 +2,8 @@
 
 from __future__ import annotations
 
-from collections import defaultdict
+from collections import defaultdict, deque
+from fractions import Fraction
 from html import escape
 import json
 import math
@@ -10,6 +11,7 @@ import math
 
 _PREVIEW_ROWS = 24
 _TRACE_BUCKETS = 80
+_LOCALIZATION_SAMPLES = 24
 
 
 def _text(value: object) -> str:
@@ -82,7 +84,41 @@ def _trace_indices(samples: list[dict]) -> list[int]:
     return sorted(selected)
 
 
-def _error_trace(samples: list[dict], units: object, maximum: float, anchor: str) -> str:
+def _localization_window(samples: list[dict]) -> tuple[int, int] | None:
+    """Locate positive net added squared error; never change supplied scores.
+
+    Rank every window of min(24, n) consecutive scored samples in supplied
+    evaluation order. Fractions preserve the exact finite floating-point error
+    values without overflow, underflow, or cancellation during ranking. Strict
+    improvement retains the earliest window on ties. The stop is exclusive.
+    """
+    if not samples:
+        return None
+    width = min(_LOCALIZATION_SAMPLES, len(samples))
+    losses = deque()
+    total = Fraction(0)
+    best_total = Fraction(0)
+    best = None
+    for index, sample in enumerate(samples):
+        baseline = _finite(sample.get("baseline_error"))
+        candidate = _finite(sample.get("candidate_error"))
+        if baseline is None or candidate is None or baseline < 0 or candidate < 0:
+            return None
+        baseline = Fraction.from_float(baseline)
+        candidate = Fraction.from_float(candidate)
+        loss = candidate * candidate - baseline * baseline
+        losses.append(loss)
+        total += loss
+        if len(losses) > width:
+            total -= losses.popleft()
+        if len(losses) == width and total > best_total:
+            best_total = total
+            best = (index + 1 - width, index + 1)
+    return best
+
+
+def _error_trace(samples: list[dict], units: object, maximum: float, anchor: str,
+                 *, start: int = 0, title: str = "Paired error trace") -> str:
     if not samples:
         return '<p class="muted">No paired samples are available for this session.</p>'
     indices = _trace_indices(samples)
@@ -120,11 +156,12 @@ def _error_trace(samples: list[dict], units: object, maximum: float, anchor: str
     else:
         preview = ("The single paired sample is shown." if len(samples) == 1 else
                    f"All {len(samples):,} paired samples are shown.")
-    xlabels = '<span>1</span>' if len(samples) == 1 else f'<span>1</span><span>{len(samples):,}</span>'
+    xlabels = (f'<span>{start + 1:,}</span>' if len(samples) == 1 else
+               f'<span>{start + 1:,}</span><span>{start + len(samples):,}</span>')
     return (
         f'<figure aria-labelledby="{anchor}-trace-title">'
         '<div class="trace-heading">'
-        f'<h3 id="{anchor}-trace-title">Paired error trace</h3>'
+        f'<h3 id="{anchor}-trace-title">{_text(title)}</h3>'
         f'<span class="muted">{_text(units)}</span></div>'
         '<div class="legend" aria-label="Trace legend">'
         '<span><i class="swatch baseline" aria-hidden="true"></i>Baseline · dashed</span>'
@@ -134,7 +171,7 @@ def _error_trace(samples: list[dict], units: object, maximum: float, anchor: str
         'preserveAspectRatio="none" role="img" '
         f'aria-labelledby="{anchor}-svg-title {anchor}-svg-description">'
         f'<title id="{anchor}-svg-title">Paired Euclidean velocity error in evaluation sample order</title>'
-        f'<desc id="{anchor}-svg-description">Sample order 1 to {len(samples):,}. '
+        f'<desc id="{anchor}-svg-description">Sample order {start + 1:,} to {start + len(samples):,}. '
         f'Shared vertical range zero to {_number(maximum)} {_text(units)}. '
         'Baseline is gray and dashed; candidate is blue and solid.</desc>'
         f'{"".join(grid)}{"".join(lines)}</svg>'
@@ -146,7 +183,8 @@ def _error_trace(samples: list[dict], units: object, maximum: float, anchor: str
     )
 
 
-def _sample_preview(samples: list[dict], units: object) -> str:
+def _sample_preview(samples: list[dict], units: object, *, start: int = 0,
+                    total: int | None = None, localized: bool = False) -> str:
     if not samples:
         return ""
     rows = []
@@ -164,12 +202,17 @@ def _sample_preview(samples: list[dict], units: object) -> str:
             f'<td>{_metric(sample.get("candidate_error"))}</td></tr>'
         )
     count = min(len(samples), _PREVIEW_ROWS)
+    total = len(samples) if total is None else total
+    selection = (
+        f'Window samples {start + 1:,}–{start + count:,} of {total:,} scored samples. '
+        if localized else
+        f'Showing {count:,} of {total:,} paired sample{"s" if total != 1 else ""} in evaluation order. '
+    )
     return (
         '<details class="supporting-samples"><summary>Supporting samples '
-        f'<span class="muted">· {count:,} / {len(samples):,} preview</span></summary>'
+        f'<span class="muted">· {count:,} / {total:,} {"window" if localized else "preview"}</span></summary>'
         '<div class="details-content">'
-        f'<p class="caption">Showing {count:,} of {len(samples):,} paired sample{"s" if len(samples) != 1 else ""} '
-        f'in evaluation order. Velocities and errors use {_text(units)}. '
+        f'<p class="caption">{selection}Velocities and errors use {_text(units)}. '
         'Display values are rounded; timestamps retain the producer\'s convention. '
         'All samples and their identities remain in the saved scoring bundle.</p>'
         '<div class="table-scroll" tabindex="0" role="region" aria-label="Supporting sample table">'
@@ -179,6 +222,71 @@ def _sample_preview(samples: list[dict], units: object) -> str:
         '<th scope="col">Candidate (vx, vy)</th><th scope="col">Baseline error</th>'
         '<th scope="col">Candidate error</th>'
         f'</tr></thead><tbody>{"".join(rows)}</tbody></table></div></div></details>'
+    )
+
+
+def _session_evidence(samples: list[dict], units: object, maximum: float,
+                      anchor: str, delta: object) -> str:
+    """Put a reproducible investigation window beside the unchanged session result."""
+    width = min(_LOCALIZATION_SAMPLES, len(samples))
+    window = _localization_window(samples)
+    rule = (
+        f'Fixed rule: examine every window of {_LOCALIZATION_SAMPLES} consecutive scored samples '
+        f'(the whole session if shorter). This session uses {width:,} samples per window. '
+        'Rank by summed candidate squared error minus baseline squared error, '
+        'with the earliest window winning exact ties. '
+        'Consecutive scored samples may span recording gaps; this is not a fixed-duration window. '
+        "Timestamps retain the producer's convention."
+    )
+    method = (
+        '<details class="localization-method"><summary>How this window is selected</summary>'
+        f'<div class="details-content"><p class="caption">{rule}</p>'
+        '<p class="caption">Exploratory localization only: it does not change scoring, '
+        'establish statistical significance, or identify a cause.</p></div></details>'
+    )
+    if window is None:
+        usable = bool(samples) and all(
+            _finite(sample.get(key)) is not None and _finite(sample.get(key)) >= 0
+            for sample in samples for key in ("baseline_error", "candidate_error")
+        )
+        message = (f'No {width:,}-sample window has net added squared error under this rule.'
+                   if usable else 'Finite paired errors are unavailable for localization.')
+        return (
+            '<section class="localization-empty" aria-label="Error localization">'
+            f'<h3>{"No added-error window" if usable else "Localization unavailable"}</h3>'
+            f'<p class="caption">{message} Session scores and flags are unchanged.</p>'
+            f'{method}</section>'
+            + _error_trace(samples, units, maximum, anchor)
+            + _sample_preview(samples, units)
+        )
+    start, stop = window
+    selected = samples[start:stop]
+    references = []
+    for label, sample in (("Start", selected[0]), ("End", selected[-1])):
+        references.append(
+            f'<div><dt>{label} sample</dt><dd class="mono">{_text(sample.get("sample_id", ""))}</dd>'
+            f'<dt>Timestamp</dt><dd class="mono">{_text(sample.get("timestamp", ""))}</dd></div>'
+        )
+    context = (
+        'This session improves overall; this window only identifies a local loss.'
+        if (_finite(delta) or 0) < 0 else
+        'This window is an investigation starting point, not a new regression flag.'
+    )
+    return (
+        f'<section class="localization" data-localization-start="{start}" '
+        f'data-localization-stop="{stop}" aria-labelledby="{anchor}-window-heading">'
+        f'<h3 id="{anchor}-window-heading">Highest added-error window</h3>'
+        f'<p class="window-range">Scored samples <strong>{start + 1:,}–{stop:,}</strong> '
+        f'of {len(samples):,} · {len(selected):,} samples</p>'
+        f'<p class="caption">{context}</p>'
+        f'<dl class="window-references">{"".join(references)}</dl>'
+        + _error_trace(selected, units, maximum, anchor + "-window", start=start,
+                       title="Paired errors in selected window")
+        + _sample_preview(selected, units, start=start, total=len(samples), localized=True)
+        + method + '</section><details class="full-session-trace"><summary>Full-session trace</summary>'
+        '<div class="details-content">'
+        + _error_trace(samples, units, maximum, anchor)
+        + '</div></details>'
     )
 
 
@@ -245,7 +353,15 @@ letter-spacing:0;color:var(--muted);font-weight:400}.change-label{font-size:12px
 margin:4px 0 14px}.detail-values{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;
 margin:16px 0 0;padding:12px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
 .detail-values dt{font-size:11px;color:var(--muted)}.detail-values dd{font-size:13px;margin:3px 0 0;
-font-variant-numeric:tabular-nums;overflow-wrap:anywhere}.trace-heading{display:flex;justify-content:space-between;
+font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
+.localization,.localization-empty{margin-top:18px}.window-range{font-size:12px;color:var(--muted);margin:5px 0}
+.window-range strong{color:var(--ink);font-weight:600}.window-references{display:grid;
+grid-template-columns:repeat(2,minmax(0,1fr));gap:10px 16px;margin:12px 0;padding:10px 12px;
+background:var(--bg);border-radius:5px}.window-references dt{font-size:11px;color:var(--muted)}
+.window-references dd{margin:2px 0 6px;overflow-wrap:anywhere;font-variant-numeric:tabular-nums}
+.window-references dd:last-child{margin-bottom:0}.localization-method{margin-top:10px;padding-top:8px}
+.localization-method summary{color:var(--muted)}.full-session-trace .details-content>figure{margin-top:8px}
+.trace-heading{display:flex;justify-content:space-between;
 gap:12px;align-items:baseline;flex-wrap:wrap}.trace-heading>span{font-size:12px;overflow-wrap:anywhere}
 figure{margin:20px 0 0}.legend{display:flex;gap:12px 18px;flex-wrap:wrap;font-size:12px;
 color:var(--muted);margin:9px 0 14px}.legend>span{display:flex;gap:7px;align-items:center}
@@ -477,7 +593,7 @@ def render_report(result: dict) -> str:
         )
         session_samples = samples_by_session.get(session_id, []) if valid else []
         evidence = (
-            _error_trace(session_samples, units, maximum, anchor) + _sample_preview(session_samples, units)
+            _session_evidence(session_samples, units, maximum, anchor, delta)
             if valid else
             '<p>This session was not scored as a valid pair. Its missing or incompatible '
             'evidence remains part of the comparison.</p>'

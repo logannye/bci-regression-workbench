@@ -59,6 +59,15 @@ Local validation passed: 110 tests passed with nine optional-dependency skips, t
 
 See [Report interface](REPORT-UI.md) for local/hosted results and source-compatibility requirements. This iteration changes presentation and interaction only.
 
+## 6. Localize added error in the selected session
+
+- [x] Fix a 24-scored-sample window rule, positive net added squared error, and earliest ties without changing scoring.
+- [x] Automatically show the window's exact source references, paired trace, and supporting samples; retain full-session context.
+- [x] Validate a late-session synthetic regression, no-positive/invalid states, exact arithmetic, and unchanged saved public scores.
+- [x] Check desktop/mobile selection, keyboard/history navigation, and the refreshed public snapshot.
+
+See [Localization](LOCALIZATION.md) for the fixed contract and validation. This is an exploratory way to locate evidence, not an additional session regression flag or a causal explanation.
+
 ## Current state
 
 The first two milestones are complete for the previously tested synthetic workflow, including hosted core checks, real datarepo/Parquet integration, report interaction, and scoring reproduction; see [Validation](VALIDATION.md). The public-recording experiment and reproduction are also complete, with all selected sessions preserved in [Public demonstration results](public-demo/RESULTS.md). Models were trained and executed only by the separate example producer. The focused reusable-reference change passed its own local tests, saved-output replay, and hosted checks in [Pinned-hook validation](PINNED-VALIDATION.md). Intended-engineer presentation/usability validation and Neuralink integration remain unperformed.

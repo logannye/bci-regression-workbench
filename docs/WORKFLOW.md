@@ -50,6 +50,8 @@ Sort valid sessions by descending candidate-minus-baseline RMSE in velocity unit
 
 A session-row link selects its evidence in the adjacent pane, or in the stacked pane on narrow screens. The selected session has a direct URL fragment; native anchors keep every session accessible without JavaScript. Supporting samples and full provenance remain available in disclosures. See [Report interface](REPORT-UI.md) for the interaction and evidence-compatibility contract. `reproduce(bundle_dir)` verifies the saved artifacts and recomputes the comparison without loading models. Users return to their existing evaluator when they need to regenerate predictions or investigate model internals.
 
+The selected pane automatically localizes the 24-scored-sample window with the most positive added squared error, using a fixed rule and earliest tie break. Exact sample IDs and timestamps let the engineer locate that region in existing analysis tools. This is an investigation starting point, not a new session flag or causal explanation; an improved session may still have a local loss. The full-session trace and original scores remain available. See [the localization contract](LOCALIZATION.md).
+
 ## Implemented example
 
 From the repository root:

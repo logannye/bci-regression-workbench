@@ -22,6 +22,7 @@ import math
 from pathlib import Path
 
 from bci_regression import EvaluationSet, PredictionSet, compare, reproduce
+from bci_regression.report import _localization_window
 
 
 _LAYOUT = [("session-01", 200), ("session-02", 100), ("session-03", 40), ("session-04", 80)]
@@ -139,6 +140,25 @@ def generate(output_dir, public_bundle=None):
              "Expected exactly session-03 to regress")
     _require(summary["session_count"] == 4 and summary["scored_samples"] == 420,
              "Expected four sessions and 420 scored samples")
+    states.append(summary)
+
+    # Fixed acceptance case: a 24-sample late failure, hidden by pooled improvement.
+    # This is constructed tooling evidence, not an experiment on recordings.
+    result, summary = _write(root, "late-session-regression", _inputs(
+        "late-session-regression", [("control-session", 1800), ("late-session", 600)],
+        candidate_error=lambda session, index: (
+            6.0 if session == "late-session" and 540 <= index < 564 else 0.25)))
+    late_samples = [row for row in result["samples"] if row["session_id"] == "late-session"]
+    _require(result["complete"] and result["pooled"]["delta"] < 0,
+             "Late fixture must have complete coverage and pooled improvement")
+    _require([row["session_id"] for row in result["sessions"] if row["regression"]] == ["late-session"],
+             "Late fixture must flag only the affected session")
+    _require(_localization_window(late_samples) == (540, 564),
+             "Localization must recover the fixed late window exactly")
+    summary["localization_acceptance"] = dict(
+        session_id="late-session", start_index=540, stop_index_exclusive=564,
+        start_sample_id="sample-0540", end_sample_id="sample-0563",
+        first_24_samples_outside_failure=True, all_2400_samples_scored=True)
     states.append(summary)
 
     invalid_inputs = _inputs("invalid-missing-nonfinite-and-global")

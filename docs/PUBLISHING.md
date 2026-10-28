@@ -12,7 +12,7 @@ Only three reviewed files in `site/` are deployed:
 
 Raw neural recordings, complete labels/predictions, models, and the full scoring bundle are not in the site. The [reproduction guide](public-demo/REPRODUCE.md) describes the separate evidence workflow. The hosted page is an inspectable report, not a replacement for that bundle.
 
-The original redesigned report has SHA-256 `655c89377c123eca73708ffb7971d5c3f4c4ac4dccf28452ee978264c5dc1ff8`. Removing the single `PUBLIC-DEMO-NOTICE` block from the hosted HTML recovers those exact bytes, including its script, session rows, charts, and provenance. Scoring and renderer source are unchanged. The original source-bound bundles remain intact.
+The current localized report snapshot has SHA-256 `791b5eb1af655f3e816f49a91851f88ca0db0f8c884ba7f2f6506f8359da7bba`. Removing the single `PUBLIC-DEMO-NOTICE` block from the hosted HTML recovers those exact bytes, including its script, session rows, charts, and provenance. Scoring source is unchanged; the renderer adds the documented fixed-window localization. The original source-bound bundles remain intact.
 
 The dataset attribution appears in the page's **About this demo & dataset** disclosure: O'Doherty, Cardoso, Makin, and Sabes, *Nonhuman Primate Reaching with Multichannel Sensorimotor Cortex Electrophysiology*, Zenodo v2, [DOI 10.5281/zenodo.3854034](https://doi.org/10.5281/zenodo.3854034), [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). The notice identifies the derived processing and independent project relationship.
 

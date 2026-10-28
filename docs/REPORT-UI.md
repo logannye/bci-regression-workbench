@@ -10,6 +10,8 @@ On desktop, the session table sits beside a bounded, sticky evidence pane. Its n
 
 On narrow screens the panes stack. Supporting sample tables and full provenance use native disclosures. The paired-error preview distinguishes baseline and candidate through line style and labels, uses an explicit shared vertical scale, and retains sample-order axes; timestamps are not silently interpreted as elapsed time. Preview sampling never changes the scoring population.
 
+Session selection also opens the fixed 24-scored-sample window with the largest positive net added squared error. Its exact source references and full-resolution paired trace appear automatically, with full-session context in a native disclosure. Supporting samples uses the same selected window. No-positive and invalid sessions do not acquire a fabricated local regression. See [localization](LOCALIZATION.md) for the fixed rule and validation; the earlier interface acceptance record below describes the original redesign.
+
 The page contains its own styles and a fixed, small enhancement script. Producer text is escaped into HTML and never interpolated into that script. No external assets, network calls, framework, new metrics, or model execution are required. Without JavaScript, all session sections remain available through ordinary anchors. Print handling exposes all sessions and supporting details.
 
 ## Evidence compatibility
@@ -26,7 +28,7 @@ PYTHONPATH=src python3 tests/report_ui_fixtures.py \
   --public-bundle /path/to/original/comparison
 ```
 
-The public-bundle argument is optional. The seven synthetic states cover a hidden session regression, invalid required predictions, global-only incompleteness, descriptive mixed signs, long/hostile text, a zero-error singleton, and within/exact/above-tolerance boundaries. Every generated bundle is score-reproduced.
+The public-bundle argument is optional. The eight synthetic states cover a hidden session regression, a known late-session regression, invalid required predictions, global-only incompleteness, descriptive mixed signs, long/hostile text, a zero-error singleton, and within/exact/above-tolerance boundaries. Every generated bundle is score-reproduced.
 
 ## Validation
 
