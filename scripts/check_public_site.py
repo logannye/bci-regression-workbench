@@ -13,7 +13,7 @@ EXPECTED_FILES = FILES | {f'indy/{name}' for name in FILES}
 NOTICE_START = '<!-- PUBLIC-DEMO-NOTICE-START -->'
 NOTICE_END = '<!-- PUBLIC-DEMO-NOTICE-END -->'
 PUBLICATIONS = [
-    ('', '23b5c0541ffd61a5eec79b36e8330650ee8d88d2f3d63693c30d9e431847ff1d',
+    ('', '4f46058f77847b29f3db1834fd02777de520f8739636e4cc7b8f2af7e90aafcb',
      'docs/human-demo/result-v1.json', '10.5061/dryad.n2z34tn5s',
      'https://creativecommons.org/publicdomain/zero/1.0/', 12),
     ('indy', '791b5eb1af655f3e816f49a91851f88ca0db0f8c884ba7f2f6506f8359da7bba',
@@ -81,7 +81,7 @@ def main():
         require(f'https://doi.org/{doi}' in page.links and license_url in page.links, 'Missing dataset attribution/license')
         require(all(f'session-{i}' in page.ids for i in range(1, n_sessions + 1)), 'Missing session panel')
         if not directory:
-            require('Inferred cursor-to-target vectors.' in raw and 'not measured intended velocities' in raw, 'Missing inferred-target disclosure')
+            require('Inferred cursor-to-target vectors.' in raw and 'not measured intended velocity' in raw, 'Missing inferred-target disclosure')
             require(publication['target_kind'] == 'inferred_cursor_to_target_vector', 'Wrong target kind')
     print('Public demos verified: six reviewed files; twelve human days and the unchanged three-day Indy report.')
 

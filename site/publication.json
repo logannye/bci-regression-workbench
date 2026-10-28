@@ -1,16 +1,16 @@
 {
   "schema_version": 1,
-  "publication_id": "mindful-t11-human-v1",
+  "publication_id": "mindful-t11-presentation-v2",
   "prepared_on": "2026-10-28",
-  "source_revision": "ca4695da8e139643bc2baba2208a0609bd05b0e4",
+  "source_revision": "362b0e5599f16878dcddadbde74b9e2947f647cf",
   "protocol_freeze_revision": "6e983e142a47d828c8f1ec2fb4c800e3406ffee7",
   "protocol_sha256": "9f51616b54b1af3dc884f4ccd51baa79ccb0f2789800aff676dafd93d68267b6",
-  "original_report_sha256": "23b5c0541ffd61a5eec79b36e8330650ee8d88d2f3d63693c30d9e431847ff1d",
-  "comparison_sha256": "ba351f189f4f2f12580cc3de8bbf049831ab807913e43331e388da2dbd2def5e",
-  "comparator_source_digest": "884aa0f214a7cea0460a0f3717c98d1c9e057be81cff40c138af01477c0a9be5",
+  "original_report_sha256": "4f46058f77847b29f3db1834fd02777de520f8739636e4cc7b8f2af7e90aafcb",
+  "comparison_sha256": "6a971cc46008804a29f1585a20778515bb81bec28a62886c1ceb0a3f56af278f",
+  "comparator_source_digest": "766fad86c92c16a4f13113b07f73d89203c25757e5493e6a70421bab5114fb3f",
   "target_kind": "inferred_cursor_to_target_vector",
-  "modification": "Added only a marked hosting notice with attribution and links. Removing the notice recovers the generated report byte for byte.",
-  "scope": "Static report with bounded sample previews and aggregate scores. No raw recordings, full labels/predictions or model files.",
+  "modification": "Copy-focused replay of the original saved outputs. Only the description and comparator source identity change in the result; all inputs, scores and sample windows are preserved. The marked hosting notice supplies context and attribution.",
+  "scope": "Static report with bounded sample previews and aggregate scores.",
   "dataset": {
     "doi": "10.5061/dryad.n2z34tn5s",
     "license": "CC0-1.0",
@@ -18,8 +18,10 @@
     "archive_sha256": "6d12b5dbcf9cac654ff1d0679e9753bf042b56cd5b8852eb31236b3cdecf7332"
   },
   "files": {
-    "index.html": "9b4e8e98d82075e0ef76f27f27d5c251f5392a9f529ffd44a8667d011e1cb7ae",
+    "index.html": "9c121cc7537800e4f8b70262230ceed4d0c8c84e47d7869d364fc0858830844e",
     "session_metrics.csv": "b62a7d28e42d91d2e048ed74480fa58447fb8765e557a03713ca216461a0b95f"
   },
-  "preserved_indy_publication": "indy/publication.json"
+  "preserved_indy_publication": "indy/publication.json",
+  "experiment_source_revision": "ca4695da8e139643bc2baba2208a0609bd05b0e4",
+  "presentation_receipt": "docs/validation/presentation-clarity-v1.json"
 }

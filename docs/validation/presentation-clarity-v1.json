@@ -1,0 +1,95 @@
+{
+  "schema_version": 1,
+  "date": "2026-10-28",
+  "change": "Presentation copy only; replay of saved human outputs",
+  "original_experiment_revision": "ca4695da8e139643bc2baba2208a0609bd05b0e4",
+  "original_manifest_sha256": "c690e4ed55a17297079e9decdae803a34019a0207d098d3cc42d14015360375b",
+  "original_source_digest": "884aa0f214a7cea0460a0f3717c98d1c9e057be81cff40c138af01477c0a9be5",
+  "comparator_source_digest": "766fad86c92c16a4f13113b07f73d89203c25757e5493e6a70421bab5114fb3f",
+  "allowed_result_changes": [
+    "comparator_source_digest",
+    "description"
+  ],
+  "all_other_result_fields_identical": true,
+  "input_and_csv_bytes_identical": true,
+  "original_bundle_unchanged": true,
+  "scoring_reproduced": true,
+  "model_fits": 0,
+  "model_inference_calls": 0,
+  "sessions": 12,
+  "scored_samples": 324732,
+  "pooled": {
+    "baseline_rmse": 0.4297063542389576,
+    "candidate_rmse": 0.41185712014681003,
+    "delta": -0.01784923409214756,
+    "n_samples": 324732
+  },
+  "description": "MINDFUL T11: one participant, three training days, twelve later evaluation days. Baseline: current-bin ridge. Candidate: current plus three previous neural bins.",
+  "artifact_hashes": {
+    "candidate.json": "c99ede034c324d34fe2d991565078ea7c23b5aa07d269abce295eb1e915a074e",
+    "comparison.json": "6a971cc46008804a29f1585a20778515bb81bec28a62886c1ceb0a3f56af278f",
+    "baseline.json": "eae0de565dd13d37eb600abb2c5c09add7bdbe188a890204f6b066955a137d01",
+    "manifest.json": "eb0dcac52941a8fdf294b5eb5585293e88e8cd468b863374e8da8bcad085126b",
+    "report.html": "4f46058f77847b29f3db1834fd02777de520f8739636e4cc7b8f2af7e90aafcb",
+    "session_metrics.csv": "b62a7d28e42d91d2e048ed74480fa58447fb8765e557a03713ca216461a0b95f",
+    "evaluation.json": "e3f44aa94c93c59f642d74a6bd3f3c555ce453cf64f4ca01e246d669fca4a7bf"
+  },
+  "report_source_revision": "362b0e5599f16878dcddadbde74b9e2947f647cf",
+  "focused_tests": {
+    "passed": 43,
+    "skipped": 0,
+    "scope": "Report, localization and target semantics"
+  },
+  "renderer_changes": {
+    "string_literals_only": true,
+    "css_identical": true,
+    "javascript_identical": true
+  },
+  "public_files": {
+    "index.html": "9c121cc7537800e4f8b70262230ceed4d0c8c84e47d7869d364fc0858830844e",
+    "publication.json": "2b484a2427a3454259c5359ad005ca32a3d6419cf2dd8afbbc454a31f44707a7",
+    "session_metrics.csv": "b62a7d28e42d91d2e048ed74480fa58447fb8765e557a03713ca216461a0b95f",
+    "indy/index.html": "098293df89ff3d316bf5787ad85ca266af2308ec83d9d952dea417e8b2e42616",
+    "indy/publication.json": "2e7f57e8dcbc500d6282b5ecabd295ca41e65a9a23c930a0435f712dc9d0634d",
+    "indy/session_metrics.csv": "464b24ae5fea8b9d0bfe106b17f785fd11db461e9aa025d53dd657f6c97f9870"
+  },
+  "report_geometry_checks": {
+    "all_identical": true,
+    "windows": 12,
+    "trace_points": 48
+  },
+  "indy_publication_bytes_unchanged": true,
+  "browser": {
+    "session_viewport_combinations": 36,
+    "viewports": [
+      [
+        1280,
+        720
+      ],
+      [
+        390,
+        844
+      ],
+      [
+        320,
+        740
+      ]
+    ],
+    "all_twelve_sessions_selected": true,
+    "horizontal_overflow": false,
+    "inferred_target_notice_present": true,
+    "keyboard": {
+      "focus": "session-1-heading",
+      "hash": "#session-1"
+    },
+    "supporting_samples": {
+      "overflow": false,
+      "rows": 24
+    },
+    "console_errors_and_warnings": []
+  },
+  "readme_words": {
+    "before": 1920,
+    "after": 865
+  }
+}
