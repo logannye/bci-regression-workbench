@@ -1,6 +1,6 @@
 # Workflow
 
-Status: the Python integration point, local report, and saved-baseline synthetic example are implemented and checked as recorded in [Validation](VALIDATION.md). A separate public-recording producer has also exported fixed predictions into the same comparison/report path, with independent audit and scoring reproduction recorded in [Public demonstration results](public-demo/RESULTS.md). The workflow below remains a proposed fit for Neuralink; its internal evaluator, experiment tracker, and review interfaces are unknown.
+Status: the Python integration point, local report, and saved-baseline synthetic example are implemented and checked as recorded in [Validation](VALIDATION.md). A separate public-recording producer has also exported fixed predictions into the same comparison/report path, with independent audit and scoring reproduction recorded in [Public demonstration results](public-demo/RESULTS.md). The reusable pinned hook passed its own local and hosted [validation](PINNED-VALIDATION.md). The workflow below remains a proposed fit for Neuralink; its internal evaluator, experiment tracker, and review interfaces are unknown.
 
 ## Fit the existing model-change loop
 

@@ -4,7 +4,7 @@
 
 Call a small Python function at the end of an existing evaluation job. It compares saved two-dimensional velocity predictions on the same declared samples, writes a session-level RMSE report, and preserves the evidence needed to recompute it. Your evaluator continues to own model execution and data access.
 
-**Status: started, in progress.** The implementation includes keyed comparison, a self-contained HTML report, CSV results, scoring reproduction, and a reusable pinned check for an existing evaluator. The synthetic example, real datarepo integration, and a frozen public neural-recording comparison have passed their checks. See [implementation validation](docs/VALIDATION.md) and [public-demo results](docs/public-demo/RESULTS.md). Neuralink internal integration and intended-engineer usability remain untested.
+**Status: started, in progress.** The implementation includes keyed comparison, a self-contained HTML report, CSV results, scoring reproduction, and a reusable pinned check for an existing evaluator. The synthetic example, real datarepo integration, and a frozen public neural-recording comparison have passed their checks. See [implementation validation](docs/VALIDATION.md), [pinned-hook validation](docs/PINNED-VALIDATION.md), and [public-demo results](docs/public-demo/RESULTS.md). Neuralink internal integration and intended-engineer usability remain untested.
 
 An independent open-source project by Logan Nye, designed for Neuralink's BCI ML engineering team. (This is not an official Neuralink project or an implemented integration with its internal systems.)
 

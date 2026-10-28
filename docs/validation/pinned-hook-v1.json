@@ -1,0 +1,92 @@
+{
+  "check": "saved-output hook replay; no refit or inference",
+  "checks": {
+    "hosted_core_each": {
+      "discovered": 119,
+      "passed": 87,
+      "skipped": 32
+    },
+    "hosted_datarepo": {
+      "discovered": 119,
+      "passed": 89,
+      "skipped": 30
+    },
+    "local": {
+      "discovered": 119,
+      "passed": 110,
+      "skipped": 9
+    },
+    "new_hook_tests_passed_per_environment": 20
+  },
+  "comparator_source_digest": "95d50f159a4ac854fb0d7f7bb3e7282e7fa7ca7ec1a20b526dd2d20e9ea79a83",
+  "environment": {
+    "platform": "Darwin-25.2.0-arm64-arm-64bit-Mach-O",
+    "python": "3.14.6"
+  },
+  "expected_evaluation_samples": 14052,
+  "hook_source_sha256": "d1dccdc567e67d4d7372a50eadb350b1869e45bb740acbb53c72b9693611c987",
+  "hosted_run": "https://github.com/logannye/bci-regression-workbench/actions/runs/40744448413",
+  "hosted_tested_revision": "aefa4fb109c2cdecb8965b1d54f482622b839322",
+  "implementation_revision": "2866339fdedd661057537437725ef79a64ed7dd2",
+  "new_bundles_reproduced": 2,
+  "original_bundle_reproduced": true,
+  "original_receipt_files_verified": 26,
+  "original_results_exactly_preserved": true,
+  "original_source_revision": "ff10e82dda29e5319aea5fe98c866a915aa98706",
+  "pin_hashes_unchanged": {
+    "baseline.json": "86d3260f0d5796723d793960873ec756678a76e0ce315a81a15e303769585bd6",
+    "evaluation.json": "11e50fe28446e542829fbadcf85c3fc3ee404e1e6b9018c024e59055b63a6121",
+    "manifest.json": "d6deb9b90b240e391293658c77550ab20553c20df375580b6c236197cdf516b4"
+  },
+  "pooled": {
+    "baseline_rmse": 102.59761451619941,
+    "candidate_rmse": 90.5103019829578,
+    "delta": -12.087312533241615,
+    "n_samples": 14052
+  },
+  "protocol_sha256": "c7d24fbde2bd727247fb4415d134d10761b3ab204bb4f3af3015dbda02488af9",
+  "sessions": [
+    {
+      "baseline_rmse": 103.40360783269914,
+      "candidate_rmse": 97.59902318294863,
+      "delta": -5.80458464975051,
+      "issues": [],
+      "n_expected": 4684,
+      "n_scored": 4684,
+      "regression": null,
+      "session_id": "indy_20160927_04",
+      "status": "valid"
+    },
+    {
+      "baseline_rmse": 91.02703377013519,
+      "candidate_rmse": 76.87472608694065,
+      "delta": -14.152307683194536,
+      "issues": [],
+      "n_expected": 4684,
+      "n_scored": 4684,
+      "regression": null,
+      "session_id": "indy_20160916_01",
+      "status": "valid"
+    },
+    {
+      "baseline_rmse": 112.25232524734615,
+      "candidate_rmse": 95.60884612801654,
+      "delta": -16.643479119329612,
+      "issues": [],
+      "n_expected": 4684,
+      "n_scored": 4684,
+      "regression": null,
+      "session_id": "indy_20160921_01",
+      "status": "valid"
+    }
+  ],
+  "status": "passed",
+  "synthetic_reference_reuse": {
+    "status": "passed",
+    "unchanged_pin_files": {
+      "baseline.json": "55677056b88ba747b141f093c7e95444e7ee25a3aa65547f5d10851218c8da12",
+      "evaluation.json": "78198238bfc0f36dea6b7b8677eca1f8e696713cc71fd9cc4c0b26548bf37048",
+      "manifest.json": "d69cc351f4415194318d36f8a2316ee4809b2ff495fbc861f525fcc97487de4b"
+    }
+  }
+}

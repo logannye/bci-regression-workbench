@@ -1,6 +1,6 @@
 # Design
 
-Status: the core comparison, report, and scoring-reproduction slice is implemented and validated with synthetic predictions and a completed public-recording demonstration. Hosted datarepo integration and synthetic report-interaction checks passed at the revision recorded in [Validation](VALIDATION.md). The public run, independent audit, and scoring reproduction are recorded in [Public demonstration results](public-demo/RESULTS.md). The reusable `PinnedComparison` integration layer described below is implemented and passed local checks; hosted validation of that new layer is pending. Intended-engineer usability and Neuralink integration remain unperformed.
+Status: the core comparison, report, and scoring-reproduction slice is implemented and validated with synthetic predictions and a completed public-recording demonstration. Hosted datarepo integration and synthetic report-interaction checks passed at the revision recorded in [Validation](VALIDATION.md). The public run, independent audit, and scoring reproduction are recorded in [Public demonstration results](public-demo/RESULTS.md). The reusable `PinnedComparison` integration layer described below passed local and hosted checks recorded in [Pinned-hook validation](PINNED-VALIDATION.md). Intended-engineer usability and Neuralink integration remain unperformed.
 
 ## Product boundary
 
@@ -50,7 +50,7 @@ At the end of each ordinary evaluation job, the caller supplies candidate output
 
 The current evaluation is mandatory; it never defaults to the pinned evaluation. Changed targets, eligibility, units, coordinates, horizon, or other fingerprint-bound content must remain detectable as an incompatible comparison. Copying reference metadata onto arbitrary candidate outputs would only conceal a changed evaluation, so the integration must export its actual current declarations. Missing or duplicate candidate predictions retain the core's explicit invalid-session behavior and never reduce the denominator silently.
 
-Local checks passed for reference creation/loading, configuration integrity, repeated candidate calls, equivalence with direct `compare`, and preservation of mismatch/invalid-input handling; hosted checks are pending. Output directories inside the pin are rejected before consuming candidate rows, including symlink aliases, so reporting cannot invalidate the reference. This layer reduces repository-specific integration code; it cannot establish whether Neuralink's evaluator provides the required outputs or whether an intended engineer finds the workflow useful.
+Local checks passed for reference creation/loading, configuration integrity, repeated candidate calls, equivalence with direct `compare`, and preservation of mismatch/invalid-input handling; hosted checks also passed. See [Pinned-hook validation](PINNED-VALIDATION.md) for source identities, counts, and optional skips. Output directories inside the pin are rejected before consuming candidate rows, including symlink aliases, so reporting cannot invalidate the reference. This layer reduces repository-specific integration code; it cannot establish whether Neuralink's evaluator provides the required outputs or whether an intended engineer finds the workflow useful.
 
 ## Baseline and data access
 

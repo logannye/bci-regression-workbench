@@ -9,7 +9,7 @@ Recorded October 28, 2026. This validates comparison software and a synthetic wo
 - Comparator source digest: `95d50f159a4ac854fb0d7f7bb3e7282e7fa7ca7ec1a20b526dd2d20e9ea79a83`.
 - Successful hosted run: [40735266228](https://github.com/logannye/bci-regression-workbench/actions/runs/40735266228).
 
-The source digest covers the four package source files and is also recorded in each comparison bundle. Reproduction requires that exact source content. These results apply to the recorded source; future code changes need their own validation.
+The source digest covers the four original comparator source files and is also recorded in each comparison bundle. Reproduction requires that exact source content. These results apply to the recorded source; future code changes need their own validation.
 
 ## Checks performed
 
@@ -36,4 +36,4 @@ The synthetic report was visually inspected at a 1265 × 712 browser viewport. R
 
 [Run 40734920825](https://github.com/logannye/bci-regression-workbench/actions/runs/40734920825) failed before running jobs because a colon in an unquoted YAML command made the workflow invalid. Commit `c725245` corrected the command. A concurrent main-branch README edit was merged before the successful run. The failed run is not treated as test execution.
 
-No public neuroscience dataset, trained decoder, live BCI, or Neuralink internal evaluator has been evaluated. The current implementation materializes inputs and paired samples in memory; large-recording memory and runtime behavior have not been benchmarked. The next product validation is one prespecified public-recording comparison, followed by feedback on the real integration effort from an intended engineer.
+At this initial validation, no public neuroscience dataset, trained decoder, live BCI, or Neuralink internal evaluator had been evaluated. Later work completed the [public-recording comparison](public-demo/RESULTS.md) and [pinned evaluator hook](PINNED-VALIDATION.md), each with its own recorded evidence. The current implementation materializes inputs and paired samples in memory; large-recording memory and runtime behavior have not been benchmarked. The intended-engineer integration validation remains unperformed.
