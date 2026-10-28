@@ -4,7 +4,7 @@
 
 Call a small Python function at the end of an existing evaluation job. It compares saved two-dimensional velocity predictions on the same declared samples, writes a session-level RMSE report, and preserves the evidence needed to recompute it. Your evaluator continues to own model execution and data access.
 
-**Status: started, in progress.** The first implementation includes keyed comparison, a self-contained HTML report, CSV results, and scoring reproduction from a JSON bundle. The synthetic example, real datarepo integration, and a frozen public neural-recording comparison have passed their checks. See [implementation validation](docs/VALIDATION.md) and [public-demo results](docs/public-demo/RESULTS.md). Neuralink internal integration and intended-engineer usability remain untested.
+**Status: started, in progress.** The implementation includes keyed comparison, a self-contained HTML report, CSV results, scoring reproduction, and a reusable pinned check for an existing evaluator. The synthetic example, real datarepo integration, and a frozen public neural-recording comparison have passed their checks. See [implementation validation](docs/VALIDATION.md) and [public-demo results](docs/public-demo/RESULTS.md). Neuralink internal integration and intended-engineer usability remain untested.
 
 An independent open-source project by Logan Nye, designed for Neuralink's BCI ML engineering team. (This is not an official Neuralink project or an implemented integration with its internal systems.)
 
@@ -23,13 +23,14 @@ A prospectively frozen comparison trained both ridge decoders on one public Indy
 From the repository root, with Python 3.10 or later:
 
 ```sh
+PYTHONPATH=src python3 examples/basic_comparison.py --output-dir runs/demo --initialize
 PYTHONPATH=src python3 examples/basic_comparison.py --output-dir runs/demo
 PYTHONPATH=src python3 examples/basic_comparison.py --output-dir runs/demo --candidate-id candidate-002
 ```
 
 The core uses only Python's standard library. No dependency installation or native compilation is needed. Start with a new example directory. Each candidate comparison needs a new candidate ID; existing comparison outputs are never overwritten.
 
-The first invocation creates a pinned evaluation set and baseline. The second reuses their saved bundles and writes the same constructed candidate predictions under a new run ID, demonstrating baseline reuse. The fixture improves pooled RMSE while worsening a shorter session. Open the report path printed by the script, then select the worsened session to inspect its paired errors and sample references.
+The initialization command saves the evaluation, baseline, column mapping, and reporting tolerance once. Both ordinary candidate commands load that same pin and generate their reports as part of evaluation. They construct only candidate predictions and write separate run directories. Repeating initialization refuses to replace the reference. The fixture improves pooled RMSE while worsening a shorter session. Open the report path printed by the script, then select the worsened session to inspect its paired errors and sample references.
 
 This tradeoff checks the comparator's behavior. It is not a result about neural decoding performance.
 
@@ -39,39 +40,38 @@ Engineers on the BCI team can keep their model code, inference environment, data
 
 Inputs are records keyed by `session_id` and `sample_id`. The evaluation table holds fixed targets and eligibility; each prediction bundle binds its outputs to that evaluation identity. Columns can be mapped once from the existing evaluator's names.
 
-This complete Python example uses two synthetic samples. Run it with this repository's `src` on `PYTHONPATH`:
+The reusable hook keeps the reference and reporting settings in a verified local directory. The integration outline is:
 
 ```python
-from bci_regression import EvaluationSet, PredictionSet, compare
+from bci_regression.pinned import PinnedComparison
 
-keys = [("session-a", "sample-0"), ("session-b", "sample-0")]
-evaluation = EvaluationSet.from_records(
-    [{"session_id": s, "sample_id": k, "timestamp": 0.0,
-      "target_vx": 0.0, "target_vy": 0.0} for s, k in keys],
-    evaluation_id="synthetic-example-v1", units="cm/s",
-    coordinates="x-right,y-up", horizon_ms=0, purpose="synthetic",
+# Once, when exporting the baseline's actual evaluation:
+PinnedComparison.create(
+    "references/reaching-v1",
+    evaluation=baseline_evaluation,       # EvaluationSet from actual labels and mask
+    baseline=baseline_export,             # PredictionSet already bound to that evaluation
+    prediction_columns={"session_id": "recording", "sample_id": "bin",
+                        "predicted_vx": "vx", "predicted_vy": "vy"},
+    tolerance=0.1,                        # Absolute RMSE increase in evaluation units
 )
 
-def prediction_rows(values):
-    return [{"session_id": s, "sample_id": k,
-             "predicted_vx": vx, "predicted_vy": 0.0}
-            for (s, k), vx in zip(keys, values)]
+# At evaluator startup:
+check = PinnedComparison.load("references/reaching-v1")
 
-baseline = PredictionSet.from_records(
-    prediction_rows([3.0, 1.0]), run_id="baseline-v1", evaluation=evaluation,
+# At completion of each normal candidate evaluation:
+result = check.compare(
+    candidate_outputs, evaluation=current_evaluation,
+    run_id=run_id, output_dir=job_dir / "session-regressions",
+    provenance=run_metadata,
 )
-candidate = PredictionSet.from_records(
-    prediction_rows([1.0, 2.0]), run_id="candidate-v1", evaluation=evaluation,
-)
-result = compare(
-    evaluation, baseline, candidate, tolerance=0.1,
-    output_dir="runs/api-example",
-    description="Synthetic arithmetic example; no model execution.",
-)
-print(result["complete"], result["sessions"])
+print(job_dir / "session-regressions" / "report.html")
 ```
 
-For subsequent candidates, load `EvaluationSet.load("runs/api-example/evaluation.json")` and `PredictionSet.load("runs/api-example/baseline.json")`, then create only the new candidate bundle from the normal evaluator's outputs. Do not recreate or relabel an old baseline against a changed evaluation set. The basic demonstration exercises this saved-baseline path.
+These names represent the existing evaluator's outputs and metadata; [the executable example](examples/basic_comparison.py) supplies them end to end, including a noncanonical column schema. `current_evaluation` must be an `EvaluationSet` constructed from the current job's actual labels, sample keys, timestamps, eligibility, and declared semantics. The hook requires it and rejects a changed evaluation before creating a comparison. Loading labels from the pin and declaring that they describe the current job would defeat this check.
+
+The daily call needs no baseline selection, column mapping, or tolerance entry. The pin refuses replacement and incomplete baseline coverage; changing the reference or settings requires a new pin directory. Missing, duplicate, or nonfinite candidate predictions remain visible as invalid sessions. A changed column schema produces an explicit error. Comparison artifacts retain the pin fingerprint and hook source digest in reserved `bci_regression_pin` candidate provenance.
+
+The original `EvaluationSet`, `PredictionSet`, and `compare` APIs remain available for callers that already manage this configuration. Both paths produce the same report format. The hook only organizes saved inputs and settings; it cannot verify that exported outputs came from the declared model or that the producer supplied truthful metadata.
 
 The returned dictionary contains all session rows under `result["sessions"]`, completeness, issues, pooled context when complete, and paired samples. A reporting tolerance is an absolute increase in RMSE in the declared velocity units; `tolerance=None` reports descriptive differences without categorical regression flags.
 
@@ -91,7 +91,7 @@ Recompute a saved comparison without loading a decoder:
 ```python
 from bci_regression import reproduce
 
-recomputed = reproduce("runs/api-example")
+recomputed = reproduce("runs/demo/candidate-001/session-regressions")
 print(recomputed["complete"])
 ```
 
@@ -111,7 +111,7 @@ The single benefit is exposing reproducible session-level regressions in existin
 
 ## What will determine whether the project is practically useful
 
-Tests and the constructed demonstration are implementation checks. The public-recording demonstration is complete; validation with an intended engineer remains future work. No Neuralink data or model code is included.
+Tests and the constructed demonstration are implementation checks. The public-recording demonstration is complete. The pinned hook addresses observed integration boilerplate; whether an intended engineer has stable keyed exports, needs this view, or already has an equivalent remains unvalidated. No Neuralink data or model code is included.
 
 The selected public recordings contain physical reaching and are described as an offline movement-decoding example. Deployment decisions remain outside this first iteration; any future expansion should depend on practical feedback from the ML engineering team.
 

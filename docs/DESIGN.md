@@ -1,6 +1,6 @@
 # Design
 
-Status: the comparison, report, and scoring-reproduction slice is implemented and validated with synthetic predictions and a completed public-recording demonstration. Hosted datarepo integration and synthetic report-interaction checks passed at the revision recorded in [Validation](VALIDATION.md). The public run, independent audit, and scoring reproduction are recorded in [Public demonstration results](public-demo/RESULTS.md). Intended-engineer usability and Neuralink integration remain unperformed.
+Status: the core comparison, report, and scoring-reproduction slice is implemented and validated with synthetic predictions and a completed public-recording demonstration. Hosted datarepo integration and synthetic report-interaction checks passed at the revision recorded in [Validation](VALIDATION.md). The public run, independent audit, and scoring reproduction are recorded in [Public demonstration results](public-demo/RESULTS.md). The reusable `PinnedComparison` integration layer described below is implemented and passed local checks; hosted validation of that new layer is pending. Intended-engineer usability and Neuralink integration remain unperformed.
 
 ## Product boundary
 
@@ -8,7 +8,7 @@ The existing evaluator owns model loading, preprocessing, inference, accelerator
 
 The [public-recording example](../examples/public_recording/run.py) demonstrates this boundary with a separate, frozen ridge-model producer. It exports both models' predictions before reading evaluation target values, then passes those saved outputs to the same comparison API. Its model fitting and independent protocol audit are example-specific; they do not add a model runner to the product or establish training provenance for arbitrary imported outputs.
 
-The entry point is `compare(evaluation, baseline, candidate, *, tolerance=None, numerical_tolerance=1e-12, output_dir=None, description="")`. It accepts an `EvaluationSet` and two `PredictionSet` objects and returns a result dictionary. The complete session table is `result["sessions"]`. Supplying a new `output_dir` also writes the report and scoring evidence; omitting it performs an in-memory comparison.
+The core entry point is `compare(evaluation, baseline, candidate, *, tolerance=None, numerical_tolerance=1e-12, output_dir=None, description="")`. It accepts an `EvaluationSet` and two `PredictionSet` objects and returns a result dictionary. The complete session table is `result["sessions"]`. Supplying a new `output_dir` also writes the report and scoring evidence; omitting it performs an in-memory comparison. The reusable reference layer delegates to this unchanged scoring function.
 
 No model adapter or access to model binaries is required. Baseline and candidate may run in different model environments. The same comparison function can be called from an existing job runner without a separate orchestration system. A standalone CLI, native application, and hosted UI are outside the first implementation.
 
@@ -29,9 +29,32 @@ Creating a `PredictionSet` binds its records to the supplied `EvaluationSet`. Do
 
 Input representation and preprocessing may legitimately change between models. Those differences must be recorded, but the comparison requires the same evaluation examples and target semantics, not identical internal feature arrays.
 
+## Reusable pinned comparison
+
+The original recurring integration required each evaluator to manage reference files, output-column mapping, and fixed comparison settings. `PinnedComparison` in `bci_regression.pinned` moves that repeated setup into a small persistent reference. It introduces no model interface or alternative scoring behavior. The selected contract is:
+
+```python
+PinnedComparison.create(
+    path, *, evaluation, baseline, prediction_columns=None,
+    tolerance=None, numerical_tolerance=1e-12, description="",
+)
+PinnedComparison.load(path)
+reference.compare(
+    rows, *, evaluation, run_id, output_dir, provenance,
+)
+```
+
+One-time creation takes the actual exported `EvaluationSet` and baseline `PredictionSet`. It requires complete baseline coverage and compatible evaluation semantics, then atomically stores their identities and contents with the candidate-column mapping, reporting tolerance, numerical tolerance, and description. Creation refuses an existing destination. The saved reference is immutable and hash-verified; changing the baseline or configuration requires an explicitly new reference.
+
+At the end of each ordinary evaluation job, the caller supplies candidate output rows, their run identity and provenance, a new output directory, and the **actual current `EvaluationSet` from that job**. The reference applies its saved prediction-column mapping, binds candidate outputs to that supplied evaluation, and calls the core comparator using the pinned evaluation and baseline. It returns the existing result dictionary and writes the existing report and scoring bundle. The caller does not select the baseline or re-enter mappings and tolerances for each candidate.
+
+The current evaluation is mandatory; it never defaults to the pinned evaluation. Changed targets, eligibility, units, coordinates, horizon, or other fingerprint-bound content must remain detectable as an incompatible comparison. Copying reference metadata onto arbitrary candidate outputs would only conceal a changed evaluation, so the integration must export its actual current declarations. Missing or duplicate candidate predictions retain the core's explicit invalid-session behavior and never reduce the denominator silently.
+
+Local checks passed for reference creation/loading, configuration integrity, repeated candidate calls, equivalence with direct `compare`, and preservation of mismatch/invalid-input handling; hosted checks are pending. Output directories inside the pin are rejected before consuming candidate rows, including symlink aliases, so reporting cannot invalidate the reference. This layer reduces repository-specific integration code; it cannot establish whether Neuralink's evaluator provides the required outputs or whether an intended engineer finds the workflow useful.
+
 ## Baseline and data access
 
-Select and save the baseline once for a fixed evaluation set, then load that exact bundle for later candidates. The report shows the run identity and content digest. The caller owns any human-readable alias resolution; the workbench does not select a baseline or substitute a latest or best-looking run. A baseline change must be explicit.
+Select and save the baseline once for a fixed evaluation set, then load that exact bundle for later candidates. The reusable reference holds this explicit choice; direct users may continue loading the underlying bundles themselves. The report shows the run identity and content digest. The caller owns any human-readable alias resolution; the workbench does not select a baseline or substitute a latest or best-looking run. A baseline change must be explicit.
 
 Missing or malformed saved bundles raise an error during loading. A successfully loaded baseline bound to incompatible evaluation semantics makes the comparison invalid. Neither path silently runs a model, selects another baseline, or shrinks the evaluation cohort.
 

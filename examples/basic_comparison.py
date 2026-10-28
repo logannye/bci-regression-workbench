@@ -1,7 +1,7 @@
-"""Synthetic evaluator output: a better pooled score hides one worse session.
+"""An existing evaluator with one pinned comparison hook at completion.
 
-This is a complete local workflow example, not a neural model experiment.
-The saved baseline is reused on subsequent candidates without model execution.
+Initialize the reference once. Later commands generate only candidate outputs
+and reuse the reference unchanged. All predictions here are synthetic.
 """
 
 from __future__ import annotations
@@ -10,61 +10,84 @@ import argparse
 import math
 from pathlib import Path
 
-from bci_regression import EvaluationSet, PredictionSet, compare, reproduce
+from bci_regression import EvaluationSet, PredictionSet, reproduce
+from bci_regression.pinned import PinnedComparison
 
 
-def fixture():
-    targets, baseline, candidate = [], [], []
-    for session, count, error in [("session-01", 200, 0.3), ("session-02", 100, 0.7),
-                                  ("session-03", 40, 0.4), ("session-04", 80, 1.0)]:
+# This is the existing evaluator's export schema, mapped once at setup.
+PREDICTION_COLUMNS = {
+    "session_id": "recording", "sample_id": "bin",
+    "predicted_vx": "vx", "predicted_vy": "vy",
+}
+DESCRIPTION = "Synthetic evaluator integration. No neural recordings or model performance claims."
+
+
+def current_evaluation():
+    """Build identity from the job's actual labels/mask, never from the pin."""
+    targets = []
+    for session, count in [("session-01", 200), ("session-02", 100),
+                           ("session-03", 40), ("session-04", 80)]:
         for i in range(count):
-            key = dict(session_id=session, sample_id=f"sample-{i:04d}")
-            vx, vy = math.sin(i / 11), math.cos(i / 17)
-            targets.append(dict(**key, timestamp=i * 0.02, target_vx=vx, target_vy=vy))
-            baseline.append(dict(**key, predicted_vx=vx + 1, predicted_vy=vy))
-            local_error = 2.8 if session == "session-03" and 18 <= i < 28 else error
-            candidate.append(dict(**key, predicted_vx=vx + local_error, predicted_vy=vy))
-    return targets, baseline, candidate
+            targets.append(dict(session_id=session, sample_id=f"sample-{i:04d}",
+                timestamp=i * 0.02, target_vx=math.sin(i / 11), target_vy=math.cos(i / 17)))
+    return EvaluationSet.from_records(targets, evaluation_id="synthetic-velocity-v1",
+        units="cm/s", coordinates="synthetic-x-y", source_ref="examples/basic_comparison.py",
+        purpose="development / synthetic tooling acceptance")
+
+
+def synthetic_outputs(evaluation, *, baseline=False):
+    errors = {"session-01": 0.3, "session-02": 0.7, "session-03": 0.4, "session-04": 1.0}
+    rows = []
+    for row in evaluation.records:
+        sid, sample = row["session_id"], row["sample_id"]
+        i = int(sample.split("-")[1])
+        error = 1.0 if baseline else (2.8 if sid == "session-03" and 18 <= i < 28 else errors[sid])
+        rows.append(dict(recording=sid, bin=sample,
+                         vx=row["target_vx"] + error, vy=row["target_vy"]))
+    return rows
+
+
+def initialize(output_dir: Path):
+    evaluation = current_evaluation()
+    baseline = PredictionSet.from_records(synthetic_outputs(evaluation, baseline=True),
+        run_id="baseline-001", evaluation=evaluation, columns=PREDICTION_COLUMNS,
+        provenance={"producer": "examples/basic_comparison.py", "kind": "synthetic"})
+    PinnedComparison.create(output_dir / "pinned", evaluation=evaluation, baseline=baseline,
+        prediction_columns=PREDICTION_COLUMNS, tolerance=0.1, description=DESCRIPTION)
+    print(f"Reference initialized: {(output_dir / 'pinned').resolve()}")
 
 
 def run(output_dir: Path, candidate_id="candidate-001"):
     if not candidate_id or Path(candidate_id).name != candidate_id or candidate_id in {".", "..", "pinned"}:
         raise ValueError("candidate_id must be a simple unique directory name")
-    targets, baseline_rows, candidate_rows = fixture()
-    pinned = output_dir / "pinned"
-    if output_dir.exists():
-        if not (pinned / "evaluation.json").is_file() or not (pinned / "baseline.json").is_file():
-            raise FileExistsError("Existing directory is not an initialized example; choose a fresh output directory")
-        evaluation = EvaluationSet.load(pinned / "evaluation.json")
-        baseline = PredictionSet.load(pinned / "baseline.json")
-    else:
-        pinned.mkdir(parents=True)
-        evaluation = EvaluationSet.from_records(targets, evaluation_id="synthetic-velocity-v1",
-            units="cm/s", coordinates="synthetic-x-y", source_ref="examples/basic_comparison.py:fixture",
-            purpose="development / synthetic tooling acceptance")
-        baseline = PredictionSet.from_records(baseline_rows, run_id="baseline-001", evaluation=evaluation,
-            provenance={"producer": "examples/basic_comparison.py", "kind": "synthetic; no model execution"})
-        evaluation.save(pinned / "evaluation.json")
-        baseline.save(pinned / "baseline.json")
+    check = PinnedComparison.load(output_dir / "pinned")
 
-    # In an engineer's job, these rows come from their existing evaluation.
-    candidate = PredictionSet.from_records(candidate_rows, run_id=candidate_id, evaluation=evaluation,
-        provenance={"producer": "examples/basic_comparison.py", "kind": "synthetic; no model execution"})
-    result = compare(evaluation, baseline, candidate, tolerance=0.1, output_dir=output_dir / candidate_id,
-        description="Synthetic acceptance example. Predictions are constructed directly; no neural recordings or model performance claims.")
+    # The ordinary evaluator owns this work and its actual evaluation identity.
+    evaluation = current_evaluation()
+    candidate_rows = synthetic_outputs(evaluation)
+    report_dir = output_dir / candidate_id / "session-regressions"
+
+    # The sole addition at evaluation completion: no baseline, mapping or threshold selection.
+    result = check.compare(candidate_rows, evaluation=evaluation, run_id=candidate_id,
+        output_dir=report_dir,
+        provenance={"producer": "examples/basic_comparison.py", "kind": "synthetic"})
+    print(f"Report: {(report_dir / 'report.html').resolve()}")
+
+    # Acceptance checks for this constructed demonstration, not a deployment gate.
     assert result["complete"] and result["pooled"]["delta"] < 0
     assert [r["session_id"] for r in result["sessions"] if r["regression"]] == ["session-03"]
-    reproduced = reproduce(output_dir / candidate_id)
-    assert reproduced == result
-    print(f"Comparison reproduced. Pooled error decreased; session-03 became worse.")
-    print(f"Report: {(output_dir / candidate_id / 'report.html').resolve()}")
-    print(f"Pinned baseline: {baseline.run_id} ({baseline.digest[:12]})")
+    assert reproduce(report_dir) == result
+    print("Comparison reproduced. Pooled error decreased; session-03 became worse.")
     return result
 
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--output-dir", required=True, type=Path)
+    parser.add_argument("--initialize", action="store_true", help="One-time reference setup; refuses replacement")
     parser.add_argument("--candidate-id", default="candidate-001")
     args = parser.parse_args()
-    run(args.output_dir, args.candidate_id)
+    if args.initialize:
+        initialize(args.output_dir)
+    else:
+        run(args.output_dir, args.candidate_id)
