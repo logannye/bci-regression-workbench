@@ -38,8 +38,8 @@ def _inputs(**options):
 
 class TargetSemanticsTests(unittest.TestCase):
     def test_default_velocity_preserves_existing_evidence_and_report(self):
-        # Frozen before this extension, against source b5869bb. These identify a
-        # deliberately small compatibility fixture, not scientific evidence.
+        # Evidence hashes were frozen before the target-kind extension, against
+        # source b5869bb. The rendered fixture below tracks current report copy.
         evaluation, baseline, candidate = _inputs()
         self.assertEqual(evaluation.fingerprint, "237999280804a7fe2796b9f4e8f1a27c937d129a59f1f1ec1f559e1b34565f74")
         self.assertEqual(baseline.digest, "5952a986d0bf898650d76e6d050fa83ffde43005971cbd9de5f9ceaf767a6796")
@@ -48,7 +48,7 @@ class TargetSemanticsTests(unittest.TestCase):
         result.pop("comparator_source_digest")
         self.assertEqual(_hash(result), "4506efb0c4520dafeb5397fd9e312f4531ac5e72ecf80abad1de3295dfd7f977")
         self.assertEqual(hashlib.sha256(render_report(result).encode()).hexdigest(),
-                         "2cf857889acb4d500605f201980064ddf66b8aa388a06803de3d2bfe9c8a6136")
+                         "5765394027ea396c189b11f4fa1689f84b47f8c8305e8ff8c4bcf5595548cf1c")
         for implicit, explicit in zip(_inputs(), _inputs(target_kind="velocity")):
             self.assertEqual(implicit, explicit)
 
@@ -169,8 +169,10 @@ class TargetSemanticsTests(unittest.TestCase):
         html = render_report(result)
         header = html.split("<header>")[1].split("</header>")[0]
         self.assertIn("Inferred cursor-to-target vectors", header)
-        self.assertIn("not measured intended velocities", header)
-        self.assertIn("does not establish better live BCI control", header)
+        self.assertIn("Displacement from cursor to target", header)
+        self.assertIn("not measured intended velocity", header)
+        self.assertIn("RMSE measures offline agreement with this proxy", header)
+        self.assertIn("live control requires separate evaluation", header)
         self.assertIn("Error against inferred cursor-to-target vectors", html)
         self.assertIn("Inferred target (x, y)", html)
         self.assertIn("Vectors and errors use source coordinate units", html)

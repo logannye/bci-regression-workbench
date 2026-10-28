@@ -260,9 +260,9 @@ class ReportTests(unittest.TestCase):
         for session in result["sessions"]:
             session["regression"] = None
         document = _Document(render_report(result))
-        self.assertIn("No regression reporting tolerance was specified", document.root.text)
+        self.assertIn("No regression threshold set", document.root.text)
         self.assertIn("Descriptive deltas only", document.root.text)
-        self.assertIn("no categorical regression claim is made", document.root.text)
+        self.assertIn("Changes are descriptive", document.root.text)
         for row in _session_rows(document):
             self.assertIn("Descriptive", row.text)
             self.assertNotIn("Regression", row.text)

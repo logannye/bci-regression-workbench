@@ -246,8 +246,8 @@ def _session_evidence(samples: list[dict], units: object, maximum: float,
     method = (
         '<details class="localization-method"><summary>How this window is selected</summary>'
         f'<div class="details-content"><p class="caption">{rule}</p>'
-        '<p class="caption">Exploratory localization only: it does not change scoring, '
-        'establish statistical significance, or identify a cause.</p></div></details>'
+        '<p class="caption">Use this window to investigate added error. '
+        'Session scores and flags use all eligible samples.</p></div></details>'
     )
     if window is None:
         usable = bool(samples) and all(
@@ -259,7 +259,7 @@ def _session_evidence(samples: list[dict], units: object, maximum: float,
         return (
             '<section class="localization-empty" aria-label="Error localization">'
             f'<h3>{"No added-error window" if usable else "Localization unavailable"}</h3>'
-            f'<p class="caption">{message} Session scores and flags are unchanged.</p>'
+            f'<p class="caption">{message}</p>'
             f'{method}</section>'
             + _error_trace(samples, units, maximum, anchor, inferred_target=inferred_target)
             + _sample_preview(samples, units, inferred_target=inferred_target)
@@ -273,9 +273,9 @@ def _session_evidence(samples: list[dict], units: object, maximum: float,
             f'<dt>Timestamp</dt><dd class="mono">{_text(sample.get("timestamp", ""))}</dd></div>'
         )
     context = (
-        'This session improves overall; this window only identifies a local loss.'
+        'This session improves overall; the candidate adds error in this window.'
         if (_finite(delta) or 0) < 0 else
-        'This window is an investigation starting point, not a new regression flag.'
+        'Start the error review here.'
     )
     return (
         f'<section class="localization" data-localization-start="{start}" '
@@ -538,9 +538,8 @@ def render_report(result: dict) -> str:
     inferred_target = target_kind == "inferred_cursor_to_target_vector"
     target_notice = (
         '<p class="description target-semantics"><strong>Inferred cursor-to-target vectors.</strong> '
-        'Targets are an inferred movement proxy, not measured intended velocities. '
-        'Lower error means closer agreement with this proxy; this offline comparison '
-        'does not establish better live BCI control.</p>'
+        'Displacement from cursor to target is a movement proxy, not measured intended velocity. '
+        'RMSE measures offline agreement with this proxy; live control requires separate evaluation.</p>'
         if inferred_target else ""
     )
     target_caption = (
@@ -574,12 +573,10 @@ def render_report(result: dict) -> str:
     expected = sum(_finite(row.get("n_expected")) or 0 for row in sessions)
     completeness = "Complete comparison" if complete else "Incomplete comparison"
     tolerance_text = (
-        f'Regression reporting tolerance: {_number(tolerance)} {_text(units)}. '
-        'Regression means candidate-minus-baseline RMSE exceeds this tolerance; '
-        'within tolerance is not a deployment decision.'
+        f'Regression threshold: {_number(tolerance)} {_text(units)}. '
+        'Sessions are flagged when candidate − baseline RMSE exceeds this threshold.'
         if tolerance is not None else
-        'No regression reporting tolerance was specified. Deltas are descriptive; '
-        'no categorical regression claim is made.'
+        'No regression threshold set. Changes are descriptive.'
     )
     flag_summary = (
         f'{regressions:,} above tolerance' if tolerance is not None else 'Descriptive deltas only'
@@ -699,7 +696,7 @@ def render_report(result: dict) -> str:
         'scores, sorting, or regression flags; the JSON bundle and CSV retain the recorded scores.</p>'
         '<p class="caption">The saved scoring bundle retains predictions, reference labels, eligibility, '
         'identities, and comparison settings. Recompute with <code>reproduce(bundle_dir)</code> using the '
-        'recorded comparator source. This report does not certify that reproduction has been run.</p></section>'
+        'recorded comparator source.</p></section>'
         '<section aria-labelledby="identity-heading"><h2 id="identity-heading">Comparison identity</h2>'
         '<div class="metadata"><dl><dt>Baseline run</dt>'
         f'<dd>{_text(baseline.get("run_id", ""))}</dd><dt>Full output digest</dt>'
@@ -718,8 +715,7 @@ def render_report(result: dict) -> str:
         '<div class="details-content provenance-grid"><div><h3>Baseline</h3>'
         f'<pre>{_json_text(baseline.get("provenance", {}))}</pre></div><div><h3>Candidate</h3>'
         f'<pre>{_json_text(candidate.get("provenance", {}))}</pre></div></div></details></section></div></details>'
-        '<footer>Scores describe supplied outputs and labels. Re-scoring does not verify model execution '
-        'or training independence, and does not establish deployment readiness. Independent project; '
-        'no Neuralink integration is implied.</footer></main>'
+        '<footer>Offline comparison of saved predictions on fixed reference labels. '
+        'Data and model provenance are supplied by the evaluator. Independent project.</footer></main>'
         f'<script id="report-interaction">{_SCRIPT}</script></body></html>'
     )
