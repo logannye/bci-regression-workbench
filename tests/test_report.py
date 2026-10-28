@@ -305,9 +305,12 @@ class ReportTests(unittest.TestCase):
         document = _Document(render_report(_result()))
         supporting = document.find(tag="details", cls="supporting-samples")
         self.assertEqual(len(supporting), 2)
+        self.assertEqual(sum("Window samples" in node.text for node in supporting), 1)
         for node in supporting:
             self.assertNotIn("open", node.attrs)
-            self.assertIn("Showing 1 of 1 paired sample", node.text)
+            expected = ("Window samples 1–1 of 1 scored samples" if "Window samples" in node.text
+                        else "Showing 1 of 1 paired sample")
+            self.assertIn(expected, node.text)
             self.assertIn("All samples and their identities remain in the saved scoring bundle", node.text)
         evidence = document.one(tag="details", id="comparison-evidence")
         self.assertNotIn("open", evidence.attrs)
@@ -371,7 +374,8 @@ class ReportTests(unittest.TestCase):
                                    "baseline_error": 1e9, "candidate_error": 1e9})
         document = _Document(render_report(result))
         captions = document.find(tag="figcaption")
-        self.assertEqual(len(captions), 2)
+        # One selected-window trace plus its full-session context, and the improved session.
+        self.assertEqual(len(captions), 3)
         self.assertTrue(all("Shared y-axis across valid sessions: 0–3.00 cm/s" in node.text
                             for node in captions))
         for panel in document.find(tag="section", cls="session-detail"):

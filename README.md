@@ -24,8 +24,8 @@ An independent open-source project by Logan Nye, designed for Neuralink's BCI ML
 ## Explore the demo in a minute
 
 1. **Read the Change column.** It shows candidate minus baseline RMSE. Positive means higher error; negative means lower error. Coverage shows whether all expected samples were scored.
-2. **Select a recording session.** The adjacent evidence pane shows its two scores and paired error traces. The session list remains visible on desktop; mobile stacks the same information.
-3. **Expand the evidence you need.** Open **Supporting samples** for a small sample preview, or **Identity & scoring details** for run identities, metric definitions, and provenance.
+2. **Select a recording session.** The evidence pane immediately shows where the candidate added the most error in a fixed 24-scored-sample window, with exact sample IDs, timestamps, and a full-resolution paired trace. The session's original scores remain visible. If no window has net added error, the report says so.
+3. **Expand the evidence you need.** Open **Supporting samples** for that window's values, **Full-session trace** for context, or **Identity & scoring details** for run identities and provenance. A local loss can occur in an overall-improved session; it does not change the session's regression flag. See the [fixed localization rule and checks](docs/LOCALIZATION.md).
 
 The [hosted report](https://logannye.github.io/bci-regression-workbench/) compares two fixed ridge decoders trained on one public Indy recording day and evaluated on three later days. The candidate adds recent neural history. **All three sessions have lower candidate error; all 14,052 expected evaluation bins were scored.** This example contains no session-level error increase, and its differences are descriptive because no regression-reporting threshold was specified. The separate [synthetic example](#try-the-synthetic-demonstration) deliberately includes a worsened session to demonstrate that failure case.
 
