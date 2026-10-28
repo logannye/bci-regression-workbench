@@ -11,7 +11,7 @@ from urllib.parse import urlsplit
 ROOT = Path(__file__).resolve().parents[1]
 SITE = ROOT / "site"
 EXPECTED_FILES = {"index.html", "session_metrics.csv", "publication.json"}
-ORIGINAL_REPORT_SHA256 = "655c89377c123eca73708ffb7971d5c3f4c4ac4dccf28452ee978264c5dc1ff8"
+ORIGINAL_REPORT_SHA256 = "791b5eb1af655f3e816f49a91851f88ca0db0f8c884ba7f2f6506f8359da7bba"
 NOTICE_START = "<!-- PUBLIC-DEMO-NOTICE-START -->"
 NOTICE_END = "<!-- PUBLIC-DEMO-NOTICE-END -->"
 

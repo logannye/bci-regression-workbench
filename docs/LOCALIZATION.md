@@ -31,3 +31,13 @@ The broader checks cover independent brute-force window selection, ties, short/z
 The renderer participates in the comparator source identity. Old bundles and pins keep their recorded source. To update the public demo, load its saved original inputs into a new comparison directory, preserve all settings, and verify equality of every result field except the comparator source digest. Never overwrite or rebind the original inputs, refit the models, or change the completed experiment.
 
 Publish only the reviewed report snapshot, unchanged aggregate CSV, and publication identities. The original public result remains lower error on all three sessions; localization does not manufacture a session regression.
+
+## Local validation
+
+Implementation revision `772d008ee7e1c78bdae67c48723b696548c3f354`, renderer SHA-256 `261cc328c354e8b065b4c728eabeeae72670245024d08c9cb6097dc5ab5a5c24`, passed 135 local tests with nine optional-dependency skips (144 discovered), including all 18 localization tests. Python 3.14.6 on macOS arm64 was used; see the [aggregate receipt](validation/localization-v1.json) for the exact platform and source identities. The fixed report script passed Node syntax validation and is unchanged.
+
+Nine generated comparison bundles reproduced. The fixed late-session case selected indices `[540, 564)` and sample IDs `sample-0540` through `sample-0563`; pooled RMSE decreased from 1 to 0.649519 while the affected session increased from 1 to 1.224745. Every one of its 2,400 samples was retained. All 14,052 public samples and every original result field except source digest remained identical; the old public bundle also reproduced with archived pre-change source. No models were refitted or executed.
+
+Browser checks passed for nine states at three viewport sizes (27 combinations), with no document-wide horizontal overflow or console errors. Clicking or keyboard-selecting the affected session revealed the correct late interval; its supporting table contained exactly those 24 sample IDs. Full-session expansion, browser history, and fragment reload passed. Mobile selection placed the evidence panel about 12px below the viewport top. The two initial old report-test failures were obsolete expectations about preview wording and the number of charts; their evidence-preservation assertions remain enforced.
+
+Hosted checks and deployment status are attached to the publication pull request/commit. These targeted checks do not establish screen-reader conformance, actual print/PDF behavior, production-scale performance, or intended-engineer usability.

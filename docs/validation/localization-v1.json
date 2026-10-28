@@ -1,0 +1,111 @@
+{
+  "schema_version": 1,
+  "implementation_revision": "772d008ee7e1c78bdae67c48723b696548c3f354",
+  "previous_revision": "aea2bc82bf74a83931ee4dd43633495c81dffed5",
+  "renderer_sha256": "261cc328c354e8b065b4c728eabeeae72670245024d08c9cb6097dc5ab5a5c24",
+  "comparator_source_digest": "d4ec0e5f7c3b5fee2a65157dec7129b633de1a6a055dfb5614ea0054beba3206",
+  "environment": {
+    "python": "3.14.6",
+    "platform": "Darwin-25.2.0-arm64-arm-64bit-Mach-O"
+  },
+  "local_tests": {
+    "discovered": 144,
+    "passed": 135,
+    "optional_skips": 9,
+    "localization_tests_passed": 18
+  },
+  "fixture_bundles_reproduced": 9,
+  "late_fixture": {
+    "localization_acceptance": {
+      "all_2400_samples_scored": true,
+      "end_sample_id": "sample-0563",
+      "first_24_samples_outside_failure": true,
+      "session_id": "late-session",
+      "start_index": 540,
+      "start_sample_id": "sample-0540",
+      "stop_index_exclusive": 564
+    },
+    "scored_samples": 2400,
+    "pooled": {
+      "baseline_rmse": 1.0,
+      "candidate_rmse": 0.649519052838329,
+      "delta": -0.350480947161671,
+      "n_samples": 2400
+    },
+    "sessions": [
+      {
+        "baseline_rmse": 1.0,
+        "candidate_rmse": 1.224744871391589,
+        "delta": 0.22474487139158894,
+        "issues": [],
+        "n_expected": 600,
+        "n_scored": 600,
+        "regression": true,
+        "session_id": "late-session",
+        "status": "valid"
+      },
+      {
+        "baseline_rmse": 1.0,
+        "candidate_rmse": 0.25,
+        "delta": -0.75,
+        "issues": [],
+        "n_expected": 1800,
+        "n_scored": 1800,
+        "regression": false,
+        "session_id": "control-session",
+        "status": "valid"
+      }
+    ],
+    "scoring_reproduced": true
+  },
+  "public_replay": {
+    "scored_samples": 14052,
+    "original_bundle_unchanged": true,
+    "original_payload_equal_except_source_digest": true,
+    "scoring_reproduced": true,
+    "original_manifest_sha256": "ad0159c731c8c7d5c64209aa1a6993682182885aba50772ff571b473a5f06dbc"
+  },
+  "preservation": {
+    "scoring_pinning_and_frozen_producer_sources_unchanged": true,
+    "session_selection_script_unchanged": true,
+    "old_public_bundle_reproduced_with_archived_source": true
+  },
+  "browser": {
+    "surface": "ChatGPT in-app browser",
+    "states": 9,
+    "requested_viewports": [
+      [
+        1265,
+        712
+      ],
+      [
+        390,
+        844
+      ],
+      [
+        320,
+        740
+      ]
+    ],
+    "state_viewport_checks_passed": 27,
+    "late_window_via_click_and_keyboard": [
+      540,
+      564
+    ],
+    "exact_preview_ids": [
+      "sample-0540",
+      "sample-0563"
+    ],
+    "preview_rows": 24,
+    "mobile_selected_panel_top_px": 12.28125,
+    "history_and_fragment_reload": true,
+    "full_session_trace_disclosure": true,
+    "console_errors_or_warnings": 0
+  },
+  "limits": [
+    "Constructed fixture validates software behavior, not a neural result.",
+    "Window uses consecutive scored samples and may span time gaps.",
+    "No screen-reader, print-dialog, intended-engineer usability, or production-scale performance validation.",
+    "Hosted checks are recorded on the pull request and commit, separately from this local receipt."
+  ]
+}
