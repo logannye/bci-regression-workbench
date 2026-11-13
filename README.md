@@ -1,8 +1,17 @@
 # BCI Regression Workbench
 
+[![Tests](https://github.com/logannye/bci-regression-workbench/actions/workflows/tests.yml/badge.svg?branch=main)](https://github.com/logannye/bci-regression-workbench/actions/workflows/tests.yml)
+[![Live demo](https://img.shields.io/badge/demo-live-2ea44f)](https://logannye.github.io/bci-regression-workbench/)
+[![Python 3.10+](https://img.shields.io/badge/python-3.10%2B-blue)](pyproject.toml)
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
+
 **A Python library that compares saved baseline and candidate BCI decoder predictions in an interactive, session-by-session report.**
 
 Use it at the end of an offline evaluation job to find recording days that got worse, even when the average score improved. Select a session to locate the window with the most added error, then use its sample IDs and timestamps in your existing analysis tools.
+
+![Report for the synthetic example: pooled RMSE falls from 1.00 to 0.74 cm/s, while session-03 rises by 0.44 cm/s and is flagged as a regression, with the 24-sample window where the error was added.](docs/assets/synthetic-report.png)
+
+*Synthetic example, produced by the [commands below](#run-the-synthetic-example). Pooled RMSE falls from 1.00 to 0.74 cm/s while `session-03` rises from 1.00 to 1.44 and is flagged. The human and macaque demos apply the same report to real recordings; neither contains a session that got worse.*
 
 ### [Explore the human BCI demo →](https://logannye.github.io/bci-regression-workbench/)
 
@@ -14,7 +23,7 @@ Open the completed comparison in your browser. Select a recording day to inspect
 
 **Existing evaluator → saved predictions → session comparison → investigate changed sessions.** Pin the baseline and column mapping once; each candidate evaluation writes its own report. Both decoders are scored on the same declared samples using two-dimensional vector RMSE.
 
-An independent open-source project by Logan Nye for BCI ML evaluation.
+An independent open-source project by Logan Nye for BCI ML evaluation. The library, both demos and their validation were built in a single day, October 28, 2026, with an AI coding agent (OpenAI Codex); the pull requests and the receipts under [`docs/`](docs/) record each step.
 
 ## Read the demo
 
@@ -30,17 +39,25 @@ The candidate has lower RMSE on all twelve days. Pooled RMSE decreased from **0.
 
 Also available: the [Indy macaque report](https://logannye.github.io/bci-regression-workbench/indy/) and its [results](docs/public-demo/RESULTS.md). The synthetic example below includes a worsened session despite an improved average.
 
-## Run the synthetic example
-
-From the repository root, using Python 3.10 or later and a fresh output directory:
+## Install
 
 ```sh
-PYTHONPATH=src python3 examples/basic_comparison.py --output-dir runs/demo --initialize
-PYTHONPATH=src python3 examples/basic_comparison.py --output-dir runs/demo
-PYTHONPATH=src python3 examples/basic_comparison.py --output-dir runs/demo --candidate-id candidate-002
+python3 -m pip install "git+https://github.com/logannye/bci-regression-workbench.git@v0.1.0"
 ```
 
-The core uses Python's standard library. Initialization saves the reference once; the next two commands reuse it for separate candidate reports and verify score reproduction. Open the printed report path and select the worsened session. Use a new output directory or candidate ID for each new comparison.
+Python 3.10 or later, in a virtual environment. The core has no third-party dependencies.
+
+## Run the synthetic example
+
+The example lives in the repository. From a clone, in an environment with the package installed (`python3 -m pip install .`), using a fresh output directory:
+
+```sh
+python3 examples/basic_comparison.py --output-dir runs/demo --initialize
+python3 examples/basic_comparison.py --output-dir runs/demo
+python3 examples/basic_comparison.py --output-dir runs/demo --candidate-id candidate-002
+```
+
+The core uses Python's standard library. Initialization saves the reference once; the next two commands reuse it for separate candidate reports and verify score reproduction. Open the printed report path and select the worsened session. Use a new output directory or candidate ID for each new comparison. To run from a clone without installing, prefix each command with `PYTHONPATH=src`.
 
 ## Add it to an evaluation job
 

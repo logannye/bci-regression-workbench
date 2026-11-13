@@ -45,6 +45,11 @@ jobs:
           python -m pip install --no-deps "$RUNNER_TEMP"/wheels/*.whl
           cd "$RUNNER_TEMP"
           python -c "from bci_regression import EvaluationSet, PredictionSet, compare, reproduce; from bci_regression.pinned import PinnedComparison; print('Installed package import passed')"
+      - name: Run the README example against the installed package
+        run: |
+          python examples/basic_comparison.py --output-dir "$RUNNER_TEMP/installed-demo" --initialize
+          python examples/basic_comparison.py --output-dir "$RUNNER_TEMP/installed-demo"
+          python examples/basic_comparison.py --output-dir "$RUNNER_TEMP/installed-demo" --candidate-id candidate-002
 
   datarepo:
     runs-on: ubuntu-24.04
