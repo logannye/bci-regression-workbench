@@ -25,14 +25,3 @@ The separate [human MINDFUL T11 comparison](docs/human-demo/RESULTS.md) complete
 ## Repository relationship
 
 This is Logan Nye's independent project intended for presentation to Neuralink's BCI ML team. Do not imply sponsorship, collaboration, private-data access, or internal integration. Prefer a thin use of upstream datarepo over a fork or replacement platform.
-
-## Native build storage
-
-User preference established September 29, 2026, applies to any Rust introduced later:
-
-- Keep edits, formatting, documentation checks, and other non-build static work local. Run native compilation, executable native tests, extension rebuilds, and packaging on hosted CI or an already-authorized remote environment by default.
-- Local Rust compilation is opt-in, including cargo check/clippy/test/build and implicit uv/maturin builds. Require explicit authorization for the work, then reuse it for necessary commands. Avoid lightweight commands that silently rebuild native packages.
-- Batch coherent changes before native validation. Preserve required tests and release gates, record revision/platform, and never claim unperformed validation. If remote validation is unavailable, continue static work and report what remains unvalidated.
-- Reuse compatible installed native libraries for Python-only changes. Changed Rust requires a rebuilt library in the validation environment before integration testing.
-- If local compilation is authorized, use focused checks, one reusable build directory, and one native validation process. Prefer debug = 0 and incremental = false unless debugger needs justify otherwise; explain the tradeoffs.
-- Before substantial local builds, inspect disk space and artifact size. Keep disposable outputs bounded. Clean only identified inactive regenerable task outputs at validation boundaries; preserve user data and useful failure evidence. Use managed pruning, not unrelated cache deletion. Temporary directories still consume local disk.
