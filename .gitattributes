@@ -1,0 +1,3 @@
+# The saved report snapshots under site/ are generated output. Marking them
+# keeps them out of GitHub's language statistics and collapses their diffs.
+site/** linguist-generated=true
